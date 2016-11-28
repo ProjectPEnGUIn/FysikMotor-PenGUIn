@@ -11,6 +11,8 @@
 #include <math.h>
 #include <cmath>
 
+#include "PEVec2D.h"
+
 //global variables
 int screenWidth = 1280;
 int screenHeight = 720;

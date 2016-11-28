@@ -1,0 +1,109 @@
+﻿  PEVec2D.cpp
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(6): error C3211: 'PEVec2D<double>::setX': explicit specialization is using partial specialization syntax, use template <> instead
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.h(38): note: see declaration of 'PEVec2D<double>::setX'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(10): error C3211: 'PEVec2D<double>::setY': explicit specialization is using partial specialization syntax, use template <> instead
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.h(39): note: see declaration of 'PEVec2D<double>::setY'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(14): error C3211: 'PEVec2D<double>::setXY': explicit specialization is using partial specialization syntax, use template <> instead
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.h(40): note: see declaration of 'PEVec2D<double>::setXY'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(23): error C2244: 'PEVec2D<double>::setVectorMagnitude': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(20): note: see declaration of 'PEVec2D<double>::setVectorMagnitude'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(23): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(23): note: 'void PEVec2D<double>::setVectorMagnitude(T)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(23): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(23): note: 'void PEVec2D<double>::setVectorMagnitude(T)'
+          with
+          [
+              T=double
+          ]
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(27): error C2244: 'PEVec2D<double>::setDirectionDEGREES': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(24): note: see declaration of 'PEVec2D<double>::setDirectionDEGREES'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(27): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(27): note: 'void PEVec2D<double>::setDirectionDEGREES(T)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(27): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(27): note: 'void PEVec2D<double>::setDirectionDEGREES(T)'
+          with
+          [
+              T=double
+          ]
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(31): error C2244: 'PEVec2D<double>::setDirectionRADIANS': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(28): note: see declaration of 'PEVec2D<double>::setDirectionRADIANS'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(31): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(31): note: 'void PEVec2D<double>::setDirectionRADIANS(T)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(31): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(31): note: 'void PEVec2D<double>::setDirectionRADIANS(T)'
+          with
+          [
+              T=double
+          ]
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(35): error C2244: 'PEVec2D<double>::scaleVector': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(32): note: see declaration of 'PEVec2D<double>::scaleVector'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(35): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(35): note: 'void PEVec2D<double>::scaleVector(T)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(35): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(35): note: 'void PEVec2D<double>::scaleVector(T)'
+          with
+          [
+              T=double
+          ]
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(41): error C2244: 'PEVec2D<double>::getX': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(38): note: see declaration of 'PEVec2D<double>::getX'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(41): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(41): note: 'T PEVec2D<double>::getX(void)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(41): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(41): note: 'double PEVec2D<double>::getX(void)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(45): error C2244: 'PEVec2D<double>::getY': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(42): note: see declaration of 'PEVec2D<double>::getY'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(45): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(45): note: 'T PEVec2D<double>::getY(void)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(45): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(45): note: 'double PEVec2D<double>::getY(void)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(50): error C2244: 'PEVec2D<double>::getDirectionDEGREES': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(47): note: see declaration of 'PEVec2D<double>::getDirectionDEGREES'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(50): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(50): note: 'T PEVec2D<double>::getDirectionDEGREES(void)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(50): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(50): note: 'double PEVec2D<double>::getDirectionDEGREES(void)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(54): error C2244: 'PEVec2D<double>::getDirectionRADIANS': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(51): note: see declaration of 'PEVec2D<double>::getDirectionRADIANS'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(54): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(54): note: 'T PEVec2D<double>::getDirectionRADIANS(void)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(54): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(54): note: 'double PEVec2D<double>::getDirectionRADIANS(void)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(58): error C2244: 'PEVec2D<double>::getMagnitude': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(55): note: see declaration of 'PEVec2D<double>::getMagnitude'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(58): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(58): note: 'T PEVec2D<double>::getMagnitude(void)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(58): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(58): note: 'double PEVec2D<double>::getMagnitude(void)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(65): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(65): error C2244: 'PEVec2D<double>::operator +': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(61): note: see declaration of 'PEVec2D<double>::operator +'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(65): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(65): note: 'int PEVec2D<double>::operator +(PEVec2D<T>)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(65): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(65): note: 'PEVec2D<double> PEVec2D<double>::operator +(PEVec2D<double>)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(70): error C2244: 'PEVec2D<double>::operator -': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(66): note: see declaration of 'PEVec2D<double>::operator -'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(70): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(70): note: 'int PEVec2D<double>::operator -(PEVec2D<T>)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(70): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(70): note: 'PEVec2D<double> PEVec2D<double>::operator -(PEVec2D<double>)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(74): error C2244: 'PEVec2D<double>::operator *': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(71): note: see declaration of 'PEVec2D<double>::operator *'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(74): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(74): note: 'int PEVec2D<double>::operator *(PEVec2D<T>)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(74): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(74): note: 'PEVec2D<double> PEVec2D<double>::operator *(PEVec2D<double>)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): error C2244: 'PEVec2D<double>::operator *': unable to match function definition to an existing declaration
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): note: see declaration of 'PEVec2D<double>::operator *'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): note: definition
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): note: 'int PEVec2D<double>::operator *(PEVec2D<T>)'
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): note: existing declarations
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(75): note: 'PEVec2D<double> PEVec2D<double>::operator *(PEVec2D<double>)'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(78): error C3211: 'PEVec2D<double>::PEVec2D': explicit specialization is using partial specialization syntax, use template <> instead
+  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.h(62): note: see declaration of 'PEVec2D<double>::PEVec2D'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(87): error C2988: unrecognizable template declaration/definition
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(87): error C2059: syntax error: '<end Parse>'
