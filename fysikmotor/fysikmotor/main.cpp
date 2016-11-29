@@ -23,6 +23,15 @@ sf::Time logicTime = sf::seconds((float)(1 / logicTickrate));
 
 int main()
 {
+
+
+	Vec2D test(10, 10);
+	
+
+
+
+	std::cin.get();
+
 	bool runProgram = true;
 	//runs while runProgram == true, program able to run without the sf::renderwindow, able to redefine it etc,
 	while (runProgram)

@@ -52,11 +52,11 @@ public:
 	T getDirectionRADIANS(); //gets the direction of vector in radians
 	T getMagnitude(); //returns the magnitude/length
 
-	//overloading operators, allows one to use + - * / with PEVec2D<T> objects
+	//overloading operators, allows one to use + - *  with PEVec2D<T> objects
 	PEVec2D<T> operator+(PEVec2D<T> inputVectorToAdd); //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
 	PEVec2D<T> operator-(PEVec2D<T> inputVectorToSubtract); //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> object
 	PEVec2D<T> operator*(PEVec2D<T> inputScalar); //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
-	//PEVec2D<T> operator*(PEVec2D<T> inputVectorToMultiply); //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> object
+	
 
 	//constructor
 	PEVec2D(); //inits x and y components to 0, give them values at another point
