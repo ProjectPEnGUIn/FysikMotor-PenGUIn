@@ -25,7 +25,8 @@ int main()
 {
 
 
-	Vec2D test(10, 10);
+	PEVec2D<double> a;
+	a.setXY( (double ) 1.1111, (double) 1.33333);
 	
 
 

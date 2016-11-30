@@ -1,15 +1,5 @@
-﻿  PEVec2D.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(61): warning C4346: '+': dependent name is not a type
-  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(61): note: prefix with 'typename' to indicate a type
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(61): error C2061: syntax error: identifier '+'
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(68): error C2143: syntax error: missing ';' before '{'
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(68): error C2447: '{': missing function header (old-style formal list?)
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(73): warning C4346: '*': dependent name is not a type
-  c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(73): note: prefix with 'typename' to indicate a type
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(73): error C2061: syntax error: identifier '*'
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(80): error C2143: syntax error: missing ';' before '{'
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\pevec2d.cpp(80): error C2447: '{': missing function header (old-style formal list?)
-  Generating Code...
-  Compiling...
-  main.cpp
-  Generating Code...
+﻿  main.cpp
+main.obj : error LNK2019: unresolved external symbol "public: void __thiscall PEVec2D<double>::setXY(double,double)" (?setXY@?$PEVec2D@N@@QAEXNN@Z) referenced in function _main
+main.obj : error LNK2019: unresolved external symbol "public: __thiscall PEVec2D<double>::PEVec2D<double>(void)" (??0?$PEVec2D@N@@QAE@XZ) referenced in function _main
+main.obj : error LNK2019: unresolved external symbol "public: __thiscall PEVec2D<double>::~PEVec2D<double>(void)" (??1?$PEVec2D@N@@QAE@XZ) referenced in function _main
+C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe : fatal error LNK1120: 3 unresolved externals

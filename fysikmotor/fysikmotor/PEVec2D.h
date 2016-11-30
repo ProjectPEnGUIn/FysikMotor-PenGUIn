@@ -35,9 +35,9 @@ public:
 	//functions
 
     //set functions
-	void setX(double inputX); //sets x component
-	void setY(double inputY); //sets y component
-	void setXY(double inputX, double inputY); //sets both x and y components
+	void setX(T inputX); //sets x component
+	void setY(T inputY); //sets y component
+	void setXY(T inputX, T inputY); //sets both x and y components
 
 	void setVectorMagnitude(T inputLength); //sets the length of the vector, keeps the direction
 	void setDirectionDEGREES(T inputDirectionInDegrees); //set the direction of vector in degrees
@@ -48,15 +48,15 @@ public:
 	T getX(); //returns x component
 	T getY(); //returns y component
 
-	T getDirectionDEGREES(); //gets the direction of vector in degrees
-	T getDirectionRADIANS(); //gets the direction of vector in radians
-	T getMagnitude(); //returns the magnitude/length
+	double getDirectionDEGREES(); //gets the direction of vector in degrees
+	double getDirectionRADIANS(); //gets the direction of vector in radians
+	double getMagnitude(); //returns the magnitude/length
 
-	//overloading operators, allows one to use + - *  with PEVec2D<T> objects
+	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 	PEVec2D<T> operator+(PEVec2D<T> inputVectorToAdd); //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
 	PEVec2D<T> operator-(PEVec2D<T> inputVectorToSubtract); //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> object
-	PEVec2D<T> operator*(PEVec2D<T> inputScalar); //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
-	
+	PEVec2D<T> operator*(T inputScalar); //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
+	PEVec2D<T> operator=(PEVec2D<T> setVectorAs); //allowes usage of vec1 = vec2, vec1 gets value of vec2. will return PEVec2D<T> object
 
 	//constructor
 	PEVec2D(); //inits x and y components to 0, give them values at another point
@@ -67,11 +67,13 @@ public:
 private:
 	//members
 
-	T x;
-	T y;
+	T x{}; //{} inits it no matter what type it is
+	T y{};
 
 };
 
-using Vec2D = PEVec2D<double>;  
+using Vec2D = PEVec2D<double>;
+
+
 
 #endif // !_PEVEC2D_
