@@ -1,5 +1,3 @@
 ﻿  main.cpp
-main.obj : error LNK2019: unresolved external symbol "public: void __thiscall PEVec2D<double>::setXY(double,double)" (?setXY@?$PEVec2D@N@@QAEXNN@Z) referenced in function _main
-main.obj : error LNK2019: unresolved external symbol "public: __thiscall PEVec2D<double>::PEVec2D<double>(void)" (??0?$PEVec2D@N@@QAE@XZ) referenced in function _main
-main.obj : error LNK2019: unresolved external symbol "public: __thiscall PEVec2D<double>::~PEVec2D<double>(void)" (??1?$PEVec2D@N@@QAE@XZ) referenced in function _main
-C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe : fatal error LNK1120: 3 unresolved externals
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

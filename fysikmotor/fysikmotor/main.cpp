@@ -25,8 +25,12 @@ int main()
 {
 
 
-	PEVec2D<double> a;
-	a.setXY( (double ) 1.1111, (double) 1.33333);
+	PEVec2D<double> a(20, -10), b(-10, -10);
+	PEVec2D<double> c;
+	c = a + b;
+	c.setVectorMagnitude(10);
+
+	std::cout << "x:" << c.getX() << " y:" << c.getY() << " degrees:" << c.getDirectionDEGREES() << " length:" << c.getMagnitude() << std::endl;
 	
 
 
