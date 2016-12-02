@@ -1,5 +1,8 @@
 // Dennis Mårtensson Erik Magnusson gymnasieprojekt fysikmotor 0.01 med sfml 2.4 till grafik
 
+//entityhandler ->rectangleentity/triangleentity/circleentity
+//eventhandler -> -||-
+
 //sfml library includes
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
@@ -23,19 +26,6 @@ sf::Time logicTime = sf::seconds((float)(1 / logicTickrate));
 
 int main()
 {
-
-
-	PEVec2D<double> a(20, -10), b(-10, -10);
-	PEVec2D<double> c;
-	c = a + b;
-	c.setVectorMagnitude(10);
-
-	std::cout << "x:" << c.getX() << " y:" << c.getY() << " degrees:" << c.getDirectionDEGREES() << " length:" << c.getMagnitude() << std::endl;
-	
-
-
-
-	std::cin.get();
 
 	bool runProgram = true;
 	//runs while runProgram == true, program able to run without the sf::renderwindow, able to redefine it etc,

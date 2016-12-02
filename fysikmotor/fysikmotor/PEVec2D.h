@@ -47,21 +47,20 @@ public:
 	void scaleVector(T inputScaleAmount); //scales the vector so many times
     
 	//get functions
-	T getX(); //returns x component
-	T getY(); //returns y component
+	T getX() const; //returns x component
+	T getY() const; //returns y component
 
-	double getDirectionDEGREES(); //gets the direction of vector in degrees
-	double getDirectionRADIANS(); //gets the direction of vector in radians
-	double getMagnitude(); //returns the magnitude/length
+	double getDirectionDEGREES() const; //gets the direction of vector in degrees
+	double getDirectionRADIANS() const; //gets the direction of vector in radians
+	T getMagnitude() const; //returns the magnitude/length
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
-	PEVec2D<T> operator+(PEVec2D<T> inputVectorToAdd); //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
-	PEVec2D<T> operator-(PEVec2D<T> inputVectorToSubtract); //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> object
-	PEVec2D<T> operator*(T inputScalar); //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
-	void operator=(PEVec2D<T> setVectorAs); //allowes usage of vec1 = vec2, vec1 gets value of vec2. will return PEVec2D<T> object
-	void operator+=(PEVec2D<T> addToVector);
-	void operator-=(PEVec2D<T> subtractFromVector);
-	void operator*=(T multiplyVectorWithScalar);
+	PEVec2D operator+(const PEVec2D& inputVectorToAdd) const; //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
+	PEVec2D operator-(const PEVec2D& inputVectorToSubtract) const; //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> object
+	PEVec2D operator*(T inputScalar) const; //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
+	PEVec2D& operator+=(const PEVec2D& addToVector);
+	PEVec2D& operator-=(const PEVec2D& subtractFromVector);
+	PEVec2D& operator*=(T multiplyVectorWithScalar);
 
 
 	//constructor
@@ -121,30 +120,30 @@ template <typename T> void PEVec2D<T>::scaleVector(T inputScaleAmount) //scales 
 }
 
 //get functions
-template <typename T> T PEVec2D<T>::getX() //returns x component
+template <typename T> T PEVec2D<T>::getX() const //returns x component
 {
 	return x;
 }
-template <typename T> T PEVec2D<T>::getY() //returns y component
+template <typename T> T PEVec2D<T>::getY() const //returns y component
 {
 	return y;
 }
 
-template <typename T> double PEVec2D<T>::getDirectionDEGREES() //gets the direction of vector in degrees
+template <typename T> double PEVec2D<T>::getDirectionDEGREES() const //gets the direction of vector in degrees
 {
 	if (x == 0 && y == 0) //stops erroirs
 		return 0;
 
 	return (atan(y / x) * 180) / PI; //atan returns in radians, must convert
 }
-template <typename T> double PEVec2D<T>::getDirectionRADIANS() //gets the direction of vector in radians
+template <typename T> double PEVec2D<T>::getDirectionRADIANS() const //gets the direction of vector in radians
 {
 	if (x == 0 && y == 0) //stops errors
 		return 0;
 
 	return atan(y / x);
 }
-template <typename T> double PEVec2D<T>::getMagnitude() //returns the magnitude/length
+template <typename T> T PEVec2D<T>::getMagnitude() const //returns the magnitude/length
 {
 	if (x == 0 && y == 0) //stops errors
 		return 0;
@@ -153,7 +152,7 @@ template <typename T> double PEVec2D<T>::getMagnitude() //returns the magnitude/
 }
 
 //overloading operators, allows one to use + - * / = with PEVec2D<T> objects
-template <typename T> PEVec2D<T> PEVec2D<T>::operator+(PEVec2D<T> inputVectorToAdd) //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
+template <typename T> PEVec2D<T> PEVec2D<T>::operator+(const PEVec2D<T>& inputVectorToAdd) const //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
 {
 	//adds their x and y components together
 
@@ -161,7 +160,7 @@ template <typename T> PEVec2D<T> PEVec2D<T>::operator+(PEVec2D<T> inputVectorToA
 
 	return returnVec2D;
 }
-template <typename T> PEVec2D<T> PEVec2D<T>::operator-(PEVec2D<T> inputVectorToSubtract) //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> objec
+template <typename T> PEVec2D<T> PEVec2D<T>::operator-(const PEVec2D<T>& inputVectorToSubtract) const //allows usage of vec1 - vec2 = vec3. will return PEVec2D<T> objec
 {
 	//subtracts their x and y components
 
@@ -169,31 +168,30 @@ template <typename T> PEVec2D<T> PEVec2D<T>::operator-(PEVec2D<T> inputVectorToS
 
 	return returnVec2D;
 }
-template <typename T> PEVec2D<T> PEVec2D<T>::operator*(T inputScalar) //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
+template <typename T> PEVec2D<T> PEVec2D<T>::operator*(T inputScalar) const //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
 {
 	PEVec2D<T> returnVec2D(x * inputScalar, y * inputScalar);
 
 	return  returnVec2D;
 }
-template <typename T> void PEVec2D<T>::operator=(PEVec2D<T> setVectorAs) //allowes usage of vec1 = vec2, vec1 gets value of vec2
-{
-	x = setVectorAs.getX();
-	y = setVectorAs.getY();
-}
-template <typename T> void PEVec2D<T>::operator+=(PEVec2D<T> addToVector)
+
+template <typename T> PEVec2D<T>& PEVec2D<T>::operator+=(const PEVec2D<T>& addToVector)
 {
 	x = x + addToVector.getX();
 	y = y + addToVector.getY();
+	return *this;
 }
-template <typename T> void PEVec2D<T>::operator-=(PEVec2D<T> subtractFromVector)
+template <typename T> PEVec2D<T>& PEVec2D<T>::operator-=(const PEVec2D<T>& subtractFromVector)
 {
 	x = x - subtractFromVector.getX();
 	y = y - subtractFromVector.getY();
+	return *this;
 }
-template <typename T> void PEVec2D<T>::operator*=(T multiplyVectorWithScalar)
+template <typename T> PEVec2D<T>& PEVec2D<T>::operator*=(T multiplyVectorWithScalar)
 {
 	x = x * multiplyVectorWithScalar;
 	y = y * multiplyVectorWithScalar;
+	return *this;
 }
 //constructor
 template <typename T> PEVec2D<T>::PEVec2D() //inits x and y components to 0, give them values at another point
