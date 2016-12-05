@@ -14,7 +14,8 @@
 #include <math.h>
 #include <cmath>
 
-#include "PEVec2D.h"
+#include "PEVec2D.h" //2d vector
+#include "Entity.h" //boxes or circles
 
 //global variables
 int screenWidth = 1280;
