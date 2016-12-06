@@ -10,6 +10,8 @@
 
 //Erik Magnusson 4/12 - 2016
 
+//https://en.wikipedia.org/wiki/Coefficient_of_restitution very relevant
+
 #pragma once
 #ifndef _ENTITY_
 #define _ENTITY
@@ -55,7 +57,9 @@ public:
 	void setAngleRotationDEGREES(double inputRotationDEGREES); //sets the entity rotation in degrees
 	void setAngleRotationRADIANS(double inputRotationRADIANS); //Sets the entity rotation in radians
 	void setIsColliding(bool inputBool); //sets isColding
-	
+	void setRestitutionCoefficient(double inputDouble); //between 0 and 1
+	void setAirDrag(double inputDouble);
+
 	//get functions
 	Vec2D getPosition() const; //gets the pos
 	Vec2D getVelocity() const; //gets the vel, in meters per second
@@ -69,7 +73,9 @@ public:
 	double getAngleRotationDEGREES() const; //gets the rotation of entity in degrees
 	double getAngleRotationRADIANS() const; //gets the rotation of entity in radians
 	bool getIsColliding() const;
-	
+	double getRestitutionCoefficient() const;
+	double getAirDrag() const;
+
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
 	void updateAcceleration(const Vec2D& inputResultingForce); //updates acceleration
@@ -101,7 +107,10 @@ private:
 	double rotationAngleDEGREES; //how much object is rotated in degrees
 	double rotationAngleRADIANS; //how much object is rotated in radians
 
-	bool isColliding;
+	bool isColliding; //can change the outline to show that it is colliding
+
+	double restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
+	double dragCoefficient; //air drag of the body
 
 };
 #endif // !_ENTITY_

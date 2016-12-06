@@ -62,7 +62,7 @@ public:
 	PEVec2D& operator-=(const PEVec2D& subtractFromVector);
 	PEVec2D& operator*=(T multiplyVectorWithScalar);
 	T operator*=(const PEVec2D& inputVectorToCrossProduct); //2d vector cross product
-
+	T operator*(const PEVec2D& inputVectorToCrossProduct); //2d vector cross product
 
 	//constructor
 	PEVec2D(); //inits x and y components to 0, give them values at another point
@@ -196,6 +196,10 @@ template <typename T> PEVec2D<T>& PEVec2D<T>::operator*=(T multiplyVectorWithSca
 }
 template <typename T> T PEVec2D<T>::operator*=(const PEVec2D& inputVectorToCrossProduct) //2d vector cross product
 {	
+	return x * inputVectorToCrossProduct.getY() - y * inputVectorToCrossProduct.getX();
+}
+template <typename T> T PEVec2D<T>::operator*(const PEVec2D& inputVectorToCrossProduct) //2d vector cross product
+{
 	return x * inputVectorToCrossProduct.getY() - y * inputVectorToCrossProduct.getX();
 }
 //constructor

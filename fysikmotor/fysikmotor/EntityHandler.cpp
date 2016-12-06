@@ -6,7 +6,3 @@ EntityHandler::EntityHandler()
 {
 }
 
-
-EntityHandler::~EntityHandler()
-{
-}

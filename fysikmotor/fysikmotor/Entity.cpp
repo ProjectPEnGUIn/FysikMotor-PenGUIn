@@ -51,6 +51,14 @@ void Entity::setIsColliding(bool inputBool)
 {
 	isColliding = inputBool;
 }
+void Entity::setRestitutionCoefficient(double inputDouble) //between 0 and 1
+{
+	restitutionCoefficient = inputDouble;
+}
+void Entity::setAirDrag(double inputDouble)
+{
+	dragCoefficient = inputDouble;
+}
 
 //get functions
 Vec2D Entity::getPosition() const //gets the pos
@@ -101,7 +109,14 @@ bool Entity::getIsColliding() const
 {
 	return isColliding;
 }
-
+double Entity::getRestitutionCoefficient() const
+{
+	return restitutionCoefficient;
+}
+double Entity::getAirDrag() const
+{
+	return dragCoefficient;
+}
 
 //update functions
 void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
