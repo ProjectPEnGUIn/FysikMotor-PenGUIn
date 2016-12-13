@@ -115,6 +115,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PEVec2D.cpp" />
     <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="VertexShape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -124,6 +125,7 @@
     <ClInclude Include="EntityHandler.h" />
     <ClInclude Include="PEVec2D.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="VertexShape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
