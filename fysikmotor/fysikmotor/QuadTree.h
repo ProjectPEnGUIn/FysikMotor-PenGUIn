@@ -37,6 +37,9 @@ private:
 		NE,
 		SE,
 		SW,
+		NWNE,
+		NWSW
+
 	};
 
 public:

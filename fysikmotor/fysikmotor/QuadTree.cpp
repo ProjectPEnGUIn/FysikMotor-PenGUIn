@@ -26,6 +26,8 @@ void QuadTree::splitQuadTree() //splits the quadtree into four partitions/sub no
 			nodes.push_back(d);
 		}
 
+		std::vector<int> removeEntityPos; //stores the pos of all entites to be removed
+
 		//attempt to split entites in current node into the sub nodes created
 		for (unsigned int i = 0; i < entities.size(); i++)
 		{
@@ -42,9 +44,26 @@ void QuadTree::splitQuadTree() //splits the quadtree into four partitions/sub no
 		}
 	}
 }
-void QuadTree::addEntity(Entity inputEntity); //adds entities to quadtree, edntity will trickle down to a designated leaf node
-int QuadTree::getNodePos(const Entity& inputEntity) const; //returns in what sub node the entitiy belongs, -1 if it doesnt fit
-std::vector<QuadTree>& QuadTree::getEntiesInProximity(const Entity& inputEntity); //returns all entieis that are in proximyu to colide with given entity
+void QuadTree::addEntity(const Entity& inputEntity) //adds entities to quadtree, edntity will trickle down to a designated leaf node
+{
+	entities.push_back(inputEntity);
+
+	if (entities.size() > maxEntitiesPerNode)
+		splitQuadTree();
+
+}
+int QuadTree::getNodePos(const Entity& inputEntity) const //returns in what sub node the entitiy belongs, -1 if it doesnt fit
+{
+	//checks in what quadrant the entity is or if its overlapping
+
+	//if the entity bounding box is fully within the current node
+	
+
+}
+std::vector<QuadTree>& QuadTree::getEntiesInProximity(const Entity& inputEntity) //returns all entieis that are in proximyu to colide with given entity
+{
+
+}
 
 QuadTree::QuadTree(int inputNodeLevel, double XMax, double XMin, double YMax, double YMin)
 	:
