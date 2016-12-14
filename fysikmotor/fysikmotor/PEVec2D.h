@@ -39,19 +39,19 @@ public:
     //set functions
 	void setX(T inputX); //sets x component
 	void setY(T inputY); //sets y component
-	void setXY(T inputX, T inputY); //sets both x and y components
+	void setXY(T inputX, T inputY); //sets both x and y components at the same time
 
-	void setVectorMagnitude(T inputLength); //sets the length of the vector, keeps the direction
-	void setDirectionDEGREES(T inputDirectionInDegrees); //set the direction of vector in degrees
-	void setDirectionRADIANS(T inputDirectionInRadians); //set the diredtion of vector in radians
+	void setVectorMagnitude(T inputLength); //sets the length of the vector, keeps the direction, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
+	void setDirectionDEGREES(T inputDirectionInDegrees); //set the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
+	void setDirectionRADIANS(T inputDirectionInRadians); //set the diredtion of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void scaleVector(T inputScaleAmount); //scales the vector so many times
     
 	//get functions
 	T getX() const; //returns x component
 	T getY() const; //returns y component
 
-	double getDirectionDEGREES() const; //gets the direction of vector in degrees
-	double getDirectionRADIANS() const; //gets the direction of vector in radians
+	double getDirectionDEGREES() const; //gets the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
+	double getDirectionRADIANS() const; //gets the direction of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	T getMagnitude() const; //returns the magnitude/length
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
@@ -82,7 +82,7 @@ private:
 
 
 
-//implementation of functions in header file to using templates
+//implementation of functions in header file due to using templates
 
 //set functions
 template <typename T> void PEVec2D<T>::setX(T inputX) //sets x component
