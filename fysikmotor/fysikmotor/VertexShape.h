@@ -5,6 +5,7 @@
 
 //Erik Magnusson
 
+//15ish december 2016
 //http://www.sfml-dev.org/documentation/2.4.1/classsf_1_1VertexArray.php
 //http://stackoverflow.com/questions/524755/finding-center-of-2d-triangle
 //http://stackoverflow.com/questions/28869441/how-to-rotate-points-about-a-specific-origin
@@ -28,13 +29,21 @@ const double PI = 3.14159265;
 
 class VertexShape
 {
+private:
+	//functions
+
+	//updating
+	void updateAABBBox(); //updates the aabb bounding box
+	void updateRotationOnVertices(); //updates the vertices points
+	void updateCenterPos(); //updates the centerpos location of the vertices shape
+
 public:
 	//functions
 
 	//set
 	void setPosition(const Vec2D& inputPos); //sets the centerpos and all vertices
 	void movePosition(const Vec2D& inputMoveAmount); //increments all posistions
-	void setRotationOffset(const Vec2D& inputRotationOffset); //rotationpoiint is offset by this amound from centerpos
+	void setRotationCenterOffset(const Vec2D& inputRotationOffset); //rotationpoiint is offset by this amound from centerpos
 	void incrementRotationDEGREES(double inputRotationIncrementDEGREES); //adds to tyhe current rotation of shape
 	void incrementRotationRADIANS(double inputRotationIncrementRADIANS);
 	void setRotationDEGREES(double inputRotationDEGREES);
@@ -46,6 +55,7 @@ public:
 
 	//get
 	Vec2D getCenterPos() const;
+	Vec2D getRotationCenterOffset() const;
 	double getCurrentRotationDEGREES() const;
 	double getCurrentRotationRADIANS() const;
 	int getAmountOfVertices() const; 
@@ -53,11 +63,7 @@ public:
 	Vec2D getTopLeftAABBCorner() const;
 	Vec2D getBottomRightAABBCorner() const;
 
-	//updating
-	void updateAABBBox(); //updates the aabb bounding box
-	void updateRotationOnVertices(); //updates the vertices points
-	void updateCenterPos(); //updates the centerpos location of the vertices shape
-
+	
 	//constructor
 	VertexShape();
 	
@@ -65,13 +71,12 @@ private:
 	//members
 
 	Vec2D trueCenterPosition; //the real center of vertices shape
-	Vec2D rotationCenter; //the center of which shape rotates around
-	double rotationAmountDEGREES,
-		   rotationAmountRADIANS;
+	Vec2D rotationCenterOffset; //the center of which shape rotates around
+	double rotationOffsetDEGREES, //rotation offset from 0
+		   rotationOffsetRADIANS;
 	std::vector<Vec2D> vertices; //vertices that define the shape, each vertex point x and y ´point
 	sf::Transform rotation; //rotation of shape
 	Vec2D aabbMin, aabbMax; //the aabb boundingbox min and max coords, easy collison checks
-
 
 };
 #endif // ! _VERTEXSHAPE_

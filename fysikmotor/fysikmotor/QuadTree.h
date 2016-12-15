@@ -2,6 +2,8 @@
 //clear quadtree after each itteration and readd new entities each itteration
 
 //https://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
+//http://gamedev.stackexchange.com/questions/63536/how-do-shapes-rectangles-work-in-quad-trees 15/12 2016
+
 
 //the leaves contains all the entities, nodes only point to the leaf nodes
 
@@ -16,8 +18,7 @@
 #include <vector>
 
 #include "Entity.h"
-//#include "PEVec2D.h"
-
+#include "PEVec2D.h"
 
 class QuadTree
 {
@@ -37,9 +38,6 @@ private:
 		NE,
 		SE,
 		SW,
-		NWNE,
-		NWSW
-
 	};
 
 public:

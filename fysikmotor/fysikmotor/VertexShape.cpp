@@ -11,7 +11,7 @@ void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all po
 	//move all positions around with input amount
 
 	trueCenterPosition += inputMoveAmount;
-	rotationCenter += inputMoveAmount;
+	//rotationCenter += inputMoveAmount;
 
 	//moves the vertices pos
 	for (unsigned int i = 0; i < vertices.size(); i++)
@@ -19,33 +19,43 @@ void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all po
 		vertices[i] += inputMoveAmount;
 	}
 }
-void VertexShape::setRotationOffset(const Vec2D& inputRotationOffset) //rotationpoiint is offset by this amound from centerpos
+void VertexShape::setRotationCenterOffset(const Vec2D& inputRotationOffset) //rotationpoiint is offset by this amound from centerpos
 {
-	rotationCenter = inputRotationOffset;
+	rotationCenterOffset = inputRotationOffset;
 }
 void VertexShape::incrementRotationDEGREES(double inputRotationIncrementDEGREES) //adds to tyhe current rotation of shaped
 {
-	rotationAmountDEGREES += inputRotationIncrementDEGREES;
+	rotationOffsetDEGREES += inputRotationIncrementDEGREES;
 
 	//convert the radian member to the same value
-	rotationAmountRADIANS = (rotationAmountDEGREES * PI) / 180.0;
+	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0;
+
+	updateRotationOnVertices();
 }
 void VertexShape::incrementRotationRADIANS(double inputRotationIncrementRADIANS)
 {
-	rotationAmountRADIANS += inputRotationIncrementRADIANS;
+	rotationOffsetRADIANS += inputRotationIncrementRADIANS;
 
 	//convert the degree thingy so they get the sam e vlaue
-	rotationAmountDEGREES = (rotationAmountRADIANS * 180.0) / PI;
+	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0) / PI;
+
+	updateRotationOnVertices();
 }
 void VertexShape::setRotationDEGREES(double inputRotationDEGREES)
 {
-	rotationAmountDEGREES = inputRotationDEGREES;
-	rotationAmountRADIANS = (rotationAmountDEGREES * PI) / 180.0;
+	double delta = rotationOffsetDEGREES - inputRotationDEGREES;
+	rotationOffsetDEGREES = inputRotationDEGREES + delta;
+	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0;
+
+	updateRotationOnVertices();
 }
 void VertexShape::setRotationRADIANS(double inputRotationRADIANS)
 {
-	rotationAmountRADIANS = inputRotationRADIANS;
-	rotationAmountDEGREES = (rotationAmountRADIANS * 180.0) / PI;
+	double delta = rotationOffsetRADIANS - inputRotationRADIANS;
+	rotationOffsetRADIANS = inputRotationRADIANS + delta;
+	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0) / PI;
+
+	updateRotationOnVertices();
 }
 
 void VertexShape::addVertexPoint(const Vec2D& inputWorldCoordinate) //adds a vertex for the shape at the input world coo´rdinate, appends it to vertex vector
@@ -75,13 +85,17 @@ Vec2D VertexShape::getCenterPos() const
 {
 	return trueCenterPosition;
 }
+Vec2D VertexShape::getRotationCenterOffset() const
+{
+	return rotationCenterOffset;
+}
 double VertexShape::getCurrentRotationDEGREES() const
 {
-	return rotationAmountDEGREES;
+	return rotationOffsetDEGREES;
 }
 double VertexShape::getCurrentRotationRADIANS() const
 {
-	return rotationAmountRADIANS;
+	return rotationOffsetRADIANS;
 }
 int VertexShape::getAmountOfVertices() const
 {
@@ -126,7 +140,16 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 }
 void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
-	//TODO
+
+	rotation.rotate(rotationOffsetDEGREES, trueCenterPosition.getX(), trueCenterPosition.getY());
+	sf::Vector2f temp;
+
+	for (unsigned int i = 0; i < vertices.size(); i++)
+	{
+	    //transforms the vertex point and stores it in temp
+		temp = rotation.transformPoint(vertices[i].getX() + rotationCenterOffset.getX(), vertices[i].getY() + rotationCenterOffset.getY());
+		vertices[i].setXY(temp.x, temp.y); //give the vertex the new temppos
+	}
 }
 void VertexShape::updateCenterPos() //updates the centerpos location of the vertices shape
 {
@@ -150,7 +173,7 @@ void VertexShape::updateCenterPos() //updates the centerpos location of the vert
 
 VertexShape::VertexShape()
 	:
-	rotationAmountDEGREES(0),
-	rotationAmountRADIANS(0)
+	rotationOffsetDEGREES(0),
+	rotationOffsetRADIANS(0)
 {
 }
