@@ -23,7 +23,7 @@ void VertexShape::setRotationCenterOffset(const Vec2D& inputRotationOffset) //ro
 {
 	rotationCenterOffset = inputRotationOffset;
 }
-void VertexShape::incrementRotationDEGREES(double inputRotationIncrementDEGREES) //adds to tyhe current rotation of shaped
+void VertexShape::incrementRotationDEGREES(float inputRotationIncrementDEGREES) //adds to tyhe current rotation of shaped
 {
 	rotationOffsetDEGREES += inputRotationIncrementDEGREES;
 
@@ -32,7 +32,7 @@ void VertexShape::incrementRotationDEGREES(double inputRotationIncrementDEGREES)
 
 	updateRotationOnVertices();
 }
-void VertexShape::incrementRotationRADIANS(double inputRotationIncrementRADIANS)
+void VertexShape::incrementRotationRADIANS(float inputRotationIncrementRADIANS)
 {
 	rotationOffsetRADIANS += inputRotationIncrementRADIANS;
 
@@ -41,18 +41,19 @@ void VertexShape::incrementRotationRADIANS(double inputRotationIncrementRADIANS)
 
 	updateRotationOnVertices();
 }
-void VertexShape::setRotationDEGREES(double inputRotationDEGREES)
+void VertexShape::setRotationDEGREES(float inputRotationDEGREES)
 {
-	double delta = rotationOffsetDEGREES - inputRotationDEGREES;
+	float delta = rotationOffsetDEGREES - inputRotationDEGREES;
 	rotationOffsetDEGREES = inputRotationDEGREES + delta;
 	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0;
 
 	updateRotationOnVertices();
 }
-void VertexShape::setRotationRADIANS(double inputRotationRADIANS)
+void VertexShape::setRotationRADIANS(float inputRotationRADIANS)
 {
-	double delta = rotationOffsetRADIANS - inputRotationRADIANS;
+	float delta = rotationOffsetRADIANS - inputRotationRADIANS;
 	rotationOffsetRADIANS = inputRotationRADIANS + delta;
+
 	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0) / PI;
 
 	updateRotationOnVertices();
@@ -70,7 +71,7 @@ void VertexShape::addVertexPoint(const Vec2D& inputWorldCoordinate) //adds a ver
 void VertexShape::removeVertex(int inputVertexIndex) //removes the vertex at the given index, starts at 0
 {
 	//prevent out of range things
-	if (inputVertexIndex < vertices.size())
+	if ((unsigned) inputVertexIndex < vertices.size())
 	{
 		vertices.erase(vertices.begin() + inputVertexIndex);
 	}
@@ -89,11 +90,11 @@ Vec2D VertexShape::getRotationCenterOffset() const
 {
 	return rotationCenterOffset;
 }
-double VertexShape::getCurrentRotationDEGREES() const
+float VertexShape::getCurrentRotationDEGREES() const
 {
 	return rotationOffsetDEGREES;
 }
-double VertexShape::getCurrentRotationRADIANS() const
+float VertexShape::getCurrentRotationRADIANS() const
 {
 	return rotationOffsetRADIANS;
 }
@@ -142,7 +143,8 @@ void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
 
 	rotation.rotate(rotationOffsetDEGREES, trueCenterPosition.getX(), trueCenterPosition.getY());
-	sf::Vector2f temp;
+	
+	sf::Vector2f temp; //use sfml vector
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
@@ -153,7 +155,7 @@ void VertexShape::updateRotationOnVertices() //updates the vertices points
 }
 void VertexShape::updateCenterPos() //updates the centerpos location of the vertices shape
 {
-	double centerXTemp, centerYTemp;
+	float centerXTemp = 0, centerYTemp = 0;
 
 	//average values from vertices to get x and y values
 
@@ -175,5 +177,7 @@ VertexShape::VertexShape()
 	:
 	rotationOffsetDEGREES(0),
 	rotationOffsetRADIANS(0)
+
 {
+	//log creating? maybe
 }

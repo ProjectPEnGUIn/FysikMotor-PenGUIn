@@ -215,7 +215,7 @@ template <typename T> PEVec2D<T>::PEVec2D(T inputX, T inputY) //set both x and y
 
 }
 
-using Metres = double;
-using Vec2D = PEVec2D<Metres>;
+using Metres = float; 
+using Vec2D = PEVec2D<float>;
 
 #endif // !_PEVEC2D_

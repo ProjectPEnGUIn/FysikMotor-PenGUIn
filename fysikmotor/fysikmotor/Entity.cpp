@@ -25,27 +25,15 @@ void Entity::setMass(double inputMass) //sets the mass in kg
 }
 void Entity::setCenterOfMass(const Vec2D& inputCenterOfMass) //sets the center of mass
 {
-	centerOfMass = inputCenterOfMass;
-}
-void Entity::setWidth(double inputWidth) //Sets the width in meters
-{
-	width = inputWidth;
-}
-void Entity::setHeight(double inputHeight) //Sets the height in meters
-{
-	height = inputHeight;
-}
-void Entity::setRadius(double inputRadius) //Sets the radius in meters
-{
-	radius = inputRadius;
+	shape.setRotationCenterOffset(inputCenterOfMass);
 }
 void Entity::setAngleRotationDEGREES(double inputRotationDEGREES) //sets the entity rotation in degrees
 {
-	rotationAngleDEGREES = inputRotationDEGREES;
+	shape.setRotationDEGREES(inputRotationDEGREES);
 }
 void Entity::setAngleRotationRADIANS(double inputRotationRADIANS) //Sets the entity rotation in radians
 {
-	rotationAngleRADIANS = inputRotationRADIANS;
+	shape.setRotationRADIANS(inputRotationRADIANS);
 }
 void Entity::setIsColliding(bool inputBool)
 {
@@ -81,29 +69,17 @@ double Entity::getMass() const//gets the mass in kg
 {
 	return mass;
 }
-Vec2D  Entity::getCenterOfmass() const //returns the Center of mass
+Vec2D  Entity::getCenterOfmassOffset() const //returns the Center of mass
 {
-	return centerOfMass;
+	return shape.getRotationCenterOffset();
 }
-double Entity::getWidth() const //gets the width in meters
+float Entity::getAngleRotationDEGREES() const //gets the rotation of entity in degrees
 {
-	return width;
+	return shape.getCurrentRotationDEGREES();
 }
-double Entity::getHeight() const //gets the height in meters
+float Entity::getAngleRotationRADIANS() const //gets the rotation of entity in radians
 {
-	return height;
-}
-double Entity::getRadius() const //gets the radius in meters
-{
-	return radius;
-}
-double Entity::getAngleRotationDEGREES() const //gets the rotation of entity in degrees
-{
-	return rotationAngleDEGREES;
-}
-double Entity::getAngleRotationRADIANS() const //gets the rotation of entity in radians
-{
-	return rotationAngleRADIANS;
+	return shape.getCurrentRotationRADIANS();
 }
 bool Entity::getIsColliding() const
 {
@@ -147,12 +123,7 @@ Entity::Entity()
 	velocity(),
 	acceleration(),
 	mass(-1),
-	centerOfMass(),
-	width(-1),
-	height(-1),
-	radius(-1),
-	rotationAngleDEGREES(0),
-	rotationAngleRADIANS(0),
+	centerOfMassOffset(),
 	isColliding(false)
 {
 

@@ -7,6 +7,8 @@
 
 //the leaves contains all the entities, nodes only point to the leaf nodes
 
+//pushes down entiteis into  sub node if they fit within that sub node, else it stays in the current node
+
 //Erik Magnusson 8/12 2016
 
 #pragma once
@@ -25,12 +27,6 @@ class QuadTree
 private:
 	//enums
 
-	enum Type
-	{
-		LEAF,
-		NODE
-	};
-
 	enum NodePos
 	{
 		OVERLAPPING = -1, //if overlapping the boundries for sub nodes
@@ -46,7 +42,7 @@ public:
 	void splitQuadTree(); //attempts to split the quadtree into four partitions/sub nodes
 	void addEntity(const Entity& inputEntity); //adds entities to quadtree, edntity will trickle down to a designated leaf node
 	int getNodePos(const Entity& inputEntity) const; //returns in what sub node the entitiy belongs, -1 if it doesnt fit
-	std::vector<QuadTree>& getEntiesInProximity(const Entity& inputEntity); //returns all entieis that are in proximyu to colide with given entity
+	std::vector<QuadTree> getEntiesInProximity(const Entity& inputEntity); //returns all entieis that are in proximyu to colide with given entity
 
 	//constructor
 	QuadTree(int inputNodeLevel, double XMax, double XMin, double YMax, double YMin);

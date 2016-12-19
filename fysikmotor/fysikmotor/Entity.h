@@ -23,6 +23,7 @@
 #include <string>
 
 #include "PEVec2D.h" //2d vector, x and y componten, has overloading operators to it
+#include "VertexShape.h" //define entity shapes using vertices
 
 class Entity
 {
@@ -51,9 +52,6 @@ public:
 	void setActingForces(std::vector<Vec2D> inputActingForces); //sets all the acting forces on the current object using a vector of vec2d objects
 	void setMass(double inputMass); //sets the mass in kg
 	void setCenterOfMass(const Vec2D& inputCenterOfMass); //sets the center of mass
-	void setWidth(double inputWidth); //Sets the width in meters
-	void setHeight(double inputHeight); //Sets the height in meters
-	void setRadius(double inputRadius); //Sets the radius in meters
 	void setAngleRotationDEGREES(double inputRotationDEGREES); //sets the entity rotation in degrees
 	void setAngleRotationRADIANS(double inputRotationRADIANS); //Sets the entity rotation in radians
 	void setIsColliding(bool inputBool); //sets isColding
@@ -66,12 +64,9 @@ public:
 	Vec2D getAcceleration() const; //gets the acc, in meters per second squared
 	std::vector<Vec2D> getActingForces() const; //gets all the acting forces
 	double getMass() const; //gets the mass in kg
-	Vec2D  getCenterOfmass() const; //returns the Center of mass
-	double getWidth() const; //gets the width in meters
-	double getHeight() const; //gets the height in meters
-	double getRadius() const; //gets the radius in meters
-	double getAngleRotationDEGREES() const; //gets the rotation of entity in degrees
-	double getAngleRotationRADIANS() const; //gets the rotation of entity in radians
+	Vec2D  getCenterOfmassOffset() const; //returns the Center of mass
+	float getAngleRotationDEGREES() const; //gets the rotation of entity in degrees
+	float getAngleRotationRADIANS() const; //gets the rotation of entity in radians
 	bool getIsColliding() const;
 	double getRestitutionCoefficient() const;
 	double getAirDrag() const;
@@ -98,14 +93,9 @@ private:
 	std::vector<Vec2D> actingForces; //all of the acting forces on the entity at this moment, in Newtons
 
 	double mass; //mass of entity in kg, -1 if not set
-	Vec2D centerOfMass; //pos of center of mass, is in the center of entity by default
+	Vec2D centerOfMassOffset; //pos of center of mass, is in the center of entity by default
 
-	double width; //if rectangle, in meters
-	double height; //if rectangle, in meters
-	double radius; //if circle, in meters
-
-	double rotationAngleDEGREES; //how much object is rotated in degrees
-	double rotationAngleRADIANS; //how much object is rotated in radians
+	VertexShape shape; //the shape of entity, define it with verticies, has rotation, centerpos / pos in middle
 
 	bool isColliding; //can change the outline to show that it is colliding
 

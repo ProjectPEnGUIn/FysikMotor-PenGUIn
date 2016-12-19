@@ -11,7 +11,6 @@
 //http://stackoverflow.com/questions/28869441/how-to-rotate-points-about-a-specific-origin
 //https://www.mathsisfun.com/geometry/vertices-faces-edges.html
 
-
 #pragma once
 #ifndef _VERTEXSHAPE_
 #define _VERTEXSHAPE_
@@ -25,7 +24,6 @@
 
 #include "PEVec2D.h"
 
-const double PI = 3.14159265;
 
 class VertexShape
 {
@@ -44,10 +42,10 @@ public:
 	void setPosition(const Vec2D& inputPos); //sets the centerpos and all vertices
 	void movePosition(const Vec2D& inputMoveAmount); //increments all posistions
 	void setRotationCenterOffset(const Vec2D& inputRotationOffset); //rotationpoiint is offset by this amound from centerpos
-	void incrementRotationDEGREES(double inputRotationIncrementDEGREES); //adds to tyhe current rotation of shape
-	void incrementRotationRADIANS(double inputRotationIncrementRADIANS);
-	void setRotationDEGREES(double inputRotationDEGREES);
-	void setRotationRADIANS(double inputRotationRADIANS);
+	void incrementRotationDEGREES(float inputRotationIncrementDEGREES); //adds to tyhe current rotation of shape
+	void incrementRotationRADIANS(float inputRotationIncrementRADIANS);
+	void setRotationDEGREES(float inputRotationDEGREES);
+	void setRotationRADIANS(float inputRotationRADIANS);
 
 	void addVertexPoint(const Vec2D& inputWorldCoordinate); //adds a vertex for the shape at the input world coo´rdinate, appends it to vertex vector
 	void removeVertex(int inputVertexIndex); //removes the vertex at the given index, starts at 0
@@ -56,23 +54,25 @@ public:
 	//get
 	Vec2D getCenterPos() const;
 	Vec2D getRotationCenterOffset() const;
-	double getCurrentRotationDEGREES() const;
-	double getCurrentRotationRADIANS() const;
+	float getCurrentRotationDEGREES() const;
+	float getCurrentRotationRADIANS() const;
 	int getAmountOfVertices() const; 
 	std::vector<Vec2D> getVertices() const; //returnsa all vertices
 	Vec2D getTopLeftAABBCorner() const;
 	Vec2D getBottomRightAABBCorner() const;
 
-	
 	//constructor
 	VertexShape();
 	
+public:
+	//members
+	const float PI = 3.141592f;
 private:
 	//members
 
 	Vec2D trueCenterPosition; //the real center of vertices shape
 	Vec2D rotationCenterOffset; //the center of which shape rotates around
-	double rotationOffsetDEGREES, //rotation offset from 0
+	float rotationOffsetDEGREES, //rotation offset from 0
 		   rotationOffsetRADIANS;
 	std::vector<Vec2D> vertices; //vertices that define the shape, each vertex point x and y ´point
 	sf::Transform rotation; //rotation of shape

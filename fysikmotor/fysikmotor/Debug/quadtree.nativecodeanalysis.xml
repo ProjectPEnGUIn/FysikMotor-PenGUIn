@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\fysikmotor-penguin\fysikmotor\fysikmotor\</FILEPATH>
+      <FILENAME>quadtree.cpp</FILENAME>
+      <LINE>38</LINE>
+      <COLUMN>12</COLUMN>
+    </SFA>
+    <DEFECTCODE>6282</DEFECTCODE>
+    <DESCRIPTION>Incorrect operator:  assignment of constant in Boolean context. Consider using '==' instead.</DESCRIPTION>
+    <FUNCTION>QuadTree::splitQuadTree</FUNCTION>
+    <DECORATED>?splitQuadTree@QuadTree@@QAEXXZ</DECORATED>
+    <FUNCLINE>9</FUNCLINE>
+    <PATH />
+  </DEFECT>
+</DEFECTS>
