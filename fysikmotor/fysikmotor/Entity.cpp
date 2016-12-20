@@ -93,6 +93,18 @@ double Entity::getAirDrag() const
 {
 	return dragCoefficient;
 }
+Vec2D Entity::getAABBTopLeft() const
+{
+	return shape.getTopLeftAABBCorner();
+}
+Vec2D Entity::getAABBMBottomRight() const
+{
+	return shape.getBottomRightAABBCorner();
+}
+int Entity::getEntityID() const //returns entity id, is an int
+{
+	return entityID;
+}
 
 //update functions
 void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces

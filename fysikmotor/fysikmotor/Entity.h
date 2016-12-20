@@ -70,6 +70,9 @@ public:
 	bool getIsColliding() const;
 	double getRestitutionCoefficient() const;
 	double getAirDrag() const;
+	Vec2D getAABBTopLeft() const; //returns aabb shape top left coords
+	Vec2D getAABBMBottomRight() const; //returns shape aabb bottom left coords
+	int getEntityID() const; //returns entity id, is an int
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces

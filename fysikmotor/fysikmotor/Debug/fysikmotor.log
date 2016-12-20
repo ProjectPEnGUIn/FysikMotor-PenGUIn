@@ -1,15 +1,4 @@
 ﻿  VertexShape.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\vertexshape.cpp(31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\vertexshape.cpp(40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\vertexshape.cpp(48): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\vertexshape.cpp(57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  QuadTree.cpp
-  PEVec2D.cpp
-  main.cpp
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\vertexshape.cpp : fatal error C1041: cannot open program database 'C:\FysikMotor-PenGUIn\fysikmotor\fysikmotor\Debug\vc140.idb'; if multiple CL.EXE write to the same .PDB file, please use /FS
   EntityHandler.cpp
-  Entity.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\entity.cpp(32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\entity.cpp(36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Generating Code...
-  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
-  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

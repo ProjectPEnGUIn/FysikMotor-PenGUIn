@@ -20,12 +20,12 @@ class EntityHandler
 private:
 	//functions
 
-	//collision checks, takes in consideration of what type both of the enttiies are
+	//collision checks
 	bool aabbCheck(const Entity& entity1, const Entity& entity2); //does a quick aabb check to see if its posible for the two entites to colide, axis alinged bounding box, not resource intensive
-	bool satCheck(const Entity& entity1, const Entity& entity2); //does a thurough check using SAT, seperating axis theorem, very resource intensive, lots of math functions, ex sqrt, cosine, sine. very accurate
+	bool SATCheck(const Entity& entity1, const Entity& entity2); //does a thurough check using SAT, seperating axis theorem, very resource intensive, lots of math functions, ex sqrt, cosine, sine. very accurate
 
 	//collision countermeasures
-	void entityCollision(const Entity& entity1, const Entity& entity2); //handles collision between entities
+	void entityCollision(Entity& entity1, Entity& entity2); //handles collision between entities
 
 public:
 	//functions
@@ -39,15 +39,23 @@ public:
 	//add entites
 	void addEntity(Entity inputEntity); //adds the entity to the list of entities
 
+	//get functions
+	float getWorldMaxX();
+	float getworldMinX();
+	float getWorldMaxY();
+	float getWorldMinY();
+
+	std::vector<Entity> getAllEntities(); //retirives all entiteis in pe    
+
 	EntityHandler();
 private:
 	//members
 
 	//world boundries in meters
-	float worldXMax, //world max and min cordinates, need to be set before adding entitties. Adds a wall with an entity at those coords
-		   worldXMin,
-		   worldYMax,
-		   worldYMin;
+	float worldMaxX, //world max and min cordinates, need to be set before adding entitties. Adds a wall with an entity at those coords
+		   worldMinX,
+		   worldMaxY,
+		   worldMinY;
 	
 	std::vector<Entity> entities;
 
