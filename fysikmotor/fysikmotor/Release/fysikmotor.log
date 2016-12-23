@@ -1,0 +1,11 @@
+﻿  Entity.cpp
+  EntityHandler.cpp
+  main.cpp
+  PEVec2D.cpp
+  QuadTree.cpp
+  VertexShape.cpp
+  Generating code
+  All 101 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Release\fysikmotor.exe
+  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Release\fysikmotor.pdb (Full PDB)

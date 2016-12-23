@@ -50,26 +50,26 @@ public:
 	void setVelocity(const Vec2D& inputVel); //sets velocity using pevec2d object
 	void setAcceleration(const Vec2D& inputAcc); //sets the velocity using pevec2d object
 	void setActingForces(std::vector<Vec2D> inputActingForces); //sets all the acting forces on the current object using a vector of vec2d objects
-	void setMass(double inputMass); //sets the mass in kg
+	void setMass(float inputMass); //sets the mass in kg
 	void setCenterOfMass(const Vec2D& inputCenterOfMass); //sets the center of mass
-	void setAngleRotationDEGREES(double inputRotationDEGREES); //sets the entity rotation in degrees
-	void setAngleRotationRADIANS(double inputRotationRADIANS); //Sets the entity rotation in radians
+	void setAngleRotationDEGREES(float inputRotationDEGREES); //sets the entity rotation in degrees
+	void setAngleRotationRADIANS(float inputRotationRADIANS); //Sets the entity rotation in radians
 	void setIsColliding(bool inputBool); //sets isColding
-	void setRestitutionCoefficient(double inputDouble); //between 0 and 1
-	void setAirDrag(double inputDouble);
+	void setRestitutionCoefficient(float inputDouble); //between 0 and 1
+	void setAirDrag(float inputDouble);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
 	Vec2D getVelocity() const; //gets the vel, in meters per second
 	Vec2D getAcceleration() const; //gets the acc, in meters per second squared
 	std::vector<Vec2D> getActingForces() const; //gets all the acting forces
-	double getMass() const; //gets the mass in kg
+	float getMass() const; //gets the mass in kg
 	Vec2D  getCenterOfmassOffset() const; //returns the Center of mass
 	float getAngleRotationDEGREES() const; //gets the rotation of entity in degrees
 	float getAngleRotationRADIANS() const; //gets the rotation of entity in radians
 	bool getIsColliding() const;
-	double getRestitutionCoefficient() const;
-	double getAirDrag() const;
+	float getRestitutionCoefficient() const;
+	float getAirDrag() const;
 	Vec2D getAABBTopLeft() const; //returns aabb shape top left coords
 	Vec2D getAABBMBottomRight() const; //returns shape aabb bottom left coords
 	int getEntityID() const; //returns entity id, is an int
@@ -95,15 +95,15 @@ private:
 	Vec2D acceleration; //acceleration, in meters per seconds squared
 	std::vector<Vec2D> actingForces; //all of the acting forces on the entity at this moment, in Newtons
 
-	double mass; //mass of entity in kg, -1 if not set
+	float mass; //mass of entity in kg, -1 if not set
 	Vec2D centerOfMassOffset; //pos of center of mass, is in the center of entity by default
 
 	VertexShape shape; //the shape of entity, define it with verticies, has rotation, centerpos / pos in middle
 
 	bool isColliding; //can change the outline to show that it is colliding
 
-	double restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
-	double dragCoefficient; //air drag of the body
+	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
+	float dragCoefficient; //air drag of the body
 
 };
 #endif // !_ENTITY_

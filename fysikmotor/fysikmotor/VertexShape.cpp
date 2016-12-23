@@ -28,7 +28,7 @@ void VertexShape::incrementRotationDEGREES(float inputRotationIncrementDEGREES) 
 	rotationOffsetDEGREES += inputRotationIncrementDEGREES;
 
 	//convert the radian member to the same value
-	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0;
+	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0f;
 
 	updateRotationOnVertices();
 }
@@ -37,7 +37,7 @@ void VertexShape::incrementRotationRADIANS(float inputRotationIncrementRADIANS)
 	rotationOffsetRADIANS += inputRotationIncrementRADIANS;
 
 	//convert the degree thingy so they get the sam e vlaue
-	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0) / PI;
+	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0f) / PI;
 
 	updateRotationOnVertices();
 }
@@ -45,7 +45,7 @@ void VertexShape::setRotationDEGREES(float inputRotationDEGREES)
 {
 	float delta = rotationOffsetDEGREES - inputRotationDEGREES;
 	rotationOffsetDEGREES = inputRotationDEGREES + delta;
-	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0;
+	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0f;
 
 	updateRotationOnVertices();
 }
@@ -54,7 +54,7 @@ void VertexShape::setRotationRADIANS(float inputRotationRADIANS)
 	float delta = rotationOffsetRADIANS - inputRotationRADIANS;
 	rotationOffsetRADIANS = inputRotationRADIANS + delta;
 
-	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0) / PI;
+	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0f) / PI;
 
 	updateRotationOnVertices();
 }

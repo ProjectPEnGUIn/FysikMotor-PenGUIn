@@ -25,13 +25,20 @@ int logicTickrate = 60; //amount of times it tries to do logic each seconds, min
 sf::Time drawTime = sf::seconds((float)(1 / drawTickrate));
 sf::Time logicTime = sf::seconds((float)(1 / logicTickrate));
 
+void a(std::vector<Vec2D>& a0, const Vec2D a1)
+{
+	a0.push_back(a1);
+}
+
 int main()
 {
 
-	Vec2D a(10, 30), b(-3, 4);
+	std::vector<Vec2D> c;
+	Vec2D d(10, 10);
+	a(c, d);
+	std::cout << c.size() << " " << c.at(0).getMagnitude();
 
-	std::cout << a*b << std::endl;
-
+	std::cout << "Press enter\n";
 	std::cin.get();
 
 	bool runProgram = true;

@@ -19,7 +19,7 @@ void Entity::setActingForces(std::vector<Vec2D> inputActingForces) //sets all th
 {
 
 }
-void Entity::setMass(double inputMass) //sets the mass in kg
+void Entity::setMass(float inputMass) //sets the mass in kg
 {
 	mass = inputMass;
 }
@@ -27,11 +27,11 @@ void Entity::setCenterOfMass(const Vec2D& inputCenterOfMass) //sets the center o
 {
 	shape.setRotationCenterOffset(inputCenterOfMass);
 }
-void Entity::setAngleRotationDEGREES(double inputRotationDEGREES) //sets the entity rotation in degrees
+void Entity::setAngleRotationDEGREES(float inputRotationDEGREES) //sets the entity rotation in degrees
 {
 	shape.setRotationDEGREES(inputRotationDEGREES);
 }
-void Entity::setAngleRotationRADIANS(double inputRotationRADIANS) //Sets the entity rotation in radians
+void Entity::setAngleRotationRADIANS(float inputRotationRADIANS) //Sets the entity rotation in radians
 {
 	shape.setRotationRADIANS(inputRotationRADIANS);
 }
@@ -39,11 +39,11 @@ void Entity::setIsColliding(bool inputBool)
 {
 	isColliding = inputBool;
 }
-void Entity::setRestitutionCoefficient(double inputDouble) //between 0 and 1
+void Entity::setRestitutionCoefficient(float inputDouble) //between 0 and 1
 {
 	restitutionCoefficient = inputDouble;
 }
-void Entity::setAirDrag(double inputDouble)
+void Entity::setAirDrag(float inputDouble)
 {
 	dragCoefficient = inputDouble;
 }
@@ -65,7 +65,7 @@ std::vector<Vec2D> Entity::getActingForces() const //gets all the acting forces
 {
 	return actingForces;
 }
-double Entity::getMass() const//gets the mass in kg
+float Entity::getMass() const//gets the mass in kg
 {
 	return mass;
 }
@@ -85,11 +85,11 @@ bool Entity::getIsColliding() const
 {
 	return isColliding;
 }
-double Entity::getRestitutionCoefficient() const
+float Entity::getRestitutionCoefficient() const
 {
 	return restitutionCoefficient;
 }
-double Entity::getAirDrag() const
+float Entity::getAirDrag() const
 {
 	return dragCoefficient;
 }

@@ -4,70 +4,93 @@
 //https://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
 //http://gamedev.stackexchange.com/questions/63536/how-do-shapes-rectangles-work-in-quad-trees 15/12 2016
 
+//-----------------------------------------------------
 
-//the leaves contains all the entities, nodes only point to the leaf nodes
+//quadtree attempt two, first version got messy, still use previously mentioned links
+//Erik Magnusson 20/12 2016
 
-//pushes down entiteis into  sub node if they fit within that sub node, else it stays in the current node
+/*
+a quadtree object contains entity objects until a certain amount, then it will split into sub quadtree objects and try to send
+the entity objects down the tree to new designated sub quadtrees, if a entity's shape can be fully contain within the given 
+quadtree regions it will be sent down to that sub quadtree. If it can't fully fit it will stay in the parrent quadtree.
 
-//Erik Magnusson 8/12 2016
+used for minimizing the amount of checks between entities for collison, an entity only needs to check collisions with other
+entities within the same sub quadtree AND entieies that couldn't be sent down the quadtree system in higher aerchy quadtrees
+
+basiclly split the world into quadrants and the quadrants into subquadrants
+
+use entity's aabb pos for entity position in quadtree, does not have to be very accurate because quadtreecheck is jsut a quick check to eliminate
+>>very<< unnessecary collisionchecks, for example entities in oposite corners, there is no way they can colide
+
+-inputentity function - add entity to quadtree object, if needed it will push the entity down into its sub node and so on
+-does entity fit in current quadtree object? function - used to check if the entity can be sent down into its sub node
+-getnearbyentites function - input a entity object and it will go down the hiarchy of quadtrees to find all nearby enties to the inputentity
+-clear quadtree function - clear quadtree object and all its sub quadtrees, needs to be done every tick
+-send entity down quadtree sub nodes IF possilble
+*/
+
 
 #pragma once
 #ifndef  _QUADTREE_
 #define _QUADTREE_
 
-#include <iostream>
-#include <string>
 #include <vector>
 
 #include "Entity.h"
 #include "PEVec2D.h"
 
-class QuadTree
+class Quadtree
 {
-private:
+public:
 	//enums
 
-	enum NodePos
+	enum SubTree //easier naming scheme of sub quadtree objects
 	{
-		OVERLAPPING = -1, //if overlapping the boundries for sub nodes
-		NW,
-		NE,
-		SE,
-		SW,
+		ERROR = -1, //something most likely went wrong
+		TOPLEFT,
+		TOPRIGHT,
+		BOTTOMLEFT,
+		BOTTOMRIGHT,
+		CANNOTBEFULLYCONTAINED //if entity can not be fully contained within the quadtree
 	};
 
-public:
-	//functioons
-	void destroyQuadTree(); //destroys quad tree, clears entities and destroys sub nodes
-	void splitQuadTree(); //attempts to split the quadtree into four partitions/sub nodes
-	void addEntity(const Entity& inputEntity); //adds entities to quadtree, edntity will trickle down to a designated leaf node
-	int getNodePos(const Entity& inputEntity) const; //returns in what sub node the entitiy belongs, -1 if it doesnt fit
-	std::vector<QuadTree> getEntiesInProximity(const Entity& inputEntity); //returns all entieis that are in proximyu to colide with given entity
+private:
+	//functions
 
-	//constructor
-	QuadTree(int inputNodeLevel, double XMax, double XMin, double YMax, double YMin);
-	//destruyctor
-	~QuadTree();
+	void splitQuadtree();
+	int getEntityBelonging(const Entity& inputEntity) const; //returns a belonging enum from subtree enum
+	bool canFullyContainEntity(const Entity& inputEntity, const float& inputMaxX, const float& inputMinX, const float& inputMaxY, const float& inputMinY) const;
+	bool canPartiallyContainEntity(const Entity& inputEntity, const float& inputMaxX, const float& inputMinX, const float& inputMaxY, const float& inputMinY) const;
 
 public:
-	//members
-	const int maxNodeLevel = 8;
-	const int maxEntitiesPerNode = 3; //max amount of entities a quadtree can have before it splits into a new quadtree
+	//functions
+
+	void addEntity(const Entity& inputEntity);
+	void clearEntities();
+	std::vector<Entity> getNearbyEntities(const Entity& inputEntity);
+
+	Quadtree(int inputCurrentQuadtreeDepth, float maxX, float minX, float maxY, float minY);
+	Quadtree();
 
 private:
-	//membeers
-	int nodeLevel;
-	//int type
-	int nodePosition;
+	//members
 
-	double maxX,  //quad tree bounding box of current node
-		   minX,
-		   maxY,
-		   minY;
+	//quadtree boundries
+	float maxX,
+		minX,
+		maxY,
+		minY;
+	
+	unsigned int currentQuadtreeDepth;
 
-	std::vector<Entity> entities; //all the entities in the leaf node
-	std::vector<QuadTree> nodes; //all the nodes of quadtree the current node has, 4 partitions of the current node layer
+	std::vector<Entity> entitiesStored; //all the entities that the current quadtree object is storing at the moment
+
+	std::vector<Quadtree> subQuadtrees; //sub quadtree objects of current quadtree, four quadrants of current quadtree
+
+	const unsigned int entityThreshold; //the max amount of entityies the quadtree object can have without trying to create sub nodes and push the entites down into them
+	const unsigned int maxQuadtreeDepth; //the maximum amount of levels the quadtree can have, else it will expand infinitly.
 
 };
 
 #endif // ! _QUADTREE_
+

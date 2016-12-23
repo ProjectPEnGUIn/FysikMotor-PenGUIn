@@ -32,7 +32,7 @@ bool EntityHandler::aabbCheck(const Entity& entity1, const Entity& entity2) //do
 		//if a statement is false it will quit checking at the next &&, avoid unnecessary checks
 		if (((entity1.getAABBTopLeft().getX() >= entity2.getAABBTopLeft().getX() && entity1.getAABBTopLeft().getX() <= entity2.getAABBMBottomRight().getX())
 			|| //or
-			(entity1.getAABBMBottomRight().getX() >= entity2.getAABBTopLeft().getX() && entity1.getAABBMBottomRight().getX() <= entity2.getAABBMBottomRight().getX))
+			(entity1.getAABBMBottomRight().getX() >= entity2.getAABBTopLeft().getX() && entity1.getAABBMBottomRight().getX() <= entity2.getAABBMBottomRight().getX()))
 			&& //and
 			((entity1.getAABBTopLeft().getY() >= entity2.getAABBMBottomRight().getY() && entity1.getAABBTopLeft().getY() <= entity2.getAABBTopLeft().getY())
 			|| //or

@@ -7,7 +7,7 @@
 //object stores x and y component
 //magnitude, direction ( degrees AND radians )
 //operator overloading, able to add  C = A + B, where each letter is an PVec2D object
-//suports +, -, *, /
+//suports +, -, * =
 //euclidian vector math functions
 
 //material used for formulas and such:
@@ -50,8 +50,8 @@ public:
 	T getX() const; //returns x component
 	T getY() const; //returns y component
 
-	double getDirectionDEGREES() const; //gets the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
-	double getDirectionRADIANS() const; //gets the direction of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
+	float getDirectionDEGREES() const; //gets the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
+	float getDirectionRADIANS() const; //gets the direction of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	T getMagnitude() const; //returns the magnitude/length
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
@@ -130,14 +130,14 @@ template <typename T> T PEVec2D<T>::getY() const //returns y component
 	return y;
 }
 
-template <typename T> double PEVec2D<T>::getDirectionDEGREES() const //gets the direction of vector in degrees
+template <typename T> float PEVec2D<T>::getDirectionDEGREES() const //gets the direction of vector in degrees
 {
 	if (x == 0 && y == 0) //stops erroirs
 		return 0;
 
 	return (atan(y / x) * 180) / PI; //atan returns in radians, must convert
 }
-template <typename T> double PEVec2D<T>::getDirectionRADIANS() const //gets the direction of vector in radians
+template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the direction of vector in radians
 {
 	if (x == 0 && y == 0) //stops errors
 		return 0;
@@ -215,7 +215,7 @@ template <typename T> PEVec2D<T>::PEVec2D(T inputX, T inputY) //set both x and y
 
 }
 
-using Metres = float; 
+//using Metres = float; 
 using Vec2D = PEVec2D<float>;
 
 #endif // !_PEVEC2D_
