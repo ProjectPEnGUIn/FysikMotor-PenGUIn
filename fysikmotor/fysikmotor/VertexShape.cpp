@@ -175,9 +175,24 @@ void VertexShape::updateCenterPos() //updates the centerpos location of the vert
 
 VertexShape::VertexShape()
 	:
+	trueCenterPosition(),
+	rotationCenterOffset(),
 	rotationOffsetDEGREES(0),
-	rotationOffsetRADIANS(0)
+	rotationOffsetRADIANS(0),
+	vertices(),
+	rotation(),
+	aabbMin(),
+	aabbMax()
 
 {
 	//log creating? maybe
+}
+
+VertexShape& VertexShape::operator=(const VertexShape& inputVertexShape)
+{
+	if (this != &inputVertexShape)
+	{
+		
+	}
+	return *this;
 }

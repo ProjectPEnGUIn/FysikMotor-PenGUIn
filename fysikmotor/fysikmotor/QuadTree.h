@@ -70,7 +70,6 @@ public:
 	std::vector<Entity> getNearbyEntities(const Entity& inputEntity);
 
 	Quadtree(int inputCurrentQuadtreeDepth, float maxX, float minX, float maxY, float minY);
-	Quadtree();
 
 private:
 	//members
@@ -87,8 +86,8 @@ private:
 
 	std::vector<Quadtree> subQuadtrees; //sub quadtree objects of current quadtree, four quadrants of current quadtree
 
-	const unsigned int entityThreshold; //the max amount of entityies the quadtree object can have without trying to create sub nodes and push the entites down into them
-	const unsigned int maxQuadtreeDepth; //the maximum amount of levels the quadtree can have, else it will expand infinitly.
+	unsigned int entityThreshold; //the max amount of entityies the quadtree object can have without trying to create sub nodes and push the entites down into them
+	unsigned int maxQuadtreeDepth; //the maximum amount of levels the quadtree can have, else it will expand infinitly.
 
 };
 

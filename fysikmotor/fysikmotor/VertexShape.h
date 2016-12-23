@@ -63,6 +63,9 @@ public:
 
 	//constructor
 	VertexShape();
+
+	//own made copy assingment thingy
+	VertexShape& operator=(const VertexShape& inputVertexShape); 
 	
 public:
 	//members

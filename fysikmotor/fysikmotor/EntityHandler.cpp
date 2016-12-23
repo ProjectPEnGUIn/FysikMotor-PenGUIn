@@ -59,7 +59,7 @@ bool EntityHandler::SATCheck(const Entity& entity1, const Entity& entity2) //doe
 	//SAT check if false
 	return false;
 }
-															 //collision countermeasures
+//collision countermeasures
 void EntityHandler::entityCollision(Entity& entity1, Entity& entity2) //handles collision between entities
 {
 

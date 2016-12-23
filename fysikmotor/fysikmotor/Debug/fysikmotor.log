@@ -1,30 +1,3 @@
-﻿  QuadTree.cpp
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility(2518): error C2280: 'Entity &Entity::operator =(const Entity &)': attempting to reference a deleted function
-  c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\entity.h(108): note: compiler has generated 'Entity::operator =' here
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xutility(2539): note: see reference to function template instantiation '_OutIt std::_Move<_InIt,_OutIt>(_InIt,_InIt,_OutIt,std::_Nonscalar_ptr_iterator_tag)' being compiled
-          with
-          [
-              _OutIt=Entity *,
-              _InIt=Entity *
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1475): note: see reference to function template instantiation '_OutIt std::_Move<Entity*,Entity*>(_InIt,_InIt,_OutIt)' being compiled
-          with
-          [
-              _OutIt=Entity *,
-              _InIt=Entity *
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1470): note: while compiling class template member function 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Entity>>> std::vector<Entity,std::allocator<_Ty>>::erase(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<Entity>>>)'
-          with
-          [
-              _Ty=Entity
-          ]
-  c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\quadtree.cpp(36): note: see reference to function template instantiation 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Entity>>> std::vector<Entity,std::allocator<_Ty>>::erase(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<Entity>>>)' being compiled
-          with
-          [
-              _Ty=Entity
-          ]
-  c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\quadtree.h(86): note: see reference to class template instantiation 'std::vector<Entity,std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=Entity
-          ]
+﻿  EntityHandler.cpp
+  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
+  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

@@ -31,7 +31,7 @@ void Quadtree::splitQuadtree()
 			//if entity cannot be fully contained, aka entitybelonging == 4 it will skip the line of code and it will stay in current pos
 			if (entityBelonging >= 0 && entityBelonging <= 3 && entityBelonging != 4 && entityBelonging != -1)
 			{
-				subQuadtrees[entityBelonging].addEntity(entitiesStored[i]);
+				subQuadtrees[entityBelonging].addEntity(entitiesStored[i]); //ERROR C2280
 
 				entitiesStored.erase(entitiesStored.begin() + i); //removes the curren entity from this quadtree entity holder,
 			}
@@ -153,31 +153,31 @@ std::vector<Entity> Quadtree::getNearbyEntities(const Entity& inputEntity)
 			if (canPartiallyContainEntity(inputEntity, (minX + maxX) / 2, minX, maxY, (minY + maxY) / 2)) //TOPLEFT
 			{
 				tempVector = subQuadtrees[TOPLEFT].getNearbyEntities(inputEntity);
-
+			
 				returnVector.insert(returnVector.begin(), tempVector.begin(), tempVector.end());
 				tempVector.clear();
 			}
-
+			
 			if (canFullyContainEntity(inputEntity, maxX, (minX + maxX) / 2, maxY, (minY + maxY) / 2)) //TOPRIGHT
 			{
 				tempVector = subQuadtrees[TOPRIGHT].getNearbyEntities(inputEntity);
-
+			
 				returnVector.insert(returnVector.begin(), tempVector.begin(), tempVector.end());
 				tempVector.clear();
 			}
-
+			
 			if (canFullyContainEntity(inputEntity, (minX + maxX) / 2, minX, (maxY + minY) / 2, minY)) //BOTTOMLEFT
 			{
 				tempVector = subQuadtrees[BOTTOMLEFT].getNearbyEntities(inputEntity);
-
+			
 				returnVector.insert(returnVector.begin(), tempVector.begin(), tempVector.end());
 				tempVector.clear();
 			}
-
+			
 			if (canFullyContainEntity(inputEntity, maxX, (minX + maxX) / 2, (maxY + minY) / 2, minY)) //BOTTOMRIGHT
 			{
 				tempVector = subQuadtrees[BOTTOMRIGHT].getNearbyEntities(inputEntity);
-
+			
 				returnVector.insert(returnVector.begin(), tempVector.begin(), tempVector.end());
 				tempVector.clear();
 			}
@@ -202,10 +202,3 @@ Quadtree::Quadtree(int inputCurrentQuadtreeDepth, float maxX, float minX, float 
 
 }
 
-Quadtree::Quadtree()
-	:
-	entityThreshold(4),
-	maxQuadtreeDepth(5)
-{
-
-}

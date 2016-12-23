@@ -105,6 +105,15 @@ int Entity::getEntityID() const //returns entity id, is an int
 {
 	return entityID;
 }
+int Entity::getEntityState() const
+{
+	return entityState;
+}
+VertexShape Entity::getVertexShape() const
+{
+	return shape;
+}
+
 
 //update functions
 void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
@@ -129,15 +138,47 @@ void Entity::updatePosition()
 Entity::Entity()
 	:
 	entityID(-1),
-	entityShape(-1),
 	entityState(-1),
+
 	position(),
 	velocity(),
 	acceleration(),
+	actingForces(),
+
 	mass(-1),
 	centerOfMassOffset(),
-	isColliding(false)
+
+	shape(),
+
+	isColliding(false),
+
+	restitutionCoefficient(0),
+	dragCoefficient(0)
+	
 {
 
 
 }
+
+
+
+//Entity& Entity::operator=(const Entity& inputEntity)
+//{
+//	if (this != &inputEntity)
+//	{
+//		entityID = inputEntity.getEntityID();
+//		entityState = inputEntity.getEntityState();
+//		position = inputEntity.getPosition();
+//		velocity = inputEntity.getPosition();
+//		acceleration = inputEntity.getAcceleration();
+//		actingForces = inputEntity.getActingForces();
+//		mass = inputEntity.getMass();
+//		centerOfMassOffset = inputEntity.getCenterOfmassOffset();
+//		shape = inputEntity.getVertexShape();
+//		isColliding = inputEntity.getIsColliding();
+//		restitutionCoefficient = inputEntity.getRestitutionCoefficient();
+//		dragCoefficient = inputEntity.getAirDrag();
+//	}
+//
+//	return *this;
+//}

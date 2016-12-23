@@ -30,11 +30,6 @@ class Entity
 public:
 	//enums
 
-	enum class Shape
-	{
-		RECTANGLE, //rectangleshape, has a width and a height
-		CIRCLE     //circleshape, has a radius
-	};
 	enum class State
 	{
 		STATIC, //Static entity, cant be moved, not affected by forces, still affects other entites, example usage; ground?
@@ -73,6 +68,8 @@ public:
 	Vec2D getAABBTopLeft() const; //returns aabb shape top left coords
 	Vec2D getAABBMBottomRight() const; //returns shape aabb bottom left coords
 	int getEntityID() const; //returns entity id, is an int
+	int getEntityState() const;
+	VertexShape getVertexShape() const;
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
@@ -83,11 +80,13 @@ public:
 	//Constructor
 	Entity();
 
+	//other
+	//Entity& operator=(const Entity& inputEntity) = default; //own copy assignment operator made? due to getting error C2280, //http://en.cppreference.com/w/cpp/language/rule_of_three#Rule_of_five, //WAS ERROR WITH SHAPE COPYTHING, NOT INITING VARIABLES IN CONSTR
+
 private:
 	//members
 
 	int entityID; //the id of the entity, -1 if not set
-	int entityShape; //what shape it is, -1 if not set
 	int entityState; //what state it is in, -1 if not set
 
 	Vec2D position; //pos of entity, is in the center
