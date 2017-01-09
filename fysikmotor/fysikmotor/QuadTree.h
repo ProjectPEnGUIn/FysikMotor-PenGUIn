@@ -38,6 +38,7 @@ use entity's aabb pos for entity position in quadtree, does not have to be very 
 
 #include "Entity.h"
 #include "PEVec2D.h"
+#include "AABBCheck.h"
 
 class Quadtree
 {
@@ -46,7 +47,7 @@ public:
 
 	enum SubTree //easier naming scheme of sub quadtree objects
 	{
-		ERROR = -1, //something most likely went wrong
+		ERROR = -1, //something most likely went wrong DUH
 		TOPLEFT,
 		TOPRIGHT,
 		BOTTOMLEFT,
@@ -59,9 +60,6 @@ private:
 
 	void splitQuadtree();
 	int getEntityBelonging(const Entity& inputEntity) const; //returns a belonging enum from subtree enum
-	bool canFullyContainEntity(const Entity& inputEntity, const float& inputMaxX, const float& inputMinX, const float& inputMaxY, const float& inputMinY) const;
-	bool canPartiallyContainEntity(const Entity& inputEntity, const float& inputMaxX, const float& inputMinX, const float& inputMaxY, const float& inputMinY) const;
-
 public:
 	//functions
 

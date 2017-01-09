@@ -14,6 +14,7 @@
 
 #include "PEVec2D.h"
 #include "Entity.h"
+#include "AABBCheck.h"
 
 class EntityHandler
 {
@@ -21,7 +22,6 @@ private:
 	//functions
 
 	//collision checks
-	bool aabbCheck(const Entity& entity1, const Entity& entity2); //does a quick aabb check to see if its posible for the two entites to colide, axis alinged bounding box, not resource intensive
 	bool SATCheck(const Entity& entity1, const Entity& entity2); //does a thurough check using SAT, seperating axis theorem, very resource intensive, lots of math functions, ex sqrt, cosine, sine. very accurate
 
 	//collision countermeasures

@@ -45,45 +45,20 @@ int Quadtree::getEntityBelonging(const Entity& inputEntity) const //returns a be
 {
 	//returns if it belongs in a subquadtree/quadrant or if it cannot be fully contained, corrspends with subtree enum scheme
 
-	if (canFullyContainEntity(inputEntity, (minX + maxX) / 2, minX, maxY, (minY + maxY) / 2) == true)
+	if (entityFullyWithinAreaAABBCheck(inputEntity, (minX + maxX) / 2, minX, maxY, (minY + maxY) / 2) == true)
 		return TOPLEFT;
-	else if (canFullyContainEntity(inputEntity, maxX, (minX + maxX) / 2, maxY, (minY + maxY) / 2) == true)
+	else if (entityFullyWithinAreaAABBCheck(inputEntity, maxX, (minX + maxX) / 2, maxY, (minY + maxY) / 2) == true)
 		return TOPRIGHT;
-	else if (canFullyContainEntity(inputEntity, (minX + maxX) / 2, minX, (maxY + minY) / 2, minY) == true)
+	else if (entityFullyWithinAreaAABBCheck(inputEntity, (minX + maxX) / 2, minX, (maxY + minY) / 2, minY) == true)
 		return BOTTOMLEFT;
-	else if (canFullyContainEntity(inputEntity, maxX, (minX + maxX) / 2, (maxY + minY) / 2, minY) == true)
+	else if (entityFullyWithinAreaAABBCheck(inputEntity, maxX, (minX + maxX) / 2, (maxY + minY) / 2, minY) == true)
 		return BOTTOMRIGHT;
 	//checks if entrity can be contaiend in current quadtree depth
-	else if (canPartiallyContainEntity(inputEntity, maxX, minX, maxY, minY) == true)
+	else if (entityPartiallyContainedWithinArea(inputEntity, maxX, minX, maxY, minY) == true)
 		return CANNOTBEFULLYCONTAINED;
 
 		return -1;
 
-}
-bool Quadtree::canFullyContainEntity(const Entity& inputEntity, const float& inputMaxX, const float& inputMinX, const float& inputMaxY, const float& inputMinY) const
-{
-	//check to see if entity can be fully contained within the given area
-
-	if (inputEntity.getAABBTopLeft().getX() >= minX && inputEntity.getAABBMBottomRight().getX() <= maxX
-		&& inputEntity.getAABBTopLeft().getY() <= maxY && inputEntity.getAABBMBottomRight().getY() >= minY)
-		return true;
-
-	return false;
-}
-bool Quadtree::canPartiallyContainEntity(const Entity& inputEntity, const float& inputMaxX, const float& inputMinX, const float& inputMaxY, const float& inputMinY) const
-{
-	//potential problem, should also return true if it is fully within the given area, just as CanFullContainEntity function
-	//canFullyContainEntity should be called and handled with first to avoid errors
-
-	//checks if the given area can contain atleast a part of a given entity, simple aabb check
-	if (((inputEntity.getAABBTopLeft().getX() >= minX && inputEntity.getAABBTopLeft().getX() <= maxX) 
-		|| (inputEntity.getAABBMBottomRight().getX() >= minX && inputEntity.getAABBMBottomRight().getX() <= maxX))
-		&& 
-		((inputEntity.getAABBTopLeft().getY() >= minY && inputEntity.getAABBTopLeft().getY() <= maxY)
-		|| (inputEntity.getAABBMBottomRight().getY() >= minY && inputEntity.getAABBMBottomRight().getY() <= maxY)))
-		return true;
-
-	return false;
 }
 void Quadtree::addEntity(const Entity& inputEntity)
 {
@@ -150,7 +125,7 @@ std::vector<Entity> Quadtree::getNearbyEntities(const Entity& inputEntity)
 		{
 			//try to get entites from each sub quadtree induvidually, if current entity boundries overlaps with given sub quadsstree it will try to retrive entites from there
 
-			if (canPartiallyContainEntity(inputEntity, (minX + maxX) / 2, minX, maxY, (minY + maxY) / 2)) //TOPLEFT
+			if (entityPartiallyContainedWithinArea(inputEntity, (minX + maxX) / 2, minX, maxY, (minY + maxY) / 2)) //TOPLEFT
 			{
 				tempVector = subQuadtrees[TOPLEFT].getNearbyEntities(inputEntity);
 			
@@ -158,7 +133,7 @@ std::vector<Entity> Quadtree::getNearbyEntities(const Entity& inputEntity)
 				tempVector.clear();
 			}
 			
-			if (canFullyContainEntity(inputEntity, maxX, (minX + maxX) / 2, maxY, (minY + maxY) / 2)) //TOPRIGHT
+			if (entityPartiallyContainedWithinArea(inputEntity, maxX, (minX + maxX) / 2, maxY, (minY + maxY) / 2)) //TOPRIGHT
 			{
 				tempVector = subQuadtrees[TOPRIGHT].getNearbyEntities(inputEntity);
 			
@@ -166,7 +141,7 @@ std::vector<Entity> Quadtree::getNearbyEntities(const Entity& inputEntity)
 				tempVector.clear();
 			}
 			
-			if (canFullyContainEntity(inputEntity, (minX + maxX) / 2, minX, (maxY + minY) / 2, minY)) //BOTTOMLEFT
+			if (entityPartiallyContainedWithinArea(inputEntity, (minX + maxX) / 2, minX, (maxY + minY) / 2, minY)) //BOTTOMLEFT
 			{
 				tempVector = subQuadtrees[BOTTOMLEFT].getNearbyEntities(inputEntity);
 			
@@ -174,7 +149,7 @@ std::vector<Entity> Quadtree::getNearbyEntities(const Entity& inputEntity)
 				tempVector.clear();
 			}
 			
-			if (canFullyContainEntity(inputEntity, maxX, (minX + maxX) / 2, (maxY + minY) / 2, minY)) //BOTTOMRIGHT
+			if (entityPartiallyContainedWithinArea(inputEntity, maxX, (minX + maxX) / 2, (maxY + minY) / 2, minY)) //BOTTOMRIGHT
 			{
 				tempVector = subQuadtrees[BOTTOMRIGHT].getNearbyEntities(inputEntity);
 			
