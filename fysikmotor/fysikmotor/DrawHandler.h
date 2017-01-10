@@ -36,6 +36,8 @@ Erik Magnusson 23/12 2016
 #include <SFML\Window.hpp>
 
 #include <vector>
+#include <math.h> //for making arrowshape
+#include <cmath> //for making arrowshape
 
 #include "EntityHandler.h"
 #include "AABBCheck.h"
@@ -51,6 +53,8 @@ private:
 	sf::Vector2f translateWorldCoordinateIntoImageCoordinate(const sf::Vector2f& inputWorldCoordinate) const;
 	sf::Vector2f translateWorldCoordinateIntoImageCoordinate(const Vec2D& inputWorldCoordinate) const;
 	sf::Vector2f translateScreenCoordinateIntoWorldCoordinate(const sf::View& inputview);
+	sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color inputColour); //arrow scales to the input length
+
 
 	void updateView() const;
 
@@ -58,7 +62,7 @@ public:
 	//functions
 
 	//main functions for draw handler
-	void draw(sf::RenderWindow& inputRenderWindow, const std::vector<Entity>& inputEntities) const; //draws everytyhing to the screen
+	void draw(sf::RenderWindow& inputRenderWindow, const std::vector<Entity>& inputEntities); //draws everytyhing to the screen
 	void setViewPosition(const sf::Vector2f& inputViewPosition); //sets the view pos on the simulation plane
 	void moveViewPosition(const sf::Vector2f& inputMoveAmount); //moves the view by the input amount
 	void setZoom(const sf::Vector2f& inputZoomFactor); //sets the zoomfactor with sf vec2f
@@ -77,7 +81,10 @@ public:
 	void setDrawAABBCollisionArea(const bool inputBool);
 	void setDrawEntityTexture(const bool inputBool);
 	void setDrawRotationAngle(const bool inputBool);
-		
+	void setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
+	void setViewPixelPos(const sf::Vector2f& inputViewPixelPos);
+	void setViewSimulationPos(const Vec2D& inputSimulationPos);
+
 	//get functions
 	bool getDrawAxis() const;
 	bool getDrawActingForces() const;
@@ -111,8 +118,8 @@ private:
 	sf::Vector2f viewPixelPos;
 	sf::Vector2f viewPixelSize; //widt and height in pixels onscreen
 
-	sf::RenderTexture drawTexture; //the texture entities will be drawn onto
-	sf::Sprite drawSprite; //the sprite that will be drawn onto the sf renderwindow
+	sf::RenderTexture rTexture; //the texture entities will be drawn onto
+	sf::Sprite sprite; //the sprite that will be drawn onto the sf renderwindow
 
 	//bools regarding the rendering
 	bool drawAxis,

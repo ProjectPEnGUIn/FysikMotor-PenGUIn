@@ -1,18 +1,25 @@
-﻿  DrawHandler.cpp
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(28): error C4716: 'DrawHandler::translateWorldCoordinateIntoImageCoordinate': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(36): error C4716: 'DrawHandler::translateScreenCoordinateIntoWorldCoordinate': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(20): error C4716: 'DrawHandler::makeIntoVertexArray': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(32): error C4716: 'DrawHandler::translateWorldCoordinateIntoImageCoordinate': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(116): error C4716: 'DrawHandler::getDrawAxis': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(120): error C4716: 'DrawHandler::getDrawActingForces': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(124): error C4716: 'DrawHandler::getDrawSquareGrid': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(128): error C4716: 'DrawHandler::getDrawVertexPoints': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(132): error C4716: 'DrawHandler::getDrawFilledVertexShape': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(136): error C4716: 'DrawHandler::getDrawVertexIDs': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(140): error C4716: 'DrawHandler::getDrawCenterOfMass': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(144): error C4716: 'DrawHandler::getDrawVelocityVector': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(148): error C4716: 'DrawHandler::getDrawFrictionSurface': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(152): error C4716: 'DrawHandler::getDrawAABBCollisionArea': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(156): error C4716: 'DrawHandler::getDrawEntityTexture': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(164): error C4716: 'DrawHandler::getView': must return a value
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(160): error C4716: 'DrawHandler::getDrawRotationAngle': must return a value
+﻿  VertexShape.cpp
+  QuadTree.cpp
+  PEVec2D.cpp
+  main.cpp
+  EntityHandler.cpp
+  Entity.cpp
+  DrawHandler.cpp
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(19): warning C4018: '<': signed/unsigned mismatch
+  AABBCheck.cpp
+  Generating Code...
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(35): error C4716: 'DrawHandler::translateWorldCoordinateIntoImageCoordinate': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(39): error C4716: 'DrawHandler::translateWorldCoordinateIntoImageCoordinate': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(43): error C4716: 'DrawHandler::translateScreenCoordinateIntoWorldCoordinate': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(122): error C4716: 'DrawHandler::getDrawAxis': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(126): error C4716: 'DrawHandler::getDrawActingForces': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(130): error C4716: 'DrawHandler::getDrawSquareGrid': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(134): error C4716: 'DrawHandler::getDrawVertexPoints': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(138): error C4716: 'DrawHandler::getDrawFilledVertexShape': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(142): error C4716: 'DrawHandler::getDrawVertexIDs': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(146): error C4716: 'DrawHandler::getDrawCenterOfMass': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(150): error C4716: 'DrawHandler::getDrawVelocityVector': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(154): error C4716: 'DrawHandler::getDrawFrictionSurface': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(158): error C4716: 'DrawHandler::getDrawAABBCollisionArea': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(166): error C4716: 'DrawHandler::getDrawRotationAngle': must return a value
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(162): error C4716: 'DrawHandler::getDrawEntityTexture': must return a value
