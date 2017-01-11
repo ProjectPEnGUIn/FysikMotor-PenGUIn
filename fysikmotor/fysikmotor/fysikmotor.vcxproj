@@ -114,9 +114,11 @@
     <ClCompile Include="DrawHandler.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityHandler.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PEVec2D.cpp" />
     <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="SATCollisionCheck.cpp" />
     <ClCompile Include="VertexShape.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,8 +126,10 @@
     <ClInclude Include="DrawHandler.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityHandler.h" />
+    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="PEVec2D.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="SATCollisionCheck.h" />
     <ClInclude Include="VertexShape.h" />
   </ItemGroup>
   <ItemGroup>

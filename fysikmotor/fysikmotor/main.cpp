@@ -1,8 +1,5 @@
 // Dennis Mårtensson Erik Magnusson gymnasieprojekt fysikmotor 0.01 med sfml 2.4 till grafik
 
-//entityhandler ->rectangleentity/triangleentity/circleentity
-//eventhandler -> -||-
-
 //sfml library includes
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
@@ -15,7 +12,7 @@
 #include <cmath>
 
 #include "PEVec2D.h" //2d vector
-#include "Entity.h" //boxes or circles
+#include "Entity.h"
 
 //global variables
 int screenWidth = 1280;

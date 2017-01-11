@@ -16,7 +16,7 @@ sf::VertexArray DrawHandler::makeIntoVertexArray(const VertexShape& inputVertexS
     
 	std::vector<Vec2D> shapeVertices = inputVertexShape.getVertices(); //gets all the vertices points from shape
 
-	for (unsigned int i = 0; i < inputVertexShape.getAmountOfVertices(); i++)
+	for (int i = 0; i < inputVertexShape.getAmountOfVertices(); i++)
 	{
 		//adds vertices onto the returnshaope one after another
 		returnShape[i].position = sf::Vector2f(shapeVertices[i].getX(), shapeVertices[i].getY());
@@ -41,21 +41,8 @@ void DrawHandler::keepViewWithinBorders() const //keeps the view within the max 
 	//handle result accordingly
 
 }
-sf::Vector2f DrawHandler::translateWorldCoordinateIntoImageCoordinate(const sf::Vector2f& inputWorldCoordinate) const
+sf::VertexArray DrawHandler::makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour) //arrow scales to the input length, warning uses alot of math and cmath cos/sin functions
 {
-
-}
-sf::Vector2f DrawHandler::translateWorldCoordinateIntoImageCoordinate(const Vec2D& inputWorldCoordinate) const
-{
-
-}
-sf::Vector2f DrawHandler::translateScreenCoordinateIntoWorldCoordinate(const sf::View& inputview) 
-{
-
-}
-sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color inputColour) //arrow scales to the input length, warning uses alot of math and cmath cos/sin functions
-{
-
 	float pointyness = 45; //in degrees
 	float arrowheadHeight = inputLength / 8;
 
@@ -89,9 +76,9 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	//2 draw other things on background such as lines etc...
 	//3 draw entities
 
-
 	//Create texture to draw things to
 	rTexture.create(viewSize.getX(), viewSize.getY());
+
 	rTexture.clear(sf::Color(255, 255, 255));
 
 	//draw lines etc onto the rtexture
@@ -108,7 +95,6 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		rTexture.draw(xAxis);
 		rTexture.draw(yAxis);
 	}
-
 	if (drawSquareGrid)
 	{
 		//TODO, need to decide spacing etc
@@ -174,12 +160,10 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			//draw a vertexarray with triangle shapes used, make a halfcircle spanning from the previous mentioned line and then draw text
 		}
 	}
-	rTexture.display(); //displays it onto the rtexture   
-
+	rTexture.display(); //displays it onto the rtexture
+	
 	sprite.setTexture(rTexture.getTexture()); //sets the sprite texture to the rtexture
 	
-
-
 	sprite.setPosition(viewPixelPos);
 
 	inputRenderWindow.draw(sprite); //Draws the sprite onto the renderwindow
@@ -253,6 +237,7 @@ void DrawHandler::setSimulationBounds(const float inputMaxX, const float inputMi
 	minX = inputMinX;
 	maxY = inputMaxY;
 	minY = inputMinY;
+
 }
 
 //get functions

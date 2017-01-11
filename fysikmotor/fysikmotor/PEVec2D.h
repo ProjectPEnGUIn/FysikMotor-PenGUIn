@@ -24,7 +24,7 @@
 #include <cmath>
 #include <math.h>
 
-const double PI = 3.14159265; //should be fine enough
+const float PI = 3.14159265f; //should be fine enough
 
 template <typename T> //the PEVec2D uses whatever typename is set at initialisation, ex: double, float, int
 class PEVec2D
@@ -45,7 +45,8 @@ public:
 	void setDirectionDEGREES(T inputDirectionInDegrees); //set the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void setDirectionRADIANS(T inputDirectionInRadians); //set the diredtion of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void scaleVector(T inputScaleAmount); //scales the vector so many times
-    
+	void normalize(); //séts length = 1 unit
+
 	//get functions
 	T getX() const; //returns x component
 	T getY() const; //returns y component
@@ -117,9 +118,15 @@ template <typename T> void PEVec2D<T>::setDirectionRADIANS(T inputDirectionInRad
 }
 template <typename T> void PEVec2D<T>::scaleVector(T inputScaleAmount) //scales the vector so many times
 {
-
+	x *= inputScaleAmount;
+	y *= inputScaleAmount;
 }
-
+template <typename T>  void PEVec2D<T>::normalize() //séts length = 1 unit
+{
+	T currentLength = sqrt((x*x) + (y*y));
+	x /= currentLength;
+	y /= currentLength;
+}
 //get functions
 template <typename T> T PEVec2D<T>::getX() const //returns x component
 {
@@ -135,7 +142,7 @@ template <typename T> float PEVec2D<T>::getDirectionDEGREES() const //gets the d
 	if (x == 0 && y == 0) //stops erroirs
 		return 0;
 
-	return (atan(y / x) * 180) / PI; //atan returns in radians, must convert
+	return (atan(y / x) * 180.0f) / PI; //atan returns in radians, must convert
 }
 template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the direction of vector in radians
 {

@@ -1,4 +1,3 @@
-
 /*
 Physics Eng
 -only intendeine Simulation Draw
@@ -50,11 +49,7 @@ private:
 	bool isEntityWithinView(const Entity& inputEntity) const;
 	sf::VertexArray makeIntoVertexArray(const VertexShape& inputVertexShape) const; //turns an own made vertexshapape object into a vertexarray object
 	void keepViewWithinBorders() const; //keeps the view within the max and min world size
-	sf::Vector2f translateWorldCoordinateIntoImageCoordinate(const sf::Vector2f& inputWorldCoordinate) const;
-	sf::Vector2f translateWorldCoordinateIntoImageCoordinate(const Vec2D& inputWorldCoordinate) const;
-	sf::Vector2f translateScreenCoordinateIntoWorldCoordinate(const sf::View& inputview);
-	sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color inputColour); //arrow scales to the input length
-
+	sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour); //arrow scales to the input length
 
 	void updateView() const;
 
@@ -81,6 +76,7 @@ public:
 	void setDrawAABBCollisionArea(const bool inputBool);
 	void setDrawEntityTexture(const bool inputBool);
 	void setDrawRotationAngle(const bool inputBool);
+	
 	void setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
 	void setViewPixelPos(const sf::Vector2f& inputViewPixelPos);
 	void setViewSimulationPos(const Vec2D& inputSimulationPos);
