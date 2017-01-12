@@ -25,7 +25,7 @@ private:
 	bool SATCheck(const Entity& entity1, const Entity& entity2); //does a thurough check using SAT, seperating axis theorem, very resource intensive, lots of math functions, ex sqrt, cosine, sine. very accurate
 
 	//collision countermeasures
-	void entityCollision(Entity& entity1, Entity& entity2); //handles collision between entities
+	void entityCollision(Entity& inpputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector); //handles collision between entities
 
 public:
 	//functions

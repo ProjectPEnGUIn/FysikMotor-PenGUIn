@@ -1,5 +1,3 @@
-﻿  DrawHandler.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(19): warning C4018: '<': signed/unsigned mismatch
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(80): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+﻿  main.cpp
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

@@ -30,6 +30,9 @@ Erik Magnusson NA3 1/12 2017
 #ifndef  _SATCOLLISIONCHECK_
 #define _SATCOLLISIONCHECK_
 
+#include "Entity.h"
+#include "PEVec2D.h"
+
 #pragma once
 class SATCollisionCheck
 {
@@ -39,12 +42,16 @@ private:
 public:
 	//functions
 
+	bool SATCheck(const Entity& inputEntity1, const Entity& inputEntity2) const;
+	void clearVariables(); //resets all variables so it can take in new entities and compare
+	Vec2D getPenentrationVector() const; //returns
+
 	SATCollisionCheck();
-	~SATCollisionCheck();
 
 private:
-	//functions
-
+	//members
+	
+	Vec2D penentrationVector; //vector containing the penentration distance between two objects that are inside eachother
 
 };
 #endif // ! _SATCOLLISIONCHECK_

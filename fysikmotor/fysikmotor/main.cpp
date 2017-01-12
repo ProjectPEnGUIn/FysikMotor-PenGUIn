@@ -19,13 +19,15 @@ int screenWidth = 1280;
 int screenHeight = 720;
 int drawTickrate = 60; //amount of times it tries to draw each second, min = 1 tick/sec
 int logicTickrate = 60; //amount of times it tries to do logic each seconds, min = 1 tick/sec
-sf::Time drawTime = sf::seconds((float)(1 / drawTickrate));
-sf::Time logicTime = sf::seconds((float)(1 / logicTickrate));
-
-
+sf::Time drawTime = sf::seconds((1.0f / drawTickrate));
+sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
 int main()
 {
+
+	Vec2D a(1, 0), b(10, 10);
+	a.normalize();
+	std::cout << a.getMagnitude() << " " << a*b;
 
 	std::cout << "Press enter\n";
 	std::cin.get();

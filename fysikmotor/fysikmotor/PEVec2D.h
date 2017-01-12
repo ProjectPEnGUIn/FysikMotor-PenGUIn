@@ -16,6 +16,7 @@
 //https://en.wikipedia.org/wiki/Euclidean_vector
 //https://www.youtube.com/watch?v=PgGhEovFhd0&t=1s
 
+//http://www.metanetsoftware.com/technique/tutorialA.html#section3 12/1 2017
 #pragma once
 #ifndef _PEVEC2D_
 #define _PEVEC2D_
@@ -29,10 +30,6 @@ const float PI = 3.14159265f; //should be fine enough
 template <typename T> //the PEVec2D uses whatever typename is set at initialisation, ex: double, float, int
 class PEVec2D
 {
-private:
-	//functions
-  
-
 public:
 	//functions
 
@@ -45,7 +42,6 @@ public:
 	void setDirectionDEGREES(T inputDirectionInDegrees); //set the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void setDirectionRADIANS(T inputDirectionInRadians); //set the diredtion of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void scaleVector(T inputScaleAmount); //scales the vector so many times
-	void normalize(); //séts length = 1 unit
 
 	//get functions
 	T getX() const; //returns x component
@@ -54,6 +50,10 @@ public:
 	float getDirectionDEGREES() const; //gets the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	float getDirectionRADIANS() const; //gets the direction of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	T getMagnitude() const; //returns the magnitude/length
+
+	Vec2D getNormalisation() const; //length = 1
+	Vec2D getRightNormal() const; //90 degree normal to current vector
+	Vec2D getLeftNormal() const; //90 degree normal to current vector
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 	PEVec2D operator+(const PEVec2D& inputVectorToAdd) const; //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
@@ -123,9 +123,8 @@ template <typename T> void PEVec2D<T>::scaleVector(T inputScaleAmount) //scales 
 }
 template <typename T>  void PEVec2D<T>::normalize() //séts length = 1 unit
 {
-	T currentLength = sqrt((x*x) + (y*y));
-	x /= currentLength;
-	y /= currentLength;
+
+
 }
 //get functions
 template <typename T> T PEVec2D<T>::getX() const //returns x component
@@ -150,6 +149,28 @@ template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the d
 		return 0;
 
 	return atan(y / x);
+}
+
+template <typename T> Vec2D PEVec2D<T>::getNormalisation() const //length = 1
+{
+	if (sqrt((x*x) + (y*y)) > 0)
+	{
+		T currentLength = sqrt((x*x) + (y*y));
+
+		return Vec2D(x / currentLength, y / currentLength)
+	}
+
+	std::cout << "error tried to normalize a vector of length 0 :(n\";
+	return Vec2D(0, 0);
+
+}
+template <typename T> Vec2D PEVec2D<T>::getRightNormal() const //90 degree normal to current vector
+{
+	return Vec2D(-y, x);
+}
+template <typename T> Vec2D PEVec2D<T>::getLeftNormal() const //90 degree normal to current vector
+{
+	return Vec2D(y, -x);
 }
 template <typename T> T PEVec2D<T>::getMagnitude() const //returns the magnitude/length
 {
