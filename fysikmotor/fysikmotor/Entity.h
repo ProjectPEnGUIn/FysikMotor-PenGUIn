@@ -77,6 +77,8 @@ public:
 	void updateVelocity(); //updates speed
 	void updatePosition();
 
+	//void move(const Vec2D& inputMoveAmount);
+
 	//Constructor
 	Entity();
 

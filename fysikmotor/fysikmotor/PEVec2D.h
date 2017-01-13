@@ -24,6 +24,7 @@
 #include <iostream>
 #include <cmath>
 #include <math.h>
+#include <cassert>
 
 const float PI = 3.14159265f; //should be fine enough
 
@@ -51,9 +52,9 @@ public:
 	float getDirectionRADIANS() const; //gets the direction of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	T getMagnitude() const; //returns the magnitude/length
 
-	Vec2D getNormalisation() const; //length = 1
-	Vec2D getRightNormal() const; //90 degree normal to current vector
-	Vec2D getLeftNormal() const; //90 degree normal to current vector
+	PEVec2D getNormalisation() const; //length = 1
+	PEVec2D getRightNormal() const; //90 degree normal to current vector
+	PEVec2D getLeftNormal() const; //90 degree normal to current vector
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 	PEVec2D operator+(const PEVec2D& inputVectorToAdd) const; //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
@@ -64,6 +65,7 @@ public:
 	PEVec2D& operator*=(T multiplyVectorWithScalar);
 	T operator*=(const PEVec2D& inputVectorToCrossProduct); //2d vector cross product
 	T operator*(const PEVec2D& inputVectorToCrossProduct); //2d vector cross product
+	T operator*(const float& inputScalar); 
 
 	//constructor
 	PEVec2D(); //inits x and y components to 0, give them values at another point
@@ -121,11 +123,11 @@ template <typename T> void PEVec2D<T>::scaleVector(T inputScaleAmount) //scales 
 	x *= inputScaleAmount;
 	y *= inputScaleAmount;
 }
-template <typename T>  void PEVec2D<T>::normalize() //séts length = 1 unit
-{
-
-
-}
+//template <typename T>  void PEVec2D<T>::normalize() //séts length = 1 unit
+//{
+//
+//
+//}
 //get functions
 template <typename T> T PEVec2D<T>::getX() const //returns x component
 {
@@ -151,26 +153,21 @@ template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the d
 	return atan(y / x);
 }
 
-template <typename T> Vec2D PEVec2D<T>::getNormalisation() const //length = 1
+template <typename T> PEVec2D<T> PEVec2D<T>::getNormalisation() const //length = 1
 {
-	if (sqrt((x*x) + (y*y)) > 0)
-	{
-		T currentLength = sqrt((x*x) + (y*y));
+	const auto currentLength = sqrt((x*x) + (y*y));
 
-		return Vec2D(x / currentLength, y / currentLength)
-	}
-
-	std::cout << "error tried to normalize a vector of length 0 :(n\";
-	return Vec2D(0, 0);
-
+	assert( currentLength > 0 && "Error: tried to normalize a vector of length 0 :(\n" );
+	
+	return PEVec2D<T>(x / currentLength, y / currentLength);
 }
-template <typename T> Vec2D PEVec2D<T>::getRightNormal() const //90 degree normal to current vector
+template <typename T> PEVec2D<T> PEVec2D<T>::getRightNormal() const //90 degree normal to current vector
 {
-	return Vec2D(-y, x);
+	return PEVec2D<T>(-y, x);
 }
-template <typename T> Vec2D PEVec2D<T>::getLeftNormal() const //90 degree normal to current vector
+template <typename T> PEVec2D<T> PEVec2D<T>::getLeftNormal() const //90 degree normal to current vector
 {
-	return Vec2D(y, -x);
+	return PEVec2D<T>(y, -x);
 }
 template <typename T> T PEVec2D<T>::getMagnitude() const //returns the magnitude/length
 {
@@ -229,6 +226,11 @@ template <typename T> T PEVec2D<T>::operator*=(const PEVec2D& inputVectorToCross
 template <typename T> T PEVec2D<T>::operator*(const PEVec2D& inputVectorToCrossProduct) //2d vector cross product
 {
 	return x * inputVectorToCrossProduct.getY() - y * inputVectorToCrossProduct.getX();
+}
+template <typename T> T PEVec2D<T>::operator*(const float& inputScalar)
+{
+	x *= inputScalar;
+	y *= inputScalar;
 }
 //constructor
 template <typename T> PEVec2D<T>::PEVec2D() //inits x and y components to 0, give them values at another point

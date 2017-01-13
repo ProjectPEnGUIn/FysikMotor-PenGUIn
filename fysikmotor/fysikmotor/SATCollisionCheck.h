@@ -45,12 +45,14 @@ public:
 	bool SATCheck(const Entity& inputEntity1, const Entity& inputEntity2) const;
 	void clearVariables(); //resets all variables so it can take in new entities and compare
 	Vec2D getPenentrationVector() const; //returns
+	Vec2D getContactPoint() const; //coords of contact point between
 
 	SATCollisionCheck();
 
 private:
 	//members
 	
+	Vec2D contactPoint; //the point, pos, at which the entities are touching
 	Vec2D penentrationVector; //vector containing the penentration distance between two objects that are inside eachother
 
 };

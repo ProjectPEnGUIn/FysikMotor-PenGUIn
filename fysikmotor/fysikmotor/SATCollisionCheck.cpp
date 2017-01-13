@@ -14,7 +14,10 @@ Vec2D SATCollisionCheck::getPenentrationVector() const //returns
 {
 	return penentrationVector;
 }
-
+Vec2D SATCollisionCheck::getContactPoint() const //coords of contact point between
+{
+	return contactPoint;
+}
 SATCollisionCheck::SATCollisionCheck()
 	:
 	penentrationVector()

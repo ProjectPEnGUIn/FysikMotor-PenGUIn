@@ -25,9 +25,10 @@ sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 int main()
 {
 
-	Vec2D a(1, 0), b(10, 10);
-	a.normalize();
-	std::cout << a.getMagnitude() << " " << a*b;
+	
+	float overlapTime = Vec2D(0.5f, 0).getMagnitude() / (Vec2D(-1, 0).getMagnitude() + Vec2D(1, 0).getMagnitude());
+
+	std::cout << overlapTime << std::endl;
 
 	std::cout << "Press enter\n";
 	std::cin.get();
