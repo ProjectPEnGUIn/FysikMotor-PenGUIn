@@ -11,8 +11,7 @@
 #include <math.h>
 #include <cmath>
 
-#include "PEVec2D.h" //2d vector
-#include "Entity.h"
+#include "PE.h"
 
 //global variables
 int screenWidth = 1280;
@@ -37,6 +36,24 @@ int main()
 	//runs while runProgram == true, program able to run without the sf::renderwindow, able to redefine it etc,
 	while (runProgram)
 	{
+
+		PE testEngine;
+		testEngine.init(100, -100, 100, -100);
+
+		VertexShape tShape; 
+		tShape.addVertexPoint(Vec2D(0, 0));
+		tShape.addVertexPoint(Vec2D(0, 20));
+		tShape.addVertexPoint(Vec2D(20, 20));
+		tShape.addVertexPoint(Vec2D(20, 0));
+
+		tShape.addVertexPoint(Vec2D(-200, 200));
+		tShape.setPosition(Vec2D(0, 0));
+
+		Entity tEntity;
+		tEntity.setVertexShape(tShape);
+
+		testEngine.addEntity(tEntity);
+
 
 		sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "PEnGUIn");  //creates the sfml window  //Physics Engine (a)n(d) Graphical User Interface n(noegenesis)
 		window.setPosition(sf::Vector2i(0, 0));
@@ -101,8 +118,8 @@ int main()
 
 			if (logicClock.getElapsedTime() >= logicTime) //the programs logic part, all programs logic happens here at a certain rate
 			{
-				logicClock.restart(); //restarts the clock
-
+				
+				testEngine.update(logicClock.restart().asSeconds()); // updates and restarts the clock
 			}
 
 			if (drawClock.getElapsedTime() >= drawTime) //the programs drawing part, draws things to the screen at a certain rate
@@ -112,6 +129,7 @@ int main()
 				window.clear(sf::Color::Black);  //clears screen to black
 				//starts to draw the current frame
 
+				testEngine.draw(window);
 
 				window.display(); //displays the current drawn frame
 			}

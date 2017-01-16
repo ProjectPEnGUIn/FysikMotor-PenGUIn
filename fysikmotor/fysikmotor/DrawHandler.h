@@ -47,9 +47,15 @@ class DrawHandler
 private:
 	//functions
 	bool isEntityWithinView(const Entity& inputEntity) const;
-	sf::VertexArray makeIntoVertexArray(const VertexShape& inputVertexShape) const; //turns an own made vertexshapape object into a vertexarray object
+	sf::ConvexShape makeIntoConvexShape(const VertexShape& inputVertexShape) const; //turns an own made vertexshapape object into a vertexarray object
 	void keepViewWithinBorders() const; //keeps the view within the max and min world size
 	sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour); //arrow scales to the input length
+
+	sf::Vector2f transformWorldCoordinatesToPixelCoordinates(const Vec2D& inputWorldCoordinates) const;
+	sf::Vector2f transformWorldCoordinatesToPixelCoordinates(const sf::Vector2f& inputWorldCoordinates) const;
+
+	sf::Vector2f transformPixelCoordinatesToWorldCoordinates(const Vec2D& inputWorldCoordinates) const;
+	sf::Vector2f transformPixelCoordinatesToWorldCoordinates(const sf::Vector2f& inputWorldCoordinates) const;
 
 	void updateView() const;
 
@@ -95,6 +101,8 @@ public:
 	bool getDrawEntityTexture() const;
 	bool getDrawRotationAngle()const;
 	sf::View getView() const;
+
+	void init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY);
 
 	DrawHandler();
 	

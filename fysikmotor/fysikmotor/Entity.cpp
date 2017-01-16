@@ -47,6 +47,10 @@ void Entity::setAirDrag(float inputDouble)
 {
 	dragCoefficient = inputDouble;
 }
+void Entity::setVertexShape(const VertexShape& inputShape)
+{
+	shape = inputShape;
+}
 
 //get functions
 Vec2D Entity::getPosition() const //gets the pos

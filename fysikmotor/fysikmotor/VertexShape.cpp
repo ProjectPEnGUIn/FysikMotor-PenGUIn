@@ -114,6 +114,10 @@ Vec2D VertexShape::getBottomRightAABBCorner() const
 {
 	return aabbMax;
 }
+sf::Transform VertexShape::getCurrentTransformation() const
+{
+	return rotation;
+}
 
 //updating
 void VertexShape::updateAABBBox() //updates the aabb bounding box
@@ -192,7 +196,14 @@ VertexShape& VertexShape::operator=(const VertexShape& inputVertexShape)
 {
 	if (this != &inputVertexShape)
 	{
-		
+		trueCenterPosition = inputVertexShape.getCenterPos();
+		rotationCenterOffset = inputVertexShape.getRotationCenterOffset();
+		rotationOffsetDEGREES = inputVertexShape.getCurrentRotationDEGREES();
+		rotationOffsetRADIANS = inputVertexShape.getCurrentRotationRADIANS();
+		vertices = inputVertexShape.getVertices();
+		rotation = inputVertexShape.getCurrentTransformation();
+		aabbMin = inputVertexShape.getBottomRightAABBCorner();
+		aabbMax = inputVertexShape.getTopLeftAABBCorner();
 	}
 	return *this;
 }

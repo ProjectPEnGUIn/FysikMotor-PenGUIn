@@ -52,6 +52,7 @@ public:
 	void setIsColliding(bool inputBool); //sets isColding
 	void setRestitutionCoefficient(float inputDouble); //between 0 and 1
 	void setAirDrag(float inputDouble);
+	void setVertexShape(const VertexShape& inputShape);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -111,7 +112,7 @@ private:
 	Vec2D momentOfInertia;
 
 	//angular momentum
-	Vec2D angularMomentum
+	Vec2D angularMomentum;
 
 };
 #endif // !_ENTITY_

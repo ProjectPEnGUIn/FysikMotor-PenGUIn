@@ -45,6 +45,8 @@ public:
 	float getWorldMaxY();
 	float getWorldMinY();
 
+	void init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY);
+
 	std::vector<Entity> getAllEntities(); //retirives all entiteis in pe    
 
 	EntityHandler();

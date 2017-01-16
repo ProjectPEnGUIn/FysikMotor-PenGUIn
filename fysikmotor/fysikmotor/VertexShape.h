@@ -60,12 +60,13 @@ public:
 	std::vector<Vec2D> getVertices() const; //returnsa all vertices
 	Vec2D getTopLeftAABBCorner() const;
 	Vec2D getBottomRightAABBCorner() const;
+	sf::Transform getCurrentTransformation() const;
 
 	//constructor
 	VertexShape();
 
 	//own made copy assingment thingy
-	VertexShape& operator=(const VertexShape& inputVertexShape); 
+    VertexShape& operator=(const VertexShape& inputVertexShape); 
 	
 public:
 	//members

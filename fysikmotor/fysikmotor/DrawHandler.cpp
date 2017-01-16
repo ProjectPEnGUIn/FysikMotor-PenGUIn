@@ -8,39 +8,35 @@ bool DrawHandler::isEntityWithinView(const Entity& inputEntity) const
 
 	return false;
 }
-sf::VertexArray DrawHandler::makeIntoVertexArray(const VertexShape& inputVertexShape) const //turns an own made vertexshapape object into a vertexarray object
+sf::ConvexShape DrawHandler::makeIntoConvexShape(const VertexShape& inputVertexShape) const //turns an own made vertexshapape object into a vertexarray object
 {
 	//used http://www.sfml-dev.org/documentation/2.4.1/classsf_1_1VertexArray.php#aa38c10707c28a97f4627ae8b2f3ad969 7/1 2017
 
-	sf::VertexArray returnShape(sf::LinesStrip, inputVertexShape.getAmountOfVertices()); //inits the return shape with the amount of vertices
+	sf::ConvexShape returnShape(inputVertexShape.getAmountOfVertices()); //inits the return shape with the amount of vertices
     
 	std::vector<Vec2D> shapeVertices = inputVertexShape.getVertices(); //gets all the vertices points from shape
+
+//	std::cout << shapeVertices.size() << " " << inputVertexShape.getAmountOfVertices() << std::endl;
 
 	for (int i = 0; i < inputVertexShape.getAmountOfVertices(); i++)
 	{
 		//adds vertices onto the returnshaope one after another
-		returnShape[i].position = sf::Vector2f(shapeVertices[i].getX(), shapeVertices[i].getY());
+		returnShape.setPoint(i, transformWorldCoordinatesToPixelCoordinates(shapeVertices[i]));
 	}
 
-	//change colour etc...
+	returnShape.setOutlineColor(sf::Color::Black);
+	returnShape.setOutlineThickness(1);
+	//returnShape.setPosition(transformWorldCoordinatesToPixelCoordinates(inputVertexShape.getCenterPos());
 
-	if (drawfilledVertexShapes)
-	{
-
-	}
-	if (drawVertexPoints)
-	{
-
-	}
+	returnShape.setPosition(50, 50);
 
 	return returnShape;
 }
 void DrawHandler::keepViewWithinBorders() const //keeps the view within the max and min world size
 {
-	//check if view is outside of world plane boundries
-	//handle result accordingly
-
+	//check if view is outside 
 }
+
 sf::VertexArray DrawHandler::makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour) //arrow scales to the input length, warning uses alot of math and cmath cos/sin functions
 {
 	float pointyness = 45; //in degrees
@@ -62,6 +58,24 @@ sf::VertexArray DrawHandler::makeArrowShape(const float startX, const float star
 
 	return arrowShape;
 }
+sf::Vector2f DrawHandler::transformWorldCoordinatesToPixelCoordinates(const Vec2D& inputWorldCoordinates) const
+{
+	return sf::Vector2f(inputWorldCoordinates.getX() - fabs(minX), fabs(minX) + fabs(maxY) - inputWorldCoordinates.getY());
+}
+sf::Vector2f DrawHandler::transformWorldCoordinatesToPixelCoordinates(const sf::Vector2f& inputWorldCoordinates) const
+{
+	return sf::Vector2f(inputWorldCoordinates.x - fabs(minX), fabs(minX) + fabs(maxY) - inputWorldCoordinates.y);
+}
+
+sf::Vector2f DrawHandler::transformPixelCoordinatesToWorldCoordinates(const Vec2D& inputWorldCoordinates) const
+{
+	return sf::Vector2f(inputWorldCoordinates.getX() + minX, inputWorldCoordinates.getY() + maxY);
+}
+sf::Vector2f DrawHandler::transformPixelCoordinatesToWorldCoordinates(const sf::Vector2f& inputWorldCoordinates) const
+{
+	return sf::Vector2f(inputWorldCoordinates.x + minX, inputWorldCoordinates.y + maxY);
+}
+
 void DrawHandler::updateView() const
 {
 
@@ -76,22 +90,22 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	//2 draw other things on background such as lines etc...
 	//3 draw entities
 
-	//Create texture to draw things to
-	rTexture.create(viewSize.getX(), viewSize.getY());
-
 	rTexture.clear(sf::Color(255, 255, 255));
 
 	//draw lines etc onto the rtexture
 
 	if (drawAxis)
 	{
-		sf::VertexArray xAxis(sf::LinesStrip, 2), yAxis(sf::LinesStrip, 2);
-		
-		xAxis[0] = sf::Vector2f(minX, 0);
-		xAxis[1] = sf::Vector2f(maxX, 0);
-		yAxis[0] = sf::Vector2f(0, minY);
-		yAxis[0] = sf::Vector2f(0, maxY);
+		sf::RectangleShape xAxis, yAxis;
 
+		xAxis.setSize(sf::Vector2f(fabs(minX) + fabs(maxX), 3));
+		xAxis.setPosition(transformWorldCoordinatesToPixelCoordinates(Vec2D(minX, 1)));
+		xAxis.setFillColor(sf::Color::Black);
+
+		yAxis.setSize(sf::Vector2f(3, fabs(minY) + fabs(maxY)));
+		yAxis.setPosition(transformWorldCoordinatesToPixelCoordinates(Vec2D(-1, maxY)));
+		yAxis.setFillColor(sf::Color::Black);
+		
 		rTexture.draw(xAxis);
 		rTexture.draw(yAxis);
 	}
@@ -102,10 +116,17 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		std::cout << "ERROR: TRIED TO DRW SQAUReQRID EVEN THO ITS NOT DONE DUMBASS/n";
 	}
    
+
+	sf::CircleShape c;
+	c.setRadius(10);
+	c.setPosition(transformWorldCoordinatesToPixelCoordinates(Vec2D(15, 15)));
+	c.setFillColor(sf::Color::Cyan);
+	rTexture.draw(c);
+
 	//go through each of the entityies and draw its shape onto the texture
 	for (Entity e : inputEntities)
 	{
-		rTexture.draw(makeIntoVertexArray(e.getVertexShape()));
+		rTexture.draw(makeIntoConvexShape(e.getVertexShape()));
 
 		if (drawActingForces)
 		{
@@ -294,6 +315,19 @@ sf::View DrawHandler::getView() const
 	return simulationView;
 }
 
+void DrawHandler::init(float inpputMaxX, float inputMinX, float inputMaxY, float inputMinY)
+{
+	maxX = inpputMaxX;
+	minX = inputMinX;
+	maxY = inputMaxY;
+	minY = inputMinY;
+
+	int width = (int) fabs(inputMinX) + fabs(inpputMaxX) + 0.5; //abs = absolute value, |x|
+	int height = (int) fabs(inputMinY) + fabs(inputMaxY) + 0.5;
+
+	rTexture.create(width, height);
+}
+
 DrawHandler::DrawHandler()
 	:
 	maxX(0.0f),
@@ -308,7 +342,7 @@ DrawHandler::DrawHandler()
 	rTexture(),
 	sprite(),
 
-	drawAxis(false),
+	drawAxis(true),
 	drawActingForces(false),
 	drawSquareGrid(false),
 	drawVertexPoints(false),

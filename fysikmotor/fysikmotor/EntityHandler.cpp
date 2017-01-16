@@ -72,6 +72,59 @@ void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, 
 
 }
 
+void EntityHandler::updateEntities(float deltaTime) //updates all entities, checks for collisions, handles collisioons
+{
+
+}
+void EntityHandler::updateForces() //update forces on all entites
+{
+
+}
+void EntityHandler::updateAcceleration() //updates acceleration on entitis
+{
+
+}
+void EntityHandler::updateVelocity() //updates velócitiyes on entiteis
+{
+
+}
+
+					   //add entites
+void EntityHandler::addEntity(Entity inputEntity) //adds the entity to the list of entities
+{
+	entities.push_back(inputEntity);
+}
+									//get functions
+float EntityHandler::getWorldMaxX()
+{
+	return worldMaxX;
+}
+float EntityHandler::getworldMinX()
+{
+	return worldMinX;
+}
+float EntityHandler::getWorldMaxY()
+{
+	return worldMaxY;
+}
+float EntityHandler::getWorldMinY()
+{
+	return worldMinY;
+}
+void EntityHandler::init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY)
+{
+	worldMaxX = inputMaxX;
+	worldMinX = inputMinX;
+	worldMaxY = inputMaxY;
+	worldMinY = inputMinY;
+}
+
+
+std::vector<Entity> EntityHandler::getAllEntities() //retirives all entiteis in pe 
+{
+	return entities;
+}
+
 EntityHandler::EntityHandler()
 	:
 	worldMaxX(0),
