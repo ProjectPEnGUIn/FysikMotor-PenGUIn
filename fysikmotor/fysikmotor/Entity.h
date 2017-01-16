@@ -106,5 +106,12 @@ private:
 	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
 	float dragCoefficient; //air drag of the body
 
+	//torque members
+	Vec2D torque; //M = F*L
+	Vec2D momentOfInertia;
+
+	//angular momentum
+	Vec2D angularMomentum
+
 };
 #endif // !_ENTITY_

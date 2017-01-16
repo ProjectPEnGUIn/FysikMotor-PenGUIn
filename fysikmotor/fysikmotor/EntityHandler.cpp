@@ -61,6 +61,8 @@ void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, 
 	inputEntity1.setPosition(inputEntity1.getPosition() + Vec2D(entity1V0.getX() * -overlapTime, entity1V0.getY() * -overlapTime));
 	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2V0.getX() * -overlapTime, entity2V0.getY() * -overlapTime));
 
+
+
 	//HANDLE PHYSICS YO, torque etc, take use of contactpoint
 
 
