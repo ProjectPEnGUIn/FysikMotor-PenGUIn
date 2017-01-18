@@ -51,11 +51,8 @@ private:
 	void keepViewWithinBorders() const; //keeps the view within the max and min world size
 	sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour); //arrow scales to the input length
 
-	sf::Vector2f transformWorldCoordinatesToPixelCoordinates(const Vec2D& inputWorldCoordinates) const;
-	sf::Vector2f transformWorldCoordinatesToPixelCoordinates(const sf::Vector2f& inputWorldCoordinates) const;
-
-	sf::Vector2f transformPixelCoordinatesToWorldCoordinates(const Vec2D& inputWorldCoordinates) const;
-	sf::Vector2f transformPixelCoordinatesToWorldCoordinates(const sf::Vector2f& inputWorldCoordinates) const;
+	sf::Vector2f toPixelCoords(const Vec2D& inputWorldCoordinates) const;
+	sf::Vector2f toPixelCoords(const sf::Vector2f& inputWorldCoordinates) const;
 
 	void updateView() const;
 
@@ -70,7 +67,6 @@ public:
 	//void showEntireSimulation() const; //changes variables to show entire sim window at once, easy preset thingy
 
 	//set functions
-	void setDrawAxis(const bool inputBool);
 	void setDrawActingForces(const bool inputBool);
 	void setDrawSquareGrid(const bool inputBool);
 	void setDrawVertexPoints(const bool inputBool);
@@ -82,13 +78,13 @@ public:
 	void setDrawAABBCollisionArea(const bool inputBool);
 	void setDrawEntityTexture(const bool inputBool);
 	void setDrawRotationAngle(const bool inputBool);
-	
+	void setDrawTrejectory(const bool inputBool);
+
 	void setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
 	void setViewPixelPos(const sf::Vector2f& inputViewPixelPos);
 	void setViewSimulationPos(const Vec2D& inputSimulationPos);
 
 	//get functions
-	bool getDrawAxis() const;
 	bool getDrawActingForces() const;
 	bool getDrawSquareGrid() const;
 	bool getDrawVertexPoints() const;
@@ -100,10 +96,10 @@ public:
 	bool getDrawAABBCollisionArea() const;
 	bool getDrawEntityTexture() const;
 	bool getDrawRotationAngle()const;
+	bool getDrawTrejectory() const;
 	sf::View getView() const;
 
-	void init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY);
-
+	void init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight);
 	DrawHandler();
 	
 private:
@@ -117,7 +113,6 @@ private:
 	
 	sf::View simulationView; //its pos is in its center
 	Vec2D viewPos; //top right corner in the plane
-	Vec2D viewSize; //width, height in meters on the cortesian plane thingy
 
 	sf::Vector2f viewPixelPos;
 	sf::Vector2f viewPixelSize; //widt and height in pixels onscreen
@@ -126,8 +121,7 @@ private:
 	sf::Sprite sprite; //the sprite that will be drawn onto the sf renderwindow
 
 	//bools regarding the rendering
-	bool drawAxis,
-		drawActingForces,
+	bool drawActingForces,
 		drawSquareGrid,
 		drawVertexPoints,
 		drawfilledVertexShapes,
@@ -137,7 +131,8 @@ private:
 		drawFrictionSurface,
 		drawAABBCollisionArea,
 		drawEntityTexture,
-		drawRotationAngleOfEntity;
+		drawRotationAngleOfEntity,
+		drawTrejectory;
 
 };
 #endif // !_DRAWHANDLER_

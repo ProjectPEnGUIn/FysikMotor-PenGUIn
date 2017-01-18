@@ -21,6 +21,8 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <cmath> //fabs, fmod
+#include <math.h> //fabs, fmod
 
 #include "PEVec2D.h"
 
@@ -70,7 +72,7 @@ public:
 	
 public:
 	//members
-	const float PI = 3.14159f;
+	const float PI = 3.141592f;
 private:
 	//members
 

@@ -111,7 +111,7 @@ float EntityHandler::getWorldMinY()
 {
 	return worldMinY;
 }
-void EntityHandler::init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY)
+void EntityHandler::init(const int inputMaxX, const int inputMinX, const float inputMaxY, const float inputMinY)
 {
 	worldMaxX = inputMaxX;
 	worldMinX = inputMinX;

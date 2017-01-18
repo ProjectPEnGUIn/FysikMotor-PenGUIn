@@ -5,6 +5,10 @@
 void VertexShape::setPosition(const Vec2D& inputPos) //sets the centerpos and all vertices
 {
 
+	//update vertices shape with the new vertex added
+	updateCenterPos();
+	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all posistions
 {
@@ -18,10 +22,20 @@ void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all po
 	{
 		vertices[i] += inputMoveAmount;
 	}
+
+	//update vertices shape with the new vertex added
+	updateCenterPos();
+	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::setRotationCenterOffset(const Vec2D& inputRotationOffset) //rotationpoiint is offset by this amound from centerpos
 {
 	rotationCenterOffset = inputRotationOffset;
+
+	//update vertices shape with the new vertex added
+	updateCenterPos();
+	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::incrementRotationDEGREES(float inputRotationIncrementDEGREES) //adds to tyhe current rotation of shaped
 {
@@ -30,7 +44,10 @@ void VertexShape::incrementRotationDEGREES(float inputRotationIncrementDEGREES) 
 	//convert the radian member to the same value
 	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0f;
 
+	//update vertices shape with the new vertex added
+	updateCenterPos();
 	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::incrementRotationRADIANS(float inputRotationIncrementRADIANS)
 {
@@ -39,24 +56,32 @@ void VertexShape::incrementRotationRADIANS(float inputRotationIncrementRADIANS)
 	//convert the degree thingy so they get the sam e vlaue
 	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0f) / PI;
 
+	//update vertices shape with the new vertex added
+	updateCenterPos();
 	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::setRotationDEGREES(float inputRotationDEGREES)
 {
-	float delta = rotationOffsetDEGREES - inputRotationDEGREES;
-	rotationOffsetDEGREES = inputRotationDEGREES + delta;
-	rotationOffsetRADIANS = (rotationOffsetDEGREES * PI) / 180.0f;
+	float delta = inputRotationDEGREES - rotationOffsetDEGREES;
+	rotationOffsetDEGREES = fmod(rotationOffsetDEGREES + delta, 360.0f);
+	rotationOffsetRADIANS = fmod((rotationOffsetDEGREES * 0.017453292f), (2 * PI));
 
+	//update vertices shape with the new vertex added
+	updateCenterPos();
 	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::setRotationRADIANS(float inputRotationRADIANS)
 {
-	float delta = rotationOffsetRADIANS - inputRotationRADIANS;
-	rotationOffsetRADIANS = inputRotationRADIANS + delta;
+	float delta = inputRotationRADIANS - rotationOffsetRADIANS;
+	rotationOffsetRADIANS = fmod(rotationOffsetRADIANS + delta, (2 * PI));
+	rotationOffsetDEGREES = fmod(rotationOffsetRADIANS / 0.017453292f, 360.0f);
 
-	rotationOffsetDEGREES = (rotationOffsetRADIANS * 180.0f) / PI;
-
+	//update vertices shape with the new vertex added
+	updateCenterPos();
 	updateRotationOnVertices();
+	updateAABBBox();
 }
 
 void VertexShape::addVertexPoint(const Vec2D& inputWorldCoordinate) //adds a vertex for the shape at the input world coo´rdinate, appends it to vertex vector
@@ -65,7 +90,6 @@ void VertexShape::addVertexPoint(const Vec2D& inputWorldCoordinate) //adds a ver
 
 	//update vertices shape with the new vertex added
 	updateCenterPos();
-	updateRotationOnVertices();
 	updateAABBBox();
 }
 void VertexShape::removeVertex(int inputVertexIndex) //removes the vertex at the given index, starts at 0
@@ -75,6 +99,10 @@ void VertexShape::removeVertex(int inputVertexIndex) //removes the vertex at the
 	{
 		vertices.erase(vertices.begin() + inputVertexIndex);
 	}
+	//update vertices shape with the new vertex added
+	updateCenterPos();
+	updateRotationOnVertices();
+	updateAABBBox();
 }
 void VertexShape::clearVertices() //erases all vertex points
 {
@@ -145,15 +173,17 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 }
 void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
-
-	rotation.rotate(rotationOffsetDEGREES, trueCenterPosition.getX(), trueCenterPosition.getY());
-	
+	rotation.rotate(rotationOffsetDEGREES, sf::Vector2f(trueCenterPosition.getX() + rotationCenterOffset.getX() , trueCenterPosition.getY() + rotationCenterOffset.getY()));//, trueCenterPosition.getX(), trueCenterPosition.getY());
 	sf::Vector2f temp; //use sfml vector
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
+		temp.x = 0;
+		temp.y = 0;
+
 	    //transforms the vertex point and stores it in temp
 		temp = rotation.transformPoint(vertices[i].getX() + rotationCenterOffset.getX(), vertices[i].getY() + rotationCenterOffset.getY());
+		
 		vertices[i].setXY(temp.x, temp.y); //give the vertex the new temppos
 	}
 }

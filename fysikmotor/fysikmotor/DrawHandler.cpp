@@ -3,7 +3,7 @@
 bool DrawHandler::isEntityWithinView(const Entity& inputEntity) const
 {
 	//if view entity is within the view area of the world 
-	if (entityAreaAABBCheck(inputEntity, viewPos.getX() + viewSize.getX(), viewPos.getX(), viewPos.getY(), viewPos.getY() - viewSize.getY()))
+	if (entityAreaAABBCheck(inputEntity, viewPos.getX() + maxX, viewPos.getX(), viewPos.getY(), viewPos.getY() - maxY))
 		return true;
 
 	return false;
@@ -21,14 +21,11 @@ sf::ConvexShape DrawHandler::makeIntoConvexShape(const VertexShape& inputVertexS
 	for (int i = 0; i < inputVertexShape.getAmountOfVertices(); i++)
 	{
 		//adds vertices onto the returnshaope one after another
-		returnShape.setPoint(i, transformWorldCoordinatesToPixelCoordinates(shapeVertices[i]));
+		returnShape.setPoint(i, toPixelCoords(shapeVertices[i]));
 	}
 
 	returnShape.setOutlineColor(sf::Color::Black);
 	returnShape.setOutlineThickness(1);
-	//returnShape.setPosition(transformWorldCoordinatesToPixelCoordinates(inputVertexShape.getCenterPos());
-
-	returnShape.setPosition(50, 50);
 
 	return returnShape;
 }
@@ -58,24 +55,14 @@ sf::VertexArray DrawHandler::makeArrowShape(const float startX, const float star
 
 	return arrowShape;
 }
-sf::Vector2f DrawHandler::transformWorldCoordinatesToPixelCoordinates(const Vec2D& inputWorldCoordinates) const
+sf::Vector2f DrawHandler::toPixelCoords(const Vec2D& inputWorldCoordinates) const
 {
-	return sf::Vector2f(inputWorldCoordinates.getX() - fabs(minX), fabs(minX) + fabs(maxY) - inputWorldCoordinates.getY());
+	return sf::Vector2f(inputWorldCoordinates.getX() * (viewPixelSize.x / maxX), (maxY - inputWorldCoordinates.getY()) * (viewPixelSize.y / maxY));
 }
-sf::Vector2f DrawHandler::transformWorldCoordinatesToPixelCoordinates(const sf::Vector2f& inputWorldCoordinates) const
+sf::Vector2f DrawHandler::toPixelCoords(const sf::Vector2f& inputWorldCoordinates) const
 {
-	return sf::Vector2f(inputWorldCoordinates.x - fabs(minX), fabs(minX) + fabs(maxY) - inputWorldCoordinates.y);
+	return sf::Vector2f(inputWorldCoordinates.x * (viewPixelSize.x / maxX), (maxY - inputWorldCoordinates.y) * (viewPixelSize.y / maxY));
 }
-
-sf::Vector2f DrawHandler::transformPixelCoordinatesToWorldCoordinates(const Vec2D& inputWorldCoordinates) const
-{
-	return sf::Vector2f(inputWorldCoordinates.getX() + minX, inputWorldCoordinates.getY() + maxY);
-}
-sf::Vector2f DrawHandler::transformPixelCoordinatesToWorldCoordinates(const sf::Vector2f& inputWorldCoordinates) const
-{
-	return sf::Vector2f(inputWorldCoordinates.x + minX, inputWorldCoordinates.y + maxY);
-}
-
 void DrawHandler::updateView() const
 {
 
@@ -90,38 +77,16 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	//2 draw other things on background such as lines etc...
 	//3 draw entities
 
-	rTexture.clear(sf::Color(255, 255, 255));
+	rTexture.clear(sf::Color(255, 255, 255)); //clears imga to white
 
 	//draw lines etc onto the rtexture
 
-	if (drawAxis)
-	{
-		sf::RectangleShape xAxis, yAxis;
-
-		xAxis.setSize(sf::Vector2f(fabs(minX) + fabs(maxX), 3));
-		xAxis.setPosition(transformWorldCoordinatesToPixelCoordinates(Vec2D(minX, 1)));
-		xAxis.setFillColor(sf::Color::Black);
-
-		yAxis.setSize(sf::Vector2f(3, fabs(minY) + fabs(maxY)));
-		yAxis.setPosition(transformWorldCoordinatesToPixelCoordinates(Vec2D(-1, maxY)));
-		yAxis.setFillColor(sf::Color::Black);
-		
-		rTexture.draw(xAxis);
-		rTexture.draw(yAxis);
-	}
 	if (drawSquareGrid)
 	{
 		//TODO, need to decide spacing etc
 
 		std::cout << "ERROR: TRIED TO DRW SQAUReQRID EVEN THO ITS NOT DONE DUMBASS/n";
 	}
-   
-
-	sf::CircleShape c;
-	c.setRadius(10);
-	c.setPosition(transformWorldCoordinatesToPixelCoordinates(Vec2D(15, 15)));
-	c.setFillColor(sf::Color::Cyan);
-	rTexture.draw(c);
 
 	//go through each of the entityies and draw its shape onto the texture
 	for (Entity e : inputEntities)
@@ -145,11 +110,13 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			//Draw it as a point, aka small circle
 			//maybe error with centering point, no offset? ehh will see if error occurs during runtime
 
-			sf::CircleShape c;
-			c.setPosition(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY());
-			c.setFillColor(sf::Color::Magenta);
-			c.setRadius(1);
-			rTexture.draw(c);
+			sf::CircleShape centerOfMass;
+			centerOfMass.setFillColor(sf::Color::Red);
+			centerOfMass.setOrigin(1, 1);
+			centerOfMass.setRadius(3); //make it scale to entitysize sometime
+			centerOfMass.setPosition(toPixelCoords(sf::Vector2f(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY())));
+			
+			rTexture.draw(centerOfMass);
 		}
 		if (drawVelocityVector)
 		{
@@ -204,10 +171,7 @@ void DrawHandler::setZoom(const sf::Vector2f& inputZoomFactor) //sets the zoomfa
 //void showEntireSimulation() const; //changes variables to show entire sim window at once, easy preset thingy
 
 //set functions
-void DrawHandler::setDrawAxis(const bool inputBool)
-{
-	drawAxis = inputBool;
-}
+
 void DrawHandler::setDrawActingForces(const bool inputBool)
 {
 	drawActingForces = inputBool;
@@ -252,6 +216,10 @@ void DrawHandler::setDrawRotationAngle(const bool inputBool)
 {
 	drawRotationAngleOfEntity = inputBool;
 }
+void DrawHandler::setDrawTrejectory(const bool inputBool)
+{
+	drawTrejectory = inputBool;
+}
 void DrawHandler::setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY)
 {
 	maxX = inputMaxX;
@@ -262,10 +230,6 @@ void DrawHandler::setSimulationBounds(const float inputMaxX, const float inputMi
 }
 
 //get functions
-bool DrawHandler::getDrawAxis() const
-{
-	return drawAxis;
-}
 bool DrawHandler::getDrawActingForces() const
 {
 	return drawActingForces;
@@ -310,22 +274,26 @@ bool DrawHandler::getDrawRotationAngle()const
 {
 	return drawRotationAngleOfEntity;
 }
+bool DrawHandler::getDrawTrejectory() const
+{
+	return drawTrejectory;
+}
 sf::View DrawHandler::getView() const
 {
 	return simulationView;
 }
 
-void DrawHandler::init(float inpputMaxX, float inputMinX, float inputMaxY, float inputMinY)
+void DrawHandler::init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight)
 {
-	maxX = inpputMaxX;
-	minX = inputMinX;
-	maxY = inputMaxY;
-	minY = inputMinY;
+	maxX = inputSimulationWidth;
+	minX = 0.0f;
+	maxY = inputSimulationHeight;
+	minY = 0;
 
-	int width = (int) fabs(inputMinX) + fabs(inpputMaxX) + 0.5; //abs = absolute value, |x|
-	int height = (int) fabs(inputMinY) + fabs(inputMaxY) + 0.5;
+	viewPixelSize.x = imageWidth;
+	viewPixelSize.y = imageHeight;
 
-	rTexture.create(width, height);
+	rTexture.create(imageWidth, imageHeight);
 }
 
 DrawHandler::DrawHandler()
@@ -336,24 +304,23 @@ DrawHandler::DrawHandler()
 	minY(0.0f),
 	simulationView(),
 	viewPos(),
-	viewSize(),
 	viewPixelPos(),
 	viewPixelSize(),
 	rTexture(),
 	sprite(),
 
-	drawAxis(true),
 	drawActingForces(false),
 	drawSquareGrid(false),
 	drawVertexPoints(false),
 	drawfilledVertexShapes(false),
 	drawVertexIDs(false),
-	drawCenterOfMass(false),
+	drawCenterOfMass(true),
 	drawVelocityVector(false),
 	drawFrictionSurface(false),
 	drawAABBCollisionArea(false),
 	drawEntityTexture(false),
-	drawRotationAngleOfEntity(false)
+	drawRotationAngleOfEntity(false),
+	drawTrejectory(false)
 {
 
 }

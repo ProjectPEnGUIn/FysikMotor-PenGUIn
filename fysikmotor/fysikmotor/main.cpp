@@ -21,13 +21,14 @@ int logicTickrate = 60; //amount of times it tries to do logic each seconds, min
 sf::Time drawTime = sf::seconds((1.0f / drawTickrate));
 sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
+
+
 int main()
 {
 
 	
-	float overlapTime = Vec2D(0.5f, 0).getMagnitude() / (Vec2D(-1, 0).getMagnitude() + Vec2D(1, 0).getMagnitude());
-
-	std::cout << overlapTime << std::endl;
+	
+	std::cout << (130 % 360);
 
 	std::cout << "Press enter\n";
 	std::cin.get();
@@ -38,16 +39,20 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(100, -100, 100, -100);
+		testEngine.init(500,500, 200, 200);
 
 		VertexShape tShape; 
-		tShape.addVertexPoint(Vec2D(0, 0));
-		tShape.addVertexPoint(Vec2D(0, 20));
-		tShape.addVertexPoint(Vec2D(20, 20));
-		tShape.addVertexPoint(Vec2D(20, 0));
+		tShape.addVertexPoint(Vec2D(0.0f, 0.0f));
+		tShape.addVertexPoint(Vec2D(0.0f, 20.0f));
+		tShape.addVertexPoint(Vec2D(20.0f, 20.0f));
+		tShape.addVertexPoint(Vec2D(20.0f, 0.0f));
 
-		tShape.addVertexPoint(Vec2D(-200, 200));
-		tShape.setPosition(Vec2D(0, 0));
+		tShape.movePosition(Vec2D(10, 10));
+		tShape.setRotationDEGREES(tShape.getCurrentRotationDEGREES() + 140);
+		
+
+		//std::cout << tShape.getCenterPos().getX() << " " << tShape.getCenterPos().getY();
+		//std::cin.get();
 
 		Entity tEntity;
 		tEntity.setVertexShape(tShape);
@@ -55,6 +60,13 @@ int main()
 		testEngine.addEntity(tEntity);
 
 
+		for (Vec2D v : tEntity.getVertexShape().getVertices())
+		{
+			std::cout << "x:" << v.getX() << " y:" << v.getY() << "\n";
+		}
+
+		std::cin.get();
+		
 		sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "PEnGUIn");  //creates the sfml window  //Physics Engine (a)n(d) Graphical User Interface n(noegenesis)
 		window.setPosition(sf::Vector2i(0, 0));
 		sf::Clock drawClock;  //clock that keeps track of how much time has passed from last time it was restarted

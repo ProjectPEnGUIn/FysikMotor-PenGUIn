@@ -6,6 +6,7 @@
 void Entity::setPosition(const Vec2D& inputPos) //Sets the pos using a PEVec2D object
 {
 	position = inputPos;
+	shape.setPosition(position);
 }
 void Entity::setVelocity(const Vec2D& inputVel) //sets velocity using pevec2d object
 {
@@ -55,7 +56,7 @@ void Entity::setVertexShape(const VertexShape& inputShape)
 //get functions
 Vec2D Entity::getPosition() const //gets the pos
 {
-	return position;
+	return shape.getCenterPos();
 }
 Vec2D Entity::getVelocity() const //gets the vel, in meters per second
 {

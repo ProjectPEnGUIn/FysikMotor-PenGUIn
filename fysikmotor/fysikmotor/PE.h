@@ -21,23 +21,27 @@ class PE
 private:
 	//functions
 
+	void updateEntityHandlerLogic();
+	void updateDrawHandlerLogic();
+
 public:
 	//functions
 
-	void init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY);
+	void init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight);
 	void addEntity(const Entity& inputEntity);
+	void clearEntities();
 	void draw(sf::RenderWindow& inputRenderwindow);
 	void update(const float& deltaTime);
-	void getEvent(sf::Event& inputEvent);
+	void inputEvent(sf::Event& inputEvent);
 
 	PE();
 
 private:
 	//members
 
-	EntityHandler entityHandler;
-	DrawHandler drawHandler;
-
+	EntityHandler entityHandler; //handles everything with entities, moving them around and checking for collisions -> handle collisions etc
+	DrawHandler drawHandler; //does all the drawing with use of entities from entityhandler
+	//LogicHandler logicHandler; //handles all the PE logic, takes input etc
 };
 
 #endif // !_PE_

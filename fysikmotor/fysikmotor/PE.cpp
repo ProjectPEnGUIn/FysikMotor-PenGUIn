@@ -1,15 +1,19 @@
 #include "PE.h"
 
 
-void PE::init(float inputMaxX, float inputMinX, float inputMaxY, float inputMinY)
+void PE::init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight)
 {
-	drawHandler.init(inputMaxX, inputMinX, inputMaxY, inputMinY);
-	entityHandler.init(inputMaxX, inputMinX, inputMaxY, inputMinY);
+	drawHandler.init(inputSimulationWidth, inputSimulationHeight, imageWidth, imageHeight);
+	entityHandler.init(inputSimulationWidth, 0, inputSimulationHeight, 0);
 	//init things
 }
 void PE::addEntity(const Entity& inputEntity)
 {
 	entityHandler.addEntity(inputEntity);
+}
+void PE::clearEntities()
+{
+	//entityHandler.clerEntities();
 }
 void PE::draw(sf::RenderWindow& inputRenderwindow)
 {
@@ -19,7 +23,7 @@ void PE::update(const float& deltaTime)
 {
 	entityHandler.updateEntities(deltaTime);
 }
-void getEvent(sf::Event& inputEvent)
+void inputEvent(sf::Event& inputEvent)
 {
 	//dothing
 }
