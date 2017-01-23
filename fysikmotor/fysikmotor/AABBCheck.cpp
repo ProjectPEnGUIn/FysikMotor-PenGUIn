@@ -1,5 +1,35 @@
 #include "AABBCheck.h"
 
+bool sweptEntityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2)
+{
+	//special kind of aabb check, can check collision of fast moving entities that happen between ticks
+	//based on https://hamaluik.com/posts/swept-aabb-collision-using-minkowski-difference/ 22/1 2017
+	//https://hamaluik.com/posts/simple-aabb-collision-using-minkowski-difference/ 22/1
+	//articles use python so i have to convert them on my own to c++
+
+
+	return false;
+}
+
+bool minskowskiDifferenceAABBCollisionCheck(const Entity& inputEntity1, const Entity& inputEntity2)
+{
+	//https://hamaluik.com/posts/simple-aabb-collision-using-minkowski-difference/
+	//covert python code into c++, the y axis in the python code was flipped, caused alot of errors 
+
+	//use differnt values in mdtopleft since the rest of the code uses flipped y axis
+	Vec2D mdTopLeft = Vec2D(inputEntity1.getAABBTopLeft().getX(), inputEntity1.getAABBTopLeft().getY()) - Vec2D(inputEntity2.getAABBMBottomRight().getX(), inputEntity2.getAABBMBottomRight().getY());
+	Vec2D mdFullSize = Vec2D(inputEntity1.getAABBMBottomRight().getX() - inputEntity1.getAABBTopLeft().getX(), inputEntity1.getAABBTopLeft().getY() - inputEntity1.getAABBMBottomRight().getY()) + Vec2D(inputEntity2.getAABBMBottomRight().getX() - inputEntity2.getAABBTopLeft().getX(), inputEntity2.getAABBTopLeft().getY() - inputEntity2.getAABBMBottomRight().getY());
+
+	if ((mdTopLeft.getX() <= 0)
+		&& (mdTopLeft.getX() + mdFullSize.getX() >= 0)
+	    && (mdTopLeft.getY() - mdFullSize.getY() <= 0)
+		&& (mdTopLeft.getY() >= 0))
+	{
+		return true;
+	}
+	
+	return false;
+}
 
 bool entityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2)
 {
@@ -10,6 +40,8 @@ bool entityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2
 	if (inputEntity1.getEntityID() != -1 && inputEntity2.getEntityID() != -1
 		&& inputEntity1.getEntityID() != inputEntity2.getEntityID())
 	{
+
+	
 
 		//checks if entity1 is ínside entity 2
 		//if a statement is false it will quit checking at the next &&, avoid unnecessary checks

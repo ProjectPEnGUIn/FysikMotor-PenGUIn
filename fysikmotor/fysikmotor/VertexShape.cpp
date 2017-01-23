@@ -4,11 +4,20 @@
 //set
 void VertexShape::setPosition(const Vec2D& inputPos) //sets the centerpos and all vertices
 {
+	//1 check deltaPos //2 apply deltapos to all vertices
 
-	//update vertices shape with the new vertex added
-	updateCenterPos();
-	updateRotationOnVertices();
-	updateAABBBox();
+	 Vec2D deltaPos = inputPos - trueCenterPosition;
+
+	 trueCenterPosition += deltaPos;
+
+	 //change vertices points
+	 for (Vec2D& p : vertices)
+	 {
+		 p += deltaPos;
+	 }
+
+	 updateAABBBox();
+
 }
 void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all posistions
 {
@@ -24,8 +33,7 @@ void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all po
 	}
 
 	//update vertices shape with the new vertex added
-	updateCenterPos();
-	updateRotationOnVertices();
+	
 	updateAABBBox();
 }
 void VertexShape::setRotationCenterOffset(const Vec2D& inputRotationOffset) //rotationpoiint is offset by this amound from centerpos
@@ -136,11 +144,11 @@ std::vector<Vec2D> VertexShape::getVertices() const //returnsa all vertices
 }
 Vec2D VertexShape::getTopLeftAABBCorner() const
 {
-	return aabbMin;
+	return aabbTL;
 }
 Vec2D VertexShape::getBottomRightAABBCorner() const
 {
-	return aabbMax;
+	return aabbBR;
 }
 sf::Transform VertexShape::getCurrentTransformation() const
 {
@@ -150,26 +158,35 @@ sf::Transform VertexShape::getCurrentTransformation() const
 //updating
 void VertexShape::updateAABBBox() //updates the aabb bounding box
 {
-	Vec2D maxPos, minPos;
+	float maxX = -1, minX = -1, maxY = -1, minY = -1; //has to be inited to something
+
+	if (vertices.size() > 1)
+	{
+		//init proper base values to maxx,minx,maxy,miny with values from the fist point
+		maxX = vertices[0].getX();
+		maxY = vertices[0].getX();
+		minX = vertices[0].getX();
+		minY = vertices[0].getY();
+	}
 
 	//searches through all the vertiuces for the max and min values
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
-		if (vertices[i].getX() > maxPos.getX())
-			maxPos.setX(vertices[i].getX());
+		if (vertices[i].getX() > maxX)
+			maxX = vertices[i].getX();
 
-		if (vertices[i].getY() > maxPos.getY())
-			maxPos.setY(vertices[i].getY());
+		if (vertices[i].getY() > maxY)
+			maxY = vertices[i].getY();
 
-		if (vertices[i].getX() < minPos.getX())
-			minPos.setX(vertices[i].getX());
+		if (vertices[i].getX() < minX)
+			minX = vertices[i].getX();
 
-		if (vertices[i].getY() < minPos.getY())
-			minPos.setY(vertices[i].getX());
+		if (vertices[i].getY() < minY)
+			minY = vertices[i].getX();
 	}
 
-	aabbMax = maxPos;
-	aabbMin = minPos;
+	aabbTL.setXY(minX, maxY);
+	aabbBR.setXY(maxX, minY);
 }
 void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
@@ -215,8 +232,8 @@ VertexShape::VertexShape()
 	rotationOffsetRADIANS(0),
 	vertices(),
 	rotation(),
-	aabbMin(),
-	aabbMax()
+	aabbTL(),
+	aabbBR()
 
 {
 	//log creating? maybe
@@ -232,8 +249,8 @@ VertexShape& VertexShape::operator=(const VertexShape& inputVertexShape)
 		rotationOffsetRADIANS = inputVertexShape.getCurrentRotationRADIANS();
 		vertices = inputVertexShape.getVertices();
 		rotation = inputVertexShape.getCurrentTransformation();
-		aabbMin = inputVertexShape.getBottomRightAABBCorner();
-		aabbMax = inputVertexShape.getTopLeftAABBCorner();
+		aabbBR = inputVertexShape.getBottomRightAABBCorner();
+		aabbTL = inputVertexShape.getTopLeftAABBCorner();
 	}
 	return *this;
 }

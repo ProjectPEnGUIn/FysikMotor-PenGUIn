@@ -82,7 +82,7 @@ private:
 		   rotationOffsetRADIANS;
 	std::vector<Vec2D> vertices; //vertices that define the shape, each vertex point x and y ´point
 	sf::Transform rotation; //rotation of shape
-	Vec2D aabbMin, aabbMax; //the aabb boundingbox min and max coords, easy collison checks
+	Vec2D aabbTL, aabbBR; //the aabb boundingbox min and max coords, easy collison checks
 
 };
 #endif // ! _VERTEXSHAPE_

@@ -79,6 +79,7 @@ public:
 	void setDrawEntityTexture(const bool inputBool);
 	void setDrawRotationAngle(const bool inputBool);
 	void setDrawTrejectory(const bool inputBool);
+	void setSquareGridSpacing(const float inputSpacing);
 
 	void setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
 	void setViewPixelPos(const sf::Vector2f& inputViewPixelPos);
@@ -98,6 +99,7 @@ public:
 	bool getDrawRotationAngle()const;
 	bool getDrawTrejectory() const;
 	sf::View getView() const;
+	float getSquareGridSpacing() const;
 
 	void init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight);
 	DrawHandler();
@@ -119,6 +121,8 @@ private:
 
 	sf::RenderTexture rTexture; //the texture entities will be drawn onto
 	sf::Sprite sprite; //the sprite that will be drawn onto the sf renderwindow
+
+	float squareGridSpacing; //in meters
 
 	//bools regarding the rendering
 	bool drawActingForces,

@@ -27,7 +27,7 @@ private:
 public:
 	//functions
 
-	void init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight);
+	void init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight, const float imageScreenXPos, const float imageScreenYPos);
 	void addEntity(const Entity& inputEntity);
 	void clearEntities();
 	void draw(sf::RenderWindow& inputRenderwindow);

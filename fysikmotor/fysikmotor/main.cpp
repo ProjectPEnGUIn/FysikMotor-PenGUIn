@@ -25,11 +25,6 @@ sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
 int main()
 {
-
-	
-	
-	std::cout << (130 % 360);
-
 	std::cout << "Press enter\n";
 	std::cin.get();
 
@@ -39,33 +34,52 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(500,500, 200, 200);
+		testEngine.init(10.0f, 10.0f, 500, 500, 20, 10);
 
-		VertexShape tShape; 
-		tShape.addVertexPoint(Vec2D(0.0f, 0.0f));
-		tShape.addVertexPoint(Vec2D(0.0f, 20.0f));
-		tShape.addVertexPoint(Vec2D(20.0f, 20.0f));
-		tShape.addVertexPoint(Vec2D(20.0f, 0.0f));
+		VertexShape tShape1, tShape2; 
+		float radius = 3.0f;
 
-		tShape.movePosition(Vec2D(10, 10));
-		tShape.setRotationDEGREES(tShape.getCurrentRotationDEGREES() + 140);
-		
+	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/5.0f)
+	//{
+	//	tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+	//}
+
+
+		tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
+		tShape1.addVertexPoint(Vec2D(0.0f, 2.0f));
+		tShape1.addVertexPoint(Vec2D(2.0f, 2.0f));
+		tShape1.addVertexPoint(Vec2D(2.0f, 0.0f));
+
+		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
+		tShape2.addVertexPoint(Vec2D(0.0f, 2.0f));
+		tShape2.addVertexPoint(Vec2D(8.0f, 2.0f));
+		tShape2.addVertexPoint(Vec2D(8.0f, 0.0f));
+
+		tShape2.setPosition(Vec2D(1, 1));
+		tShape1.setPosition(Vec2D(3, 2.5f));
+		//tShape.setRotationDEGREES(tShape.getCurrentRotationDEGREES() + 140);
 
 		//std::cout << tShape.getCenterPos().getX() << " " << tShape.getCenterPos().getY();
 		//std::cin.get();
 
-		Entity tEntity;
-		tEntity.setVertexShape(tShape);
+		Entity tEntity1, tEntity2;
+		tEntity1.setVertexShape(tShape1);
+		tEntity2.setVertexShape(tShape2);
 
-		testEngine.addEntity(tEntity);
+		tEntity1.setEnttityID(1);
+		tEntity2.setEnttityID(2);
 
+		tEntity1.setEntityState(1);
+		tEntity2.setEntityState(1);
 
-		for (Vec2D v : tEntity.getVertexShape().getVertices())
-		{
-			std::cout << "x:" << v.getX() << " y:" << v.getY() << "\n";
-		}
+		testEngine.addEntity(tEntity1);
+		testEngine.addEntity(tEntity2);
 
-		std::cin.get();
+		//for (Vec2D v : tEntity1.getVertexShape().getVertices())
+		//{
+		//	std::cout << "x:" << v.getX() << " y:" << v.getY() << "\n";
+		//}
+
 		
 		sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "PEnGUIn");  //creates the sfml window  //Physics Engine (a)n(d) Graphical User Interface n(noegenesis)
 		window.setPosition(sf::Vector2i(0, 0));
@@ -145,8 +159,6 @@ int main()
 
 				window.display(); //displays the current drawn frame
 			}
-
-
 		}
 	}
 

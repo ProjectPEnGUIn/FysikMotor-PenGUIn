@@ -18,7 +18,7 @@ void Entity::setAcceleration(const Vec2D& inputAcc) //sets the velocity using pe
 }
 void Entity::setActingForces(std::vector<Vec2D> inputActingForces) //sets all the acting forces on the current object using a vector of vec2d objects
 {
-
+	actingForces = inputActingForces;
 }
 void Entity::setMass(float inputMass) //sets the mass in kg
 {
@@ -51,6 +51,31 @@ void Entity::setAirDrag(float inputDouble)
 void Entity::setVertexShape(const VertexShape& inputShape)
 {
 	shape = inputShape;
+}
+void Entity::addForce(const Vec2D& inputForce) //adds it to acting forces vector
+{
+	actingForces.push_back(inputForce);
+
+}
+void Entity::setEntityState(const int inputState) //0 for static non movable, 0 for movable
+{
+	entityState = inputState;
+}
+void Entity::setEnttityID(const int inputIDNumber)
+{
+	entityID = inputIDNumber;
+}
+void Entity::setPreviousVelocity(const Vec2D& inputPrevVel)
+{
+	prevVel = inputPrevVel;
+}
+void Entity::setPreviousPosition(const Vec2D inputPrevPos)
+{
+	prevPos = inputPrevPos;
+}
+void Entity::setPreviousRotation(const float inputPrevRot)
+{
+	prevRot = inputPrevRot;
 }
 
 //get functions
@@ -118,6 +143,18 @@ VertexShape Entity::getVertexShape() const
 {
 	return shape;
 }
+Vec2D Entity::getPreviousVelocity() const
+{
+	return prevVel;
+}
+Vec2D Entity::getPreviousPosition() const
+{
+	return prevPos;
+}
+float Entity::getPreviousRotation() const
+{
+	return prevRot;
+}
 
 
 //update functions
@@ -150,14 +187,14 @@ Entity::Entity()
 	acceleration(),
 	actingForces(),
 
-	mass(-1),
+	mass(10.0f),
 	centerOfMassOffset(),
 
 	shape(),
 
 	isColliding(false),
 
-	restitutionCoefficient(0),
+	restitutionCoefficient(1),
 	dragCoefficient(0)
 	
 {

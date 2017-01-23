@@ -1,2 +1,24 @@
-﻿  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Release\fysikmotor.exe
+﻿  AABBCheck.cpp
+  DrawHandler.cpp
+DrawHandler.cpp(302): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+DrawHandler.cpp(303): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+  Entity.cpp
+  EntityHandler.cpp
+EntityHandler.cpp(116): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+EntityHandler.cpp(117): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+  InputHandler.cpp
+  main.cpp
+  PE.cpp
+PE.cpp(8): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+PE.cpp(8): warning C4244: 'argument': conversion from 'const float' to 'const int', possible loss of data
+  PEVec2D.cpp
+  QuadTree.cpp
+  SATCollisionCheck.cpp
+  VertexShape.cpp
+  Generating code
+  306 of 317 functions (96.5%) were compiled, the rest were copied from previous compilation.
+    23 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Release\fysikmotor.exe
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Release\fysikmotor.pdb (Full PDB)

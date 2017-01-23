@@ -83,16 +83,27 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 
 	if (drawSquareGrid)
 	{
-		//TODO, need to decide spacing etc
-
-		std::cout << "ERROR: TRIED TO DRW SQAUReQRID EVEN THO ITS NOT DONE DUMBASS/n";
+		for (float yLines = maxY / squareGridSpacing; yLines > 0; yLines--)
+		{
+			//for(int xLines = 
+		}
 	}
 
 	//go through each of the entityies and draw its shape onto the texture
 	for (Entity e : inputEntities)
 	{
-		rTexture.draw(makeIntoConvexShape(e.getVertexShape()));
+		if (drawAABBCollisionArea)
+		{
+			//draw a 2d box around entity
 
+			//creates a rectanglehape
+			sf::RectangleShape rShape;
+			rShape.setSize(toPixelCoords(Vec2D(e.getAABBMBottomRight().getX() - e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY() - e.getAABBMBottomRight().getY())));
+			rShape.setOutlineColor(sf::Color(255, 0, 0));
+			rShape.setPosition(toPixelCoords(Vec2D(e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY())));
+			rShape.setOutlineThickness(2);
+			rTexture.draw(rShape); //Draws the square shape onto the rTexture
+		}
 		if (drawActingForces)
 		{
 			//go through each of the acting forces and draw it from the cente ofmass of entity
@@ -105,19 +116,6 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		{
 
 		}
-		if (drawCenterOfMass)
-		{
-			//Draw it as a point, aka small circle
-			//maybe error with centering point, no offset? ehh will see if error occurs during runtime
-
-			sf::CircleShape centerOfMass;
-			centerOfMass.setFillColor(sf::Color::Red);
-			centerOfMass.setOrigin(1, 1);
-			centerOfMass.setRadius(3); //make it scale to entitysize sometime
-			centerOfMass.setPosition(toPixelCoords(sf::Vector2f(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY())));
-			
-			rTexture.draw(centerOfMass);
-		}
 		if (drawVelocityVector)
 		{
 			rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), e.getVelocity().getMagnitude(), 1, e.getVelocity().getDirectionDEGREES(), sf::Color::Blue));
@@ -125,18 +123,6 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		if (drawFrictionSurface)
 		{
 			//ehhh todo
-		}
-		if (drawAABBCollisionArea)
-		{
-			//draw a 2d box around entity
-
-			//creates a rectanglehape
-			sf::RectangleShape rShape;
-			rShape.setSize(sf::Vector2f(e.getAABBMBottomRight().getX() - e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY() - e.getAABBMBottomRight().getY()));
-			rShape.setOutlineColor(sf::Color(255, 0, 0));
-			rShape.setPosition(e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY());
-			rShape.setOutlineThickness(2);
-			rTexture.draw(rShape); //Draws the square shape onto the rTexture
 		}
 		if (drawEntityTexture)
 		{
@@ -147,18 +133,35 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			//draw line aligned with x axis
 			//draw a vertexarray with triangle shapes used, make a halfcircle spanning from the previous mentioned line and then draw text
 		}
+
+		rTexture.draw(makeIntoConvexShape(e.getVertexShape()));
+
+		if (drawCenterOfMass)
+		{
+			//Draw it as a point, aka small circle
+			//maybe error with centering point, no offset? ehh will see if error occurs during runtime
+
+			sf::CircleShape centerOfMass;
+			centerOfMass.setFillColor(sf::Color::Red);
+			centerOfMass.setOrigin(1, 1);
+			centerOfMass.setRadius(2); //make it scale to entitysize sometime
+			centerOfMass.setPosition(toPixelCoords(sf::Vector2f(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY())));
+
+			rTexture.draw(centerOfMass);
+		}
+
 	}
 	rTexture.display(); //displays it onto the rtexture
 	
 	sprite.setTexture(rTexture.getTexture()); //sets the sprite texture to the rtexture
-	
+
 	sprite.setPosition(viewPixelPos);
 
 	inputRenderWindow.draw(sprite); //Draws the sprite onto the renderwindow
 }
 void DrawHandler::setViewPosition(const sf::Vector2f& inputViewPosition) //sets the view pos on the simulation plane
 {
-	simulationView.setCenter(inputViewPosition);
+	//viewPos = inputViewPosition;
 }
 void DrawHandler::moveViewPosition(const sf::Vector2f& inputMoveAmount) //moves the view by the input amount
 {
@@ -220,6 +223,10 @@ void DrawHandler::setDrawTrejectory(const bool inputBool)
 {
 	drawTrejectory = inputBool;
 }
+void DrawHandler::setSquareGridSpacing(const float inputSpacing)
+{
+	squareGridSpacing = inputSpacing;
+}
 void DrawHandler::setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY)
 {
 	maxX = inputMaxX;
@@ -228,7 +235,10 @@ void DrawHandler::setSimulationBounds(const float inputMaxX, const float inputMi
 	minY = inputMinY;
 
 }
-
+void DrawHandler::setViewPixelPos(const sf::Vector2f& inputViewPixelPos)
+{
+	viewPixelPos = inputViewPixelPos;
+}
 //get functions
 bool DrawHandler::getDrawActingForces() const
 {
@@ -282,6 +292,10 @@ sf::View DrawHandler::getView() const
 {
 	return simulationView;
 }
+float DrawHandler::getSquareGridSpacing() const
+{
+	return squareGridSpacing;
+}
 
 void DrawHandler::init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight)
 {
@@ -308,6 +322,7 @@ DrawHandler::DrawHandler()
 	viewPixelSize(),
 	rTexture(),
 	sprite(),
+	squareGridSpacing(1.0f),
 
 	drawActingForces(false),
 	drawSquareGrid(false),

@@ -74,21 +74,115 @@ void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, 
 
 void EntityHandler::updateEntities(float deltaTime) //updates all entities, checks for collisions, handles collisioons
 {
+	//update forces - force - acc - vel - pos - reset forces ( let forces accumulate from now unti next logictick)
+	//then check for collision between entities after they have been moved
 
-}
-void EntityHandler::updateForces() //update forces on all entites
+	//go through and update each of the entiteis one by one
+	for (Entity& e : entities)
+	{
+		//if it is a movable entity
+
+			updateActingForces(e);
+			updateAcceleration(e);
+			updateVelocity(e);
+			updatePreviousEntityData(e);
+			updatePosition(deltaTime, e);
+			clearActingForces(e);
+	
+			if(e.getEntityID() == 1)
+		    	e.setPosition(e.getPosition() + Vec2D(0 ,0.08 ));
+	}
+
+	//check for collisions
+	for (Entity& e : entities)
+	{
+		//retrive entity from quadtree
+		//
+		//
+		//
+
+
+		//temp bruteforce check fornow
+		for (unsigned int i = 0; i < entities.size(); i++)
+		{
+		
+			//checks so the entiteis are defined and that collisions are not being checked with one entity and itself
+			if ((e.getEntityID() != -1) 
+				&& (entities[i].getEntityID() != -1)
+				&& (e.getEntityID() != entities[i].getEntityID()))
+			{
+				if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
+				{
+					//entiteis are possibly colliding
+
+					std::cout << "\ntouch" << std::endl;
+					std::cin.get();
+
+					////continue and try SAT collision method to be sure
+					//if (satCheck.SATCheck(e, entities[i]))
+					//{
+					//	//entities are definity inside of eachother
+					//
+					//	//handle collison logic
+					//	entityCollision(e, entities[i], satCheck.getPenentrationVector(), satCheck.getContactPoint());
+					//}
+				}
+			}
+		 }
+		}
+
+	}
+
+
+void EntityHandler::updateAcceleration(Entity& inputEntity) //updates acceleration on entitis
 {
+	//get resulting force of each entity and use F = ma, a = F/m
 
+		Vec2D resultingForce;
+
+		for (Vec2D& f : inputEntity.getActingForces())
+		{
+			resultingForce += f;
+		}
+
+		inputEntity.setAcceleration(Vec2D(resultingForce.getX() / inputEntity.getMass(), resultingForce.getY() / inputEntity.getMass()));
 }
-void EntityHandler::updateAcceleration() //updates acceleration on entitis
+void EntityHandler::updateVelocity(Entity& inputEntity) //updates velócitiyes on entiteis
 {
-
+	
+	    inputEntity.setVelocity(Vec2D(inputEntity.getVelocity().getX() + inputEntity.getAcceleration().getX(), inputEntity.getVelocity().getY() + inputEntity.getAcceleration().getY()));
+	//	std::cout << inputEntity.getVelocity().getY() << std::endl; std::cin.get();
 }
-void EntityHandler::updateVelocity() //updates velócitiyes on entiteis
+void EntityHandler::updatePosition(const float deltaTime, Entity& inputEntity)
 {
+	
+	    inputEntity.setPosition(inputEntity.getPosition() + inputEntity.getVelocity().scaleVector(deltaTime));
+		
+		//std::cout << "x:" << e.getPosition().getX() + e.getAcceleration().getX() << " y:" << e.getPosition().getY() + e.getAcceleration().getY() << std::endl;
+		//std::cin.get();
+	
+}
+void EntityHandler::updateActingForces(Entity& inputEntity)
+{
+	//add gravity, air resitance etc..
+
+		//F = mg
+	    inputEntity.addForce(Vec2D(gravitationalAcceleration.getX() * inputEntity.getMass(), gravitationalAcceleration.getY() * inputEntity.getMass()));
 
 }
+void EntityHandler::clearActingForces(Entity& inputEntity)
+{
+	std::vector<Vec2D> a; //has no values
 
+	inputEntity.setActingForces(a);
+}
+void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
+{
+	inputEntity.setPreviousPosition(inputEntity.getPosition());
+	
+	inputEntity.setPreviousVelocity(inputEntity.getVelocity());
+	//inputEntity.setPreviousRotation(inputEntity.getVertexShape().get)
+}
 					   //add entites
 void EntityHandler::addEntity(Entity inputEntity) //adds the entity to the list of entities
 {
@@ -111,7 +205,7 @@ float EntityHandler::getWorldMinY()
 {
 	return worldMinY;
 }
-void EntityHandler::init(const int inputMaxX, const int inputMinX, const float inputMaxY, const float inputMinY)
+void EntityHandler::init(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY)
 {
 	worldMaxX = inputMaxX;
 	worldMinX = inputMinX;
@@ -130,6 +224,8 @@ EntityHandler::EntityHandler()
 	worldMaxX(0),
 	worldMinX(0),
 	worldMaxY(0),
-	worldMinY(0)
+	worldMinY(0),
+
+	gravitationalAcceleration(0.0f, 0.0f)
 {
 }

@@ -40,8 +40,19 @@ Erik Magnusson 7/1 2017
 #ifndef _AABBFUNCTIONS_
 #define _AABBFUNCTIONS_
 
-#include "Entity.h"
 
+#include <iostream>
+#include <math.h>
+#include <cmath>
+
+#include "Entity.h"
+#include "PEVec2D.h"
+
+bool sweptEntityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2);
+//helper functions to this function;
+bool minskowskiDifferenceAABBCollisionCheck(const Entity& inputEntity1, const Entity& inputEntity2);
+
+bool entityAreaAABBCheck(const Entity& inputEntity, const float& maxX, const float& minX, const float& maxY, const float& minY);
 bool entityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2);
 bool entityAreaAABBCheck(const Entity& inputEntity, const float& maxX, const float& minX, const float& maxY, const float& minY);
 bool entityFullyWithinAreaAABBCheck(const Entity& inputEntity, const float& maxX, const float& minX, const float& maxY, const float& minY);

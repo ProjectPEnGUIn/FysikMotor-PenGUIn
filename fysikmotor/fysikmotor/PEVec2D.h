@@ -42,7 +42,7 @@ public:
 	void setVectorMagnitude(T inputLength); //sets the length of the vector, keeps the direction, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void setDirectionDEGREES(T inputDirectionInDegrees); //set the direction of vector in degrees, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	void setDirectionRADIANS(T inputDirectionInRadians); //set the diredtion of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
-	void scaleVector(T inputScaleAmount); //scales the vector so many times
+	PEVec2D scaleVector(T inputScaleAmount); //scales the vector so many times
 
 	//get functions
 	T getX() const; //returns x component
@@ -65,7 +65,7 @@ public:
 	PEVec2D& operator*=(T multiplyVectorWithScalar);
 	T operator*=(const PEVec2D& inputVectorToCrossProduct); //2d vector cross product
 	T operator*(const PEVec2D& inputVectorToCrossProduct); //2d vector cross product
-	T operator*(const float& inputScalar); 
+	//PEVec2D& operator*(const float& inputScalar); 
 
 	//constructor
 	PEVec2D(); //inits x and y components to 0, give them values at another point
@@ -118,10 +118,9 @@ template <typename T> void PEVec2D<T>::setDirectionRADIANS(T inputDirectionInRad
 {
 
 }
-template <typename T> void PEVec2D<T>::scaleVector(T inputScaleAmount) //scales the vector so many times
+template <typename T> PEVec2D<T> PEVec2D<T>::scaleVector(T inputScaleAmount) //scales the vector so many times
 {
-	x *= inputScaleAmount;
-	y *= inputScaleAmount;
+	return Vec2D(x * inputScaleAmount, y * inputScaleAmount);
 }
 //template <typename T>  void PEVec2D<T>::normalize() //séts length = 1 unit
 //{
@@ -227,11 +226,12 @@ template <typename T> T PEVec2D<T>::operator*(const PEVec2D& inputVectorToCrossP
 {
 	return x * inputVectorToCrossProduct.getY() - y * inputVectorToCrossProduct.getX();
 }
-template <typename T> T PEVec2D<T>::operator*(const float& inputScalar)
-{
-	x *= inputScalar;
-	y *= inputScalar;
-}
+//template <typename T> PEVec2D<T> PEVec2D<T>::operator*(const float& inputScalar)
+//{
+//	
+//	
+//	
+//}
 //constructor
 template <typename T> PEVec2D<T>::PEVec2D() //inits x and y components to 0, give them values at another point
 {

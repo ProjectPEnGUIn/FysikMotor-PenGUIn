@@ -37,6 +37,10 @@ public:
 	};
 private:
 	//functions
+
+	void updateAcceleration(const Vec2D& inputResultingForce); //updates acceleration
+	void updateVelocity(); //updates speed
+	void updatePosition();
 public:
 	//functions
 
@@ -53,6 +57,12 @@ public:
 	void setRestitutionCoefficient(float inputDouble); //between 0 and 1
 	void setAirDrag(float inputDouble);
 	void setVertexShape(const VertexShape& inputShape);
+	void addForce(const Vec2D& inputForce); //adds it to acting forces vector
+	void setEntityState(const int inputState); //0 for static non movable, 0 for movable
+	void setEnttityID(const int inputIDNumber);
+	void setPreviousVelocity(const Vec2D& inputPrevVel);
+	void setPreviousPosition(const Vec2D inputPrevPos);
+	void setPreviousRotation(const float inputPrevRot);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -71,12 +81,13 @@ public:
 	int getEntityID() const; //returns entity id, is an int
 	int getEntityState() const;
 	VertexShape getVertexShape() const;
+	Vec2D getPreviousVelocity() const;
+	Vec2D getPreviousPosition() const;
+	float getPreviousRotation() const;
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
-	void updateAcceleration(const Vec2D& inputResultingForce); //updates acceleration
-	void updateVelocity(); //updates speed
-	void updatePosition();
+
 
 	//void move(const Vec2D& inputMoveAmount);
 
@@ -106,6 +117,14 @@ private:
 
 	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
 	float dragCoefficient; //air drag of the body
+
+	//variables containing prev tick entity data
+	Vec2D prevPos;
+	Vec2D prevVel;
+	float prevRot;
+
+	//physics variabeles
+	
 
 	//torque members
 	Vec2D torque; //M = F*L

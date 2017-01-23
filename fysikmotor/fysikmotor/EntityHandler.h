@@ -15,6 +15,7 @@
 #include "PEVec2D.h"
 #include "Entity.h"
 #include "AABBCheck.h"
+#include "SATCollisionCheck.h"
 
 class EntityHandler
 {
@@ -27,14 +28,22 @@ private:
 	//collision countermeasures
 	void entityCollision(Entity& inpputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector, const Vec2D& contactPoint); //handles collision between entities
 
+	void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
+	void updateVelocity(Entity& inputEntity); //updates velócitiyes on entiteis
+	void updatePosition(const float deltaTime, Entity& inputEntity);
+	void updateActingForces(Entity& inputEntity);
+	void clearActingForces(Entity& inputEntity);
+
+	void updatePreviousEntityData(Entity& inputEntity);
+
 public:
 	//functions
 
 	//update funcrions
 	void updateEntities(float deltaTime); //updates all entities, checks for collisions, handles collisioons
-	void updateForces(); //update forces on all entites
-	void updateAcceleration(); //updates acceleration on entitis
-	void updateVelocity(); //updates velócitiyes on entiteis
+	
+
+	void elapseEntityTime(const Entity& inputEntity, const float deltaTime); //elapses time for a single entity
 
 	//add entites
 	void addEntity(Entity inputEntity); //adds the entity to the list of entities
@@ -45,7 +54,7 @@ public:
 	float getWorldMaxY();
 	float getWorldMinY();
 
-	void init(const int inputMaxX, const int inputMinX, const float inputMaxY, const float inputMinY);
+	void init(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
 
 	std::vector<Entity> getAllEntities(); //retirives all entiteis in pe    
 
@@ -62,6 +71,9 @@ private:
 	std::vector<Entity> entities;
 
 	bool automaticDelete; //deletes entities if they exit world boundries
+
+	//world variables that apply to all entities
+	Vec2D gravitationalAcceleration;  
 };
 
 #endif // !_ENTITYHANDLER_
