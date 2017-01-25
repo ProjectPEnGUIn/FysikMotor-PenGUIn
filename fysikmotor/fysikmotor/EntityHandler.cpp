@@ -78,60 +78,52 @@ void EntityHandler::updateEntities(float deltaTime) //updates all entities, chec
 	//then check for collision between entities after they have been moved
 
 	//go through and update each of the entiteis one by one
+
 	for (Entity& e : entities)
 	{
 		//if it is a movable entity
-
+		if (e.getEntityState() == 1)
+		{	
 			updateActingForces(e);
 			updateAcceleration(e);
 			updateVelocity(e);
 			updatePreviousEntityData(e);
 			updatePosition(deltaTime, e);
 			clearActingForces(e);
-	
-			if(e.getEntityID() == 1)
-		    	e.setPosition(e.getPosition() + Vec2D(0 ,0.08 ));
+		}
 	}
 
 	//check for collisions
 	for (Entity& e : entities)
 	{
-		//retrive entity from quadtree
-		//
-		//
-		//
-
-
-		//temp bruteforce check fornow
-		for (unsigned int i = 0; i < entities.size(); i++)
-		{
-		
-			//checks so the entiteis are defined and that collisions are not being checked with one entity and itself
-			if ((e.getEntityID() != -1) 
-				&& (entities[i].getEntityID() != -1)
-				&& (e.getEntityID() != entities[i].getEntityID()))
+			//temp bruteforce check fornow
+			for (unsigned int i = 0; i < entities.size(); i++)
 			{
-				if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
+				//checks so the entiteis are defined and that collisions are not being checked with one entity and itself
+				if ((e.getEntityID() != -1)
+					&& (entities[i].getEntityID() != -1)
+					&& (e.getEntityID() != entities[i].getEntityID()))
 				{
-					//entiteis are possibly colliding
+					if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
+					{
+						//entiteis are directly coliding
 
-					std::cout << "\ntouch" << std::endl;
-					std::cin.get();
+						std::cout << "Entities have directly collided " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << std::endl;
+						std::cin.get();
 
-					////continue and try SAT collision method to be sure
-					//if (satCheck.SATCheck(e, entities[i]))
-					//{
-					//	//entities are definity inside of eachother
-					//
-					//	//handle collison logic
-					//	entityCollision(e, entities[i], satCheck.getPenentrationVector(), satCheck.getContactPoint());
-					//}
+					}
+					else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == true)
+					{
+						//entiteis have colided this tick
+						std::cout << "Entities collided this tick nut passed through eachother " << "currentPos " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << std::endl;
+						std::cin.get();
+	
+					}
 				}
 			}
-		 }
-		}
-
 	}
+
+}
 
 
 void EntityHandler::updateAcceleration(Entity& inputEntity) //updates acceleration on entitis
@@ -182,6 +174,13 @@ void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
 	
 	inputEntity.setPreviousVelocity(inputEntity.getVelocity());
 	//inputEntity.setPreviousRotation(inputEntity.getVertexShape().get)
+
+	//Saves the aabb boundries pos before position is updated with new velocity
+	inputEntity.setPreviousAABBTL(inputEntity.getAABBTopLeft());
+	inputEntity.setPreviousAABBBR(inputEntity.getAABBMBottomRight());
+
+
+	//std::cout << "width " << inputEntity.getPreviousAABBBR().getX() - inputEntity.getPreviousAABBTL().getX() << " height " << inputEntity.getPreviousAABBTL().getY() - inputEntity.getPreviousAABBBR().getY() << std::endl;
 }
 					   //add entites
 void EntityHandler::addEntity(Entity inputEntity) //adds the entity to the list of entities
@@ -226,6 +225,7 @@ EntityHandler::EntityHandler()
 	worldMaxY(0),
 	worldMinY(0),
 
-	gravitationalAcceleration(0.0f, 0.0f)
+	gravitationalAcceleration(0.0f, -9.82f),
+	temp(false)
 {
 }

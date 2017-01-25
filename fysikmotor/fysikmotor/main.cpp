@@ -34,30 +34,31 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(10.0f, 10.0f, 500, 500, 20, 10);
+		testEngine.init(10.0f, 10.0f, 500, 500, 20, 20);
 
 		VertexShape tShape1, tShape2; 
-		float radius = 3.0f;
+		float radius = 2.0f;
 
-	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/5.0f)
+	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/7.0f)
 	//{
 	//	tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
 	//}
+	
 
 
 		tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
-		tShape1.addVertexPoint(Vec2D(0.0f, 2.0f));
-		tShape1.addVertexPoint(Vec2D(2.0f, 2.0f));
+		tShape1.addVertexPoint(Vec2D(0.0f, .1f));
+		tShape1.addVertexPoint(Vec2D(2.0f, .1f));
 		tShape1.addVertexPoint(Vec2D(2.0f, 0.0f));
 
 		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
-		tShape2.addVertexPoint(Vec2D(0.0f, 2.0f));
-		tShape2.addVertexPoint(Vec2D(8.0f, 2.0f));
-		tShape2.addVertexPoint(Vec2D(8.0f, 0.0f));
+		tShape2.addVertexPoint(Vec2D(0.0f, .1f));
+		tShape2.addVertexPoint(Vec2D(9.0f, .1f));
+		tShape2.addVertexPoint(Vec2D(9.0f, 0.0f));
 
-		tShape2.setPosition(Vec2D(1, 1));
-		tShape1.setPosition(Vec2D(3, 2.5f));
-		//tShape.setRotationDEGREES(tShape.getCurrentRotationDEGREES() + 140);
+		//tShape2.movePosition(Vec2D(0.25, 15.5));
+		//tShape1.movePosition(Vec2D(5, 90.f));
+		//tShape2.setRotationDEGREES(tShape2.getCurrentRotationDEGREES() + 15);
 
 		//std::cout << tShape.getCenterPos().getX() << " " << tShape.getCenterPos().getY();
 		//std::cin.get();
@@ -70,7 +71,10 @@ int main()
 		tEntity2.setEnttityID(2);
 
 		tEntity1.setEntityState(1);
-		tEntity2.setEntityState(1);
+		tEntity2.setEntityState(0);
+
+		tEntity1.setPosition(Vec2D(5,7));
+		tEntity2.setPosition(Vec2D(5.0f, 2.5f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);
@@ -92,6 +96,7 @@ int main()
 		//runs while the window is open
 		while (window.isOpen())
 		{
+
 			sf::Event programEvent;
 			while (window.pollEvent(programEvent)) //processes events
 			{

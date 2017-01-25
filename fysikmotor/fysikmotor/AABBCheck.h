@@ -48,9 +48,13 @@ Erik Magnusson 7/1 2017
 #include "Entity.h"
 #include "PEVec2D.h"
 
-bool sweptEntityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2);
-//helper functions to this function;
+
 bool minskowskiDifferenceAABBCollisionCheck(const Entity& inputEntity1, const Entity& inputEntity2);
+
+bool sweptMinskowskiDifferenceAABBCollisionCheck(const Entity& inputEntity1, const Entity& inputEntity2, const float inputDeltaTime);
+//helper functions to this function;
+float getRayIntersectionFractionOfFirstRay(const Vec2D& inputVec1Origin, const Vec2D& inputVec1End, const Vec2D& inputVec2Origin, const Vec2D& inputVec2End);
+float getRayIntersectionFraction(const Vec2D& inputVectorOrigin, const Vec2D& inputDirectionVector, const Vec2D& inputTL, const Vec2D& inputBR);
 
 bool entityAreaAABBCheck(const Entity& inputEntity, const float& maxX, const float& minX, const float& maxY, const float& minY);
 bool entityEntityAABBCheck(const Entity& inputEntity1, const Entity inputEntity2);

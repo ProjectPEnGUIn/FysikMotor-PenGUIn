@@ -95,13 +95,13 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		if (drawAABBCollisionArea)
 		{
 			//draw a 2d box around entity
-
+		//	std::cout << e.getAABBTopLeft().getY() - e.getAABBMBottomRight().getY() << std::endl; std::cin.get();
 			//creates a rectanglehape
-			sf::RectangleShape rShape;
-			rShape.setSize(toPixelCoords(Vec2D(e.getAABBMBottomRight().getX() - e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY() - e.getAABBMBottomRight().getY())));
+			sf::RectangleShape rShape; 
+			rShape.setSize(toPixelCoords(Vec2D(e.getAABBMBottomRight().getX(), e.getAABBTopLeft().getY())) - toPixelCoords(Vec2D(e.getAABBMBottomRight().getX(), e.getAABBTopLeft().getY())));
 			rShape.setOutlineColor(sf::Color(255, 0, 0));
 			rShape.setPosition(toPixelCoords(Vec2D(e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY())));
-			rShape.setOutlineThickness(2);
+			rShape.setOutlineThickness(1);
 			rTexture.draw(rShape); //Draws the square shape onto the rTexture
 		}
 		if (drawActingForces)
@@ -332,7 +332,7 @@ DrawHandler::DrawHandler()
 	drawCenterOfMass(true),
 	drawVelocityVector(false),
 	drawFrictionSurface(false),
-	drawAABBCollisionArea(false),
+	drawAABBCollisionArea(true),
 	drawEntityTexture(false),
 	drawRotationAngleOfEntity(false),
 	drawTrejectory(false)

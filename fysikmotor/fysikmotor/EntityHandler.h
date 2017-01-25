@@ -74,6 +74,9 @@ private:
 
 	//world variables that apply to all entities
 	Vec2D gravitationalAcceleration;  
+
+
+	bool temp;
 };
 
 #endif // !_ENTITYHANDLER_

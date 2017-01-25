@@ -158,16 +158,16 @@ sf::Transform VertexShape::getCurrentTransformation() const
 //updating
 void VertexShape::updateAABBBox() //updates the aabb bounding box
 {
-	float maxX = -1, minX = -1, maxY = -1, minY = -1; //has to be inited to something
+	float maxX = -FLT_MAX, minX = FLT_MAX, maxY = -FLT_MAX, minY = FLT_MAX; //has to be inited to something
 
-	if (vertices.size() > 1)
-	{
-		//init proper base values to maxx,minx,maxy,miny with values from the fist point
-		maxX = vertices[0].getX();
-		maxY = vertices[0].getX();
-		minX = vertices[0].getX();
-		minY = vertices[0].getY();
-	}
+//	if (vertices.size() > 1)
+//	{
+//		//init proper base values to maxx,minx,maxy,miny with values from the fist point
+//		maxX = vertices[0].getX();
+//		maxY = vertices[0].getX();
+//		minX = vertices[0].getX();
+//		minY = vertices[0].getY();
+//	}
 
 	//searches through all the vertiuces for the max and min values
 	for (unsigned int i = 0; i < vertices.size(); i++)
@@ -182,8 +182,10 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 			minX = vertices[i].getX();
 
 		if (vertices[i].getY() < minY)
-			minY = vertices[i].getX();
+			minY = vertices[i].getY();
 	}
+
+	//std::cout << "maxX:" << maxX << " minX" << minX << " maxY:" << maxY << " minY:" << minY << " deltaY:" << maxY - minY << "\n\n";
 
 	aabbTL.setXY(minX, maxY);
 	aabbBR.setXY(maxX, minY);

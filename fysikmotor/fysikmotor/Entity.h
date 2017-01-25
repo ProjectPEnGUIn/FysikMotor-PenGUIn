@@ -63,6 +63,8 @@ public:
 	void setPreviousVelocity(const Vec2D& inputPrevVel);
 	void setPreviousPosition(const Vec2D inputPrevPos);
 	void setPreviousRotation(const float inputPrevRot);
+	void setPreviousAABBTL(const Vec2D& inputAABBTL);
+	void setPreviousAABBBR(const Vec2D& inputAABBBR);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -84,6 +86,8 @@ public:
 	Vec2D getPreviousVelocity() const;
 	Vec2D getPreviousPosition() const;
 	float getPreviousRotation() const;
+	Vec2D getPreviousAABBTL() const;
+	Vec2D getPreviousAABBBR() const;
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
@@ -122,6 +126,7 @@ private:
 	Vec2D prevPos;
 	Vec2D prevVel;
 	float prevRot;
+	Vec2D prevAABBTL, prevAABBBR; 
 
 	//physics variabeles
 	

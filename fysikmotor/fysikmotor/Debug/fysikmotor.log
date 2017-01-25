@@ -1,4 +1,4 @@
-﻿  EntityHandler.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\entityhandler.cpp(93): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  main.cpp
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\main.cpp(20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

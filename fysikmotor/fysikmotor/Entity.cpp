@@ -5,8 +5,10 @@
 // set functions
 void Entity::setPosition(const Vec2D& inputPos) //Sets the pos using a PEVec2D object
 {
-	position = inputPos;
-	shape.setPosition(position);
+	prevAABBBR = shape.getBottomRightAABBCorner();
+	prevAABBTL = shape.getTopLeftAABBCorner();
+	prevPos = shape.getCenterPos();
+	shape.setPosition(inputPos);
 }
 void Entity::setVelocity(const Vec2D& inputVel) //sets velocity using pevec2d object
 {
@@ -77,6 +79,15 @@ void Entity::setPreviousRotation(const float inputPrevRot)
 {
 	prevRot = inputPrevRot;
 }
+void Entity::setPreviousAABBTL(const Vec2D& inputAABBTL)
+{
+	prevAABBTL = inputAABBTL;
+}
+void Entity::setPreviousAABBBR(const Vec2D& inputAABBBR)
+{
+	prevAABBBR = inputAABBBR;
+}
+
 
 //get functions
 Vec2D Entity::getPosition() const //gets the pos
@@ -155,6 +166,14 @@ float Entity::getPreviousRotation() const
 {
 	return prevRot;
 }
+Vec2D Entity::getPreviousAABBTL() const
+{
+	return prevAABBTL;
+}
+Vec2D Entity::getPreviousAABBBR() const
+{
+	return prevAABBBR;
+}
 
 
 //update functions
@@ -187,7 +206,7 @@ Entity::Entity()
 	acceleration(),
 	actingForces(),
 
-	mass(10.0f),
+	mass(1.0f),
 	centerOfMassOffset(),
 
 	shape(),
@@ -195,7 +214,12 @@ Entity::Entity()
 	isColliding(false),
 
 	restitutionCoefficient(1),
-	dragCoefficient(0)
+	dragCoefficient(0),
+	prevPos(),
+	prevVel(),
+	prevRot(),
+	prevAABBTL(),
+	prevAABBBR()
 	
 {
 
