@@ -81,6 +81,13 @@ void EntityHandler::updateEntities(float deltaTime) //updates all entities, chec
 
 	for (Entity& e : entities)
 	{
+		if (e.getIsColliding() == 1)
+		{
+			std::cout << "press enter\n" << std::endl;
+			std::cin.get();
+			e.setIsColliding(false);
+		}
+
 		//if it is a movable entity
 		if (e.getEntityState() == 1)
 		{	
@@ -96,6 +103,8 @@ void EntityHandler::updateEntities(float deltaTime) //updates all entities, chec
 	//check for collisions
 	for (Entity& e : entities)
 	{
+		if (e.getEntityState() == 1)
+		{
 			//temp bruteforce check fornow
 			for (unsigned int i = 0; i < entities.size(); i++)
 			{
@@ -109,18 +118,21 @@ void EntityHandler::updateEntities(float deltaTime) //updates all entities, chec
 						//entiteis are directly coliding
 
 						std::cout << "Entities have directly collided " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << std::endl;
-						std::cin.get();
+						e.setIsColliding(true);
+					//	std::cin.get();
 
 					}
 					else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == true)
 					{
 						//entiteis have colided this tick
 						std::cout << "Entities collided this tick nut passed through eachother " << "currentPos " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << std::endl;
-						std::cin.get();
-	
+						e.setIsColliding(true);
+						//	std::cin.get();
+
 					}
 				}
 			}
+		}
 	}
 
 }

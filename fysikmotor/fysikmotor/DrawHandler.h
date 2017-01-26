@@ -49,8 +49,7 @@ private:
 	bool isEntityWithinView(const Entity& inputEntity) const;
 	sf::ConvexShape makeIntoConvexShape(const VertexShape& inputVertexShape) const; //turns an own made vertexshapape object into a vertexarray object
 	void keepViewWithinBorders() const; //keeps the view within the max and min world size
-	sf::VertexArray makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour); //arrow scales to the input length
-
+	sf::ConvexShape makeArrowShape(const float inputStartX, const float inputStartY, const Vec2D& inputVector, const sf::Color& inputColour); //arrow scales to the input lengt
 	sf::Vector2f toPixelCoords(const Vec2D& inputWorldCoordinates) const;
 	sf::Vector2f toPixelCoords(const sf::Vector2f& inputWorldCoordinates) const;
 

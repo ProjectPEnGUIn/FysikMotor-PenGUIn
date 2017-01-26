@@ -45,7 +45,7 @@ bool sweptMinskowskiDifferenceAABBCollisionCheck(const Entity& inputEntity1, con
 	}
 	else
 	{
-		Vec2D relativeMotion = (Vec2D(inputEntity1.getVelocity().getX(), -inputEntity1.getVelocity().getY()) - Vec2D(inputEntity2.getVelocity().getX(), -inputEntity2.getVelocity().getY())).scaleVector(inputDeltaTime); //how much they have moved relative to eachother
+		Vec2D relativeMotion = (Vec2D(inputEntity1.getVelocity().getX(), -1 * inputEntity1.getVelocity().getY()) - Vec2D(inputEntity2.getVelocity().getX(), -1 * inputEntity2.getVelocity().getY())).scaleVector(inputDeltaTime); //how much they have moved relative to eachother
         
 		float h = getRayIntersectionFraction(Vec2D(0, 0), relativeMotion, Vec2D(mdTopLeft.getX(), mdTopLeft.getY()), Vec2D(mdTopLeft.getX() + mdFullSize.getX(), mdTopLeft.getY() - mdFullSize.getY()));
 

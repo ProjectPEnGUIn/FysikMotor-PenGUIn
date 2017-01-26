@@ -34,24 +34,22 @@ void DrawHandler::keepViewWithinBorders() const //keeps the view within the max 
 	//check if view is outside 
 }
 
-sf::VertexArray DrawHandler::makeArrowShape(const float startX, const float startY, const float inputLength, const float sizeFactor, const float inputRotationDEGREES, const sf::Color& inputColour) //arrow scales to the input length, warning uses alot of math and cmath cos/sin functions
+sf::ConvexShape makeArrowShape(const float inputStartX, const float inputStartY, const Vec2D& inputVector, const sf::Color& inputColour) //arrow scales to the input length
 {
-	float pointyness = 45; //in degrees
-	float arrowheadHeight = inputLength / 8;
+	sf::ConvexShape arrowShape(7);
 
-	sf::VertexArray arrowShape(sf::LinesStrip, 2); //arrowshaft and arrowtip
+	arrowShape.setPoint(0, sf::Vector2f(-1, 0));
+	arrowShape.setPoint(1, sf::Vector2f(1, 0));
+	arrowShape.setPoint(2, sf::Vector2f(1, inputVector.getMagnitude()/10));
+	arrowShape.setPoint(3, sf::Vector2f(3, inputVector.getMagnitude()/10));
+	arrowShape.setPoint(4, sf::Vector2f(0, inputVector.getMagnitude() / 8));
+	arrowShape.setPoint(5, sf::Vector2f(-3, inputVector.getMagnitude() / 10));
+	arrowShape.setPoint(6, sf::Vector2f(-1, inputVector.getMagnitude() / 10));
 
-	arrowShape[0] = sf::Vector2f(startX, startY); //arrow startpoint
-	arrowShape[1] = sf::Vector2f(cos(inputRotationDEGREES) * inputLength, sin(inputRotationDEGREES) * inputLength); //arrow tippoint
-		
-	arrowShape[2] = sf::Vector2f(cos(inputRotationDEGREES) * inputLength - cos(pointyness) * arrowheadHeight, sin(inputRotationDEGREES) * inputLength + sin(pointyness) * arrowheadHeight);
-	arrowShape[3] = sf::Vector2f(cos(inputRotationDEGREES) * inputLength + cos(pointyness) * arrowheadHeight, sin(inputRotationDEGREES) * inputLength - sin(pointyness) * arrowheadHeight);
-	
-	//change the colour of the vertices
-	arrowShape[0].color = inputColour;
-	arrowShape[1].color = inputColour;
-	arrowShape[2].color = inputColour;
-	arrowShape[3].color = inputColour;
+	arrowShape.rotate(inputVector.getDirectionDEGREES());
+
+	arrowShape.setFillColor(inputColour);
+	arrowShape.setPosition(inputStartX, inputStartY);
 
 	return arrowShape;
 }
@@ -104,21 +102,13 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			rShape.setOutlineThickness(1);
 			rTexture.draw(rShape); //Draws the square shape onto the rTexture
 		}
-		if (drawActingForces)
-		{
-			//go through each of the acting forces and draw it from the cente ofmass of entity
-			for (Vec2D f : e.getActingForces())
-			{
-				rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f.getMagnitude(), 1, f.getDirectionDEGREES(), sf::Color::Red));
-			}
-		}
 		if (drawVertexIDs)
 		{
 
 		}
 		if (drawVelocityVector)
 		{
-			rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), e.getVelocity().getMagnitude(), 1, e.getVelocity().getDirectionDEGREES(), sf::Color::Blue));
+			//rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), e.getVelocity(), sf::Color::Magenta));
 		}
 		if (drawFrictionSurface)
 		{
@@ -148,6 +138,14 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			centerOfMass.setPosition(toPixelCoords(sf::Vector2f(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY())));
 
 			rTexture.draw(centerOfMass);
+		}
+		if (drawActingForces)
+		{
+			//go through each of the acting forces and draw it from the cente ofmass of entity
+			for (Vec2D f : e.getActingForces())
+			{
+				rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f, sf::Color::Blue));
+			}
 		}
 
 	}
@@ -304,6 +302,7 @@ void DrawHandler::init(const float inputSimulationWidth, const float inputSimula
 	maxY = inputSimulationHeight;
 	minY = 0;
 
+
 	viewPixelSize.x = imageWidth;
 	viewPixelSize.y = imageHeight;
 
@@ -324,7 +323,7 @@ DrawHandler::DrawHandler()
 	sprite(),
 	squareGridSpacing(1.0f),
 
-	drawActingForces(false),
+	drawActingForces(true),
 	drawSquareGrid(false),
 	drawVertexPoints(false),
 	drawfilledVertexShapes(false),
