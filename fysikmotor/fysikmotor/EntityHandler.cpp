@@ -71,13 +71,28 @@ void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, 
 	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2Vf.getX() * overlapTime, entity2Vf.getY() * overlapTime));
 
 }
+float EntityHandler::getAirDensity(const float inputHeight) const
+{
 
-void EntityHandler::updateEntities(float deltaTime) //updates all entities, checks for collisions, handles collisioons
+	//asume air density 1.225 for now https://en.wikipedia.org/wiki/Density_of_air 28/1
+
+	return float(1.25f);
+}
+Vec2D EntityHandler::getAirResistance(const Vec2D& inputVelocity, const float inputDragCoefficient, const float inputSillhouetteArea, const float inputHeight) const //returns the air resistance force vector
+{
+	//F = C * ( (A * airDensity * V^2)/2
+	//ifrån utdelat häfte, inte säker ännu om det är hastighet nu eller hastighet nu+1tick som används
+
+	return Vec2D(inputDragCoefficient * ((inputSillhouetteArea * getAirDensity(inputHeight) * inputVelocity.getX() * inputVelocity.getX()) / 2.0f), inputDragCoefficient * ((inputSillhouetteArea * getAirDensity(inputHeight) * inputVelocity.getY() * inputVelocity.getY()) / 2.0f));
+}
+void EntityHandler::updateEntities(const float deltaTime) //updates all entities, checks for collisions, handles collisioons
 {
 	//update forces - force - acc - vel - pos - reset forces ( let forces accumulate from now unti next logictick)
 	//then check for collision between entities after they have been moved
 
 	//go through and update each of the entiteis one by one
+
+	tempElapsedTime += deltaTime;
 
 	for (Entity& e : entities)
 	{
@@ -90,13 +105,14 @@ void EntityHandler::updateEntities(float deltaTime) //updates all entities, chec
 
 		//if it is a movable entity
 		if (e.getEntityState() == 1)
-		{	
+		{
+			clearActingForces(e);
 			updateActingForces(e);
 			updateAcceleration(e);
-			updateVelocity(e);
+			updateVelocity(e, deltaTime);
 			updatePreviousEntityData(e);
 			updatePosition(deltaTime, e);
-			clearActingForces(e);
+			
 		}
 	}
 
@@ -113,23 +129,33 @@ void EntityHandler::updateEntities(float deltaTime) //updates all entities, chec
 					&& (entities[i].getEntityID() != -1)
 					&& (e.getEntityID() != entities[i].getEntityID()))
 				{
-					if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
+
+					SATCollisionCheck satCheck;
+
+					if (satCheck.SATCheck(e, entities[i]))
 					{
-						//entiteis are directly coliding
-
-						std::cout << "Entities have directly collided " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << std::endl;
+						std::cout << "woo" << std::endl;
 						e.setIsColliding(true);
-					//	std::cin.get();
-
 					}
-					else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == true)
-					{
-						//entiteis have colided this tick
-						std::cout << "Entities collided this tick nut passed through eachother " << "currentPos " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << std::endl;
-						e.setIsColliding(true);
-						//	std::cin.get();
 
-					}
+
+					//if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
+					//{
+					//	//entiteis are directly coliding
+					//
+					//	std::cout << "Entities have directly collided " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << " time:" << tempElapsedTime << std::endl;
+					//	e.setIsColliding(true);
+					////	std::cin.get();
+					//
+					//}
+					//else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == true)
+					//{
+					//	//entiteis have colided this tick
+					//	std::cout << "Entities collided this tick nut passed through eachother " << "currentPos " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() <<  " time:" << tempElapsedTime << std::endl;
+					//	e.setIsColliding(true);
+					//	//	std::cin.get();
+					//
+					//}
 				}
 			}
 		}
@@ -142,28 +168,21 @@ void EntityHandler::updateAcceleration(Entity& inputEntity) //updates accelerati
 {
 	//get resulting force of each entity and use F = ma, a = F/m
 
-		Vec2D resultingForce;
-
-		for (Vec2D& f : inputEntity.getActingForces())
-		{
-			resultingForce += f;
-		}
-
-		inputEntity.setAcceleration(Vec2D(resultingForce.getX() / inputEntity.getMass(), resultingForce.getY() / inputEntity.getMass()));
+	
+	//	inputEntity.setAcceleration(Vec2D(resultingForce.getX() / inputEntity.getMass(), resultingForce.getY() / inputEntity.getMass()));
 }
-void EntityHandler::updateVelocity(Entity& inputEntity) //updates velócitiyes on entiteis
+void EntityHandler::updateVelocity(Entity& inputEntity, const float InputDeltaTime) //updates velócitiyes on entiteis
 {
 	
-	    inputEntity.setVelocity(Vec2D(inputEntity.getVelocity().getX() + inputEntity.getAcceleration().getX(), inputEntity.getVelocity().getY() + inputEntity.getAcceleration().getY()));
-	//	std::cout << inputEntity.getVelocity().getY() << std::endl; std::cin.get();
+	    inputEntity.setVelocity(Vec2D(inputEntity.getVelocity().getX() + ((inputEntity.getResultingForce().getX() * InputDeltaTime) / inputEntity.getMass()), inputEntity.getVelocity().getY() + ((inputEntity.getResultingForce().getY() * InputDeltaTime) / inputEntity.getMass())));
+	
+		
+		//	std::cout << inputEntity.getVelocity().getY() << std::endl; std::cin.get();
 }
 void EntityHandler::updatePosition(const float deltaTime, Entity& inputEntity)
 {
 	
 	    inputEntity.setPosition(inputEntity.getPosition() + inputEntity.getVelocity().scaleVector(deltaTime));
-		
-		//std::cout << "x:" << e.getPosition().getX() + e.getAcceleration().getX() << " y:" << e.getPosition().getY() + e.getAcceleration().getY() << std::endl;
-		//std::cin.get();
 	
 }
 void EntityHandler::updateActingForces(Entity& inputEntity)
@@ -171,13 +190,28 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 	//add gravity, air resitance etc..
 
 		//F = mg
-	    inputEntity.addForce(Vec2D(gravitationalAcceleration.getX() * inputEntity.getMass(), gravitationalAcceleration.getY() * inputEntity.getMass()));
+	
 
+		Vec2D resultingForce;
+
+		//add gravity force
+		inputEntity.addForce(Vec2D(gravitationalAcceleration.getX() * inputEntity.getMass(), gravitationalAcceleration.getY() * inputEntity.getMass()));
+		
+		//add air resistance
+		//inputEntity.addForce(getAirResistance(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), 12.56f, inputEntity.getPosition().getY()));
+
+		for (Vec2D& f : inputEntity.getActingForces())
+		{
+			resultingForce += f;
+		}
+
+		inputEntity.setResultingForce(resultingForce);
 }
 void EntityHandler::clearActingForces(Entity& inputEntity)
 {
 	std::vector<Vec2D> a; //has no values
 
+	inputEntity.setResultingForce(Vec2D(0, 0));
 	inputEntity.setActingForces(a);
 }
 void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
@@ -234,10 +268,12 @@ EntityHandler::EntityHandler()
 	:
 	worldMaxX(0),
 	worldMinX(0),
+
 	worldMaxY(0),
 	worldMinY(0),
 
 	gravitationalAcceleration(0.0f, -9.82f),
-	temp(false)
+	temp(false),
+	tempElapsedTime(0.0f)
 {
 }

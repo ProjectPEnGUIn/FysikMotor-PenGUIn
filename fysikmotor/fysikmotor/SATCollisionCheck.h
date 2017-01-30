@@ -24,11 +24,21 @@ also indepth
 use this object and a function that takes in two entities, returns true if colliding. 
 then if true it can retrive the penentrationvector
 
-Erik Magnusson NA3 1/12 2017
+Erik Magnusson NA3 12/1 2017
+
+
+//new attempt 30/1 2017
+http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
+
+
+
 */
 
 #ifndef  _SATCOLLISIONCHECK_
 #define _SATCOLLISIONCHECK_
+
+#include <cmath>
+#include <math.h>
 
 #include "Entity.h"
 #include "PEVec2D.h"
@@ -39,10 +49,16 @@ class SATCollisionCheck
 private:
 	//functions
 
+	bool isConvex(const Entity& inputEntity) const;
+	void SATtest(const Vec2D& inputAxis, const std::vector<Vec2D>& inputPoints, float& minAlong, float& maxAlong);
+	std::vector<Vec2D> getNormals(const std::vector<Vec2D>& inputVertices) const; //takes in all vertices and returns all normals
+	bool overlaps(const float min1, const float max1, const float min2, const float max2) const;
+	inline bool isBetweenOrdered(const float val, const float lowerBound, const float upperBound) const;
+
 public:
 	//functions
 
-	bool SATCheck(const Entity& inputEntity1, const Entity& inputEntity2) const;
+	bool SATCheck(const Entity& inputEntity1, const Entity& inputEntity2);
 	void clearVariables(); //resets all variables so it can take in new entities and compare
 	Vec2D getPenentrationVector() const; //returns
 	Vec2D getContactPoint() const; //coords of contact point between

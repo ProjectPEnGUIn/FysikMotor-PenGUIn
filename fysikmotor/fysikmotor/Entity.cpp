@@ -46,7 +46,7 @@ void Entity::setRestitutionCoefficient(float inputDouble) //between 0 and 1
 {
 	restitutionCoefficient = inputDouble;
 }
-void Entity::setAirDrag(float inputDouble)
+void Entity::setDragCoefficient(float inputDouble)
 {
 	dragCoefficient = inputDouble;
 }
@@ -86,6 +86,10 @@ void Entity::setPreviousAABBTL(const Vec2D& inputAABBTL)
 void Entity::setPreviousAABBBR(const Vec2D& inputAABBBR)
 {
 	prevAABBBR = inputAABBBR;
+}
+void Entity::setResultingForce(const Vec2D& inputResultingForce)
+{
+	resultingForce = inputResultingForce;
 }
 
 
@@ -130,7 +134,7 @@ float Entity::getRestitutionCoefficient() const
 {
 	return restitutionCoefficient;
 }
-float Entity::getAirDrag() const
+float Entity::getDragCoefficient() const
 {
 	return dragCoefficient;
 }
@@ -174,7 +178,10 @@ Vec2D Entity::getPreviousAABBBR() const
 {
 	return prevAABBBR;
 }
-
+Vec2D Entity::getResultingForce() const
+{
+	return resultingForce;
+}
 
 //update functions
 void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
@@ -205,6 +212,7 @@ Entity::Entity()
 	velocity(),
 	acceleration(),
 	actingForces(),
+	resultingForce(),
 
 	mass(1.0f),
 	centerOfMassOffset(),
@@ -214,7 +222,7 @@ Entity::Entity()
 	isColliding(false),
 
 	restitutionCoefficient(1),
-	dragCoefficient(0),
+	dragCoefficient(0.15),
 	prevPos(),
 	prevVel(),
 	prevRot(),

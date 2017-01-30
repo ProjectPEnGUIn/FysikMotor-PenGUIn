@@ -34,23 +34,35 @@ void DrawHandler::keepViewWithinBorders() const //keeps the view within the max 
 	//check if view is outside 
 }
 
-sf::ConvexShape makeArrowShape(const float inputStartX, const float inputStartY, const Vec2D& inputVector, const sf::Color& inputColour) //arrow scales to the input length
+sf::ConvexShape DrawHandler::makeArrowShape(const float inputStartX, const float inputStartY, const Vec2D& inputVector, const sf::Color inputColour, const float inputScale) //arrow scales to the input length
 {
-	sf::ConvexShape arrowShape(7);
+	//make a square for now to save time
+
+	const float height = inputVector.getMagnitude() * inputScale;
+
+	//rotation is clockwise due to sfml t, sfml rotate is 0 at the top basiclly
+	float rotation = inputVector.getDirectionDEGREES();
+
+	rotation += 90.0f;
+	rotation *= -1.0f;
+
+	if (rotation > 360.0f || rotation < 0)
+		rotation = fmod(rotation, 360.0f);
+
+	sf::ConvexShape arrowShape;
+	arrowShape.setPointCount(4);
 
 	arrowShape.setPoint(0, sf::Vector2f(-1, 0));
 	arrowShape.setPoint(1, sf::Vector2f(1, 0));
-	arrowShape.setPoint(2, sf::Vector2f(1, inputVector.getMagnitude()/10));
-	arrowShape.setPoint(3, sf::Vector2f(3, inputVector.getMagnitude()/10));
-	arrowShape.setPoint(4, sf::Vector2f(0, inputVector.getMagnitude() / 8));
-	arrowShape.setPoint(5, sf::Vector2f(-3, inputVector.getMagnitude() / 10));
-	arrowShape.setPoint(6, sf::Vector2f(-1, inputVector.getMagnitude() / 10));
+	arrowShape.setPoint(2, sf::Vector2f(1, 0) + toPixelCoords(sf::Vector2f(0, height)));
+	arrowShape.setPoint(3, sf::Vector2f(-1, 0) + toPixelCoords(sf::Vector2f(0, height)));
 
-	arrowShape.rotate(inputVector.getDirectionDEGREES());
+	arrowShape.setPosition(toPixelCoords(sf::Vector2f(inputStartX, inputStartY)));
+
+	arrowShape.setRotation(rotation);
 
 	arrowShape.setFillColor(inputColour);
-	arrowShape.setPosition(inputStartX, inputStartY);
-
+	
 	return arrowShape;
 }
 sf::Vector2f DrawHandler::toPixelCoords(const Vec2D& inputWorldCoordinates) const
@@ -92,15 +104,12 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	{
 		if (drawAABBCollisionArea)
 		{
-			//draw a 2d box around entity
-		//	std::cout << e.getAABBTopLeft().getY() - e.getAABBMBottomRight().getY() << std::endl; std::cin.get();
-			//creates a rectanglehape
 			sf::RectangleShape rShape; 
 			rShape.setSize(toPixelCoords(Vec2D(e.getAABBMBottomRight().getX(), e.getAABBTopLeft().getY())) - toPixelCoords(Vec2D(e.getAABBMBottomRight().getX(), e.getAABBTopLeft().getY())));
 			rShape.setOutlineColor(sf::Color(255, 0, 0));
 			rShape.setPosition(toPixelCoords(Vec2D(e.getAABBTopLeft().getX(), e.getAABBTopLeft().getY())));
 			rShape.setOutlineThickness(1);
-			rTexture.draw(rShape); //Draws the square shape onto the rTexture
+			rTexture.draw(rShape); 
 		}
 		if (drawVertexIDs)
 		{
@@ -142,9 +151,9 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		if (drawActingForces)
 		{
 			//go through each of the acting forces and draw it from the cente ofmass of entity
-			for (Vec2D f : e.getActingForces())
-			{
-				rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f, sf::Color::Blue));
+			for (const Vec2D& f : e.getActingForces())
+			{		
+				 rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f, sf::Color::Blue, 0.1f));
 			}
 		}
 
@@ -295,7 +304,7 @@ float DrawHandler::getSquareGridSpacing() const
 	return squareGridSpacing;
 }
 
-void DrawHandler::init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight)
+void DrawHandler::init(const float inputSimulationWidth, const float inputSimulationHeight, const float imageWidth, const float imageHeight)
 {
 	maxX = inputSimulationWidth;
 	minX = 0.0f;

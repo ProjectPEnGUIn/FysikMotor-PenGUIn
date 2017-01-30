@@ -49,7 +49,7 @@ private:
 	bool isEntityWithinView(const Entity& inputEntity) const;
 	sf::ConvexShape makeIntoConvexShape(const VertexShape& inputVertexShape) const; //turns an own made vertexshapape object into a vertexarray object
 	void keepViewWithinBorders() const; //keeps the view within the max and min world size
-	sf::ConvexShape makeArrowShape(const float inputStartX, const float inputStartY, const Vec2D& inputVector, const sf::Color& inputColour); //arrow scales to the input lengt
+	sf::ConvexShape makeArrowShape(const float inputStartX, const float inputStartY, const Vec2D& inputVector, const sf::Color inputColour, const float inputScale); //arrow scales to the input lengt
 	sf::Vector2f toPixelCoords(const Vec2D& inputWorldCoordinates) const;
 	sf::Vector2f toPixelCoords(const sf::Vector2f& inputWorldCoordinates) const;
 
@@ -100,7 +100,7 @@ public:
 	sf::View getView() const;
 	float getSquareGridSpacing() const;
 
-	void init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight);
+	void init(const float inputSimulationWidth, const float inputSimulationHeight, const float imageWidth, const float imageHeight);
 	DrawHandler();
 	
 private:

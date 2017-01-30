@@ -29,18 +29,21 @@ private:
 	void entityCollision(Entity& inpputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector, const Vec2D& contactPoint); //handles collision between entities
 
 	void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
-	void updateVelocity(Entity& inputEntity); //updates velócitiyes on entiteis
+	void updateVelocity(Entity& inputEntity, const float inputDeltaTime); //updates velócitiyes on entiteis
 	void updatePosition(const float deltaTime, Entity& inputEntity);
 	void updateActingForces(Entity& inputEntity);
 	void clearActingForces(Entity& inputEntity);
 
 	void updatePreviousEntityData(Entity& inputEntity);
 
+	float getAirDensity(const float inputHeight) const ;
+	Vec2D getAirResistance(const Vec2D& inputVelocity, const float inputDragCoefficient, const float inputSillhouetteArea, const float inputheight) const; //returns the air resistance force vector
+
 public:
 	//functions
 
 	//update funcrions
-	void updateEntities(float deltaTime); //updates all entities, checks for collisions, handles collisioons
+	void updateEntities(const float deltaTime); //updates all entities, checks for collisions, handles collisioons
 	
 
 	void elapseEntityTime(const Entity& inputEntity, const float deltaTime); //elapses time for a single entity
@@ -77,6 +80,7 @@ private:
 
 
 	bool temp;
+	float tempElapsedTime;
 };
 
 #endif // !_ENTITYHANDLER_

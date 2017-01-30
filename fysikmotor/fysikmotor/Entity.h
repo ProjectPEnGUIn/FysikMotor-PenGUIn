@@ -55,7 +55,7 @@ public:
 	void setAngleRotationRADIANS(float inputRotationRADIANS); //Sets the entity rotation in radians
 	void setIsColliding(bool inputBool); //sets isColding
 	void setRestitutionCoefficient(float inputDouble); //between 0 and 1
-	void setAirDrag(float inputDouble);
+	void setDragCoefficient(float inputDouble);
 	void setVertexShape(const VertexShape& inputShape);
 	void addForce(const Vec2D& inputForce); //adds it to acting forces vector
 	void setEntityState(const int inputState); //0 for static non movable, 0 for movable
@@ -65,6 +65,7 @@ public:
 	void setPreviousRotation(const float inputPrevRot);
 	void setPreviousAABBTL(const Vec2D& inputAABBTL);
 	void setPreviousAABBBR(const Vec2D& inputAABBBR);
+	void setResultingForce(const Vec2D& inputResultingForce);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -77,7 +78,7 @@ public:
 	float getAngleRotationRADIANS() const; //gets the rotation of entity in radians
 	bool getIsColliding() const;
 	float getRestitutionCoefficient() const;
-	float getAirDrag() const;
+	float getDragCoefficient() const;
 	Vec2D getAABBTopLeft() const; //returns aabb shape top left coords
 	Vec2D getAABBMBottomRight() const; //returns shape aabb bottom left coords
 	int getEntityID() const; //returns entity id, is an int
@@ -88,6 +89,7 @@ public:
 	float getPreviousRotation() const;
 	Vec2D getPreviousAABBTL() const;
 	Vec2D getPreviousAABBBR() const;
+	Vec2D getResultingForce() const;
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
@@ -111,6 +113,7 @@ private:
 	Vec2D velocity; //velocity of entity, has a magnitude and direction, in meters per second
 	Vec2D acceleration; //acceleration, in meters per seconds squared
 	std::vector<Vec2D> actingForces; //all of the acting forces on the entity at this moment, in Newtons
+	Vec2D resultingForce;
 
 	float mass; //mass of entity in kg, -1 if not set
 	Vec2D centerOfMassOffset; //pos of center of mass, is in the center of entity by default

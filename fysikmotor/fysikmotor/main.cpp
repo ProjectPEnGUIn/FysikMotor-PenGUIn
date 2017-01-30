@@ -25,6 +25,7 @@ sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
 int main()
 {
+	
 	std::cout << "Press enter\n";
 	std::cin.get();
 
@@ -34,34 +35,27 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(10.0f, 10.0f, 500, 500, 20, 20);
+		testEngine.init(50.0f, 50.0f, 500 ,500, 20, 20);
 
 		VertexShape tShape1, tShape2; 
-		float radius = 2.0f;
+		float radius = 9.0f;
 
-	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/10.0f)
+
+	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/7.0f)
 	{
 		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
 	}
-	
 
 
-	//	tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
-	//	tShape1.addVertexPoint(Vec2D(0.0f, .1f));
-	//	tShape1.addVertexPoint(Vec2D(2.0f, .1f));
-	//	tShape1.addVertexPoint(Vec2D(2.0f, 0.0f));
 
 		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
-		tShape2.addVertexPoint(Vec2D(0.0f, .5f));
-		tShape2.addVertexPoint(Vec2D(9.0f, .5f));
-		tShape2.addVertexPoint(Vec2D(9.0f, 0.0f));
+		tShape2.addVertexPoint(Vec2D(0.0f, 10.0f));
+		tShape2.addVertexPoint(Vec2D(30.0f, 10.0f));
+		tShape2.addVertexPoint(Vec2D(30.0f, 0.0f));
 
-		//tShape2.movePosition(Vec2D(0.25, 15.5));
-		//tShape1.movePosition(Vec2D(5, 90.f));
-		//tShape2.setRotationDEGREES(tShape2.getCurrentRotationDEGREES() + 15);
+	//	tShape1.setRotationDEGREES(0);
+		tShape2.setRotationDEGREES(277.0f);
 
-		//std::cout << tShape.getCenterPos().getX() << " " << tShape.getCenterPos().getY();
-		//std::cin.get();
 
 		Entity tEntity1, tEntity2;
 		tEntity1.setVertexShape(tShape1);
@@ -73,8 +67,8 @@ int main()
 		tEntity1.setEntityState(1);
 		tEntity2.setEntityState(0);
 
-		tEntity1.setPosition(Vec2D(5,9.9f));
-		tEntity2.setPosition(Vec2D(5.0f, 2.5f));
+		tEntity1.setPosition(Vec2D(25,40.0f));
+		tEntity2.setPosition(Vec2D(25.0f,10.0f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);

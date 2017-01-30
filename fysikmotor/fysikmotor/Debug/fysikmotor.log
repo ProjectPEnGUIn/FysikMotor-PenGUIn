@@ -1,5 +1,3 @@
-﻿  DrawHandler.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(306): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(307): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
-DrawHandler.obj : error LNK2019: unresolved external symbol "private: class sf::ConvexShape __thiscall DrawHandler::makeArrowShape(float,float,class PEVec2D<float> const &,class sf::Color const &)" (?makeArrowShape@DrawHandler@@AAE?AVConvexShape@sf@@MMABV?$PEVec2D@M@@ABVColor@3@@Z) referenced in function "public: void __thiscall DrawHandler::draw(class sf::RenderWindow &,class std::vector<class Entity,class std::allocator<class Entity> > const &)" (?draw@DrawHandler@@QAEXAAVRenderWindow@sf@@ABV?$vector@VEntity@@V?$allocator@VEntity@@@std@@@std@@@Z)
-C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe : fatal error LNK1120: 1 unresolved externals
+﻿  main.cpp
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
