@@ -51,15 +51,17 @@ private:
 
 	bool isConvex(const Entity& inputEntity) const;
 	void SATtest(const Vec2D& inputAxis, const std::vector<Vec2D>& inputPoints, float& minAlong, float& maxAlong);
-	std::vector<Vec2D> getNormals(const std::vector<Vec2D>& inputVertices) const; //takes in all vertices and returns all normals
-	bool overlaps(const float min1, const float max1, const float min2, const float max2) const;
+	std::vector<Vec2D> getNormalizedNormals(const std::vector<Vec2D>& inputVertices) const; //takes in all vertices and returns all normals
+	bool overlaps(const float min1, const float max1, const float min2, const float max2);
 	inline bool isBetweenOrdered(const float val, const float lowerBound, const float upperBound) const;
+	float getOverlapAmount(const float max1, const float min1, const float max2, const float min2) const;
 
 public:
 	//functions
 
 	bool SATCheck(const Entity& inputEntity1, const Entity& inputEntity2);
 	void clearVariables(); //resets all variables so it can take in new entities and compare
+	float getOverlap() const;
 	Vec2D getPenentrationVector() const; //returns
 	Vec2D getContactPoint() const; //coords of contact point between
 
@@ -68,8 +70,10 @@ public:
 private:
 	//members
 	
+	float overlap;
+
 	Vec2D contactPoint; //the point, pos, at which the entities are touching
-	Vec2D penentrationVector; //vector containing the penentration distance between two objects that are inside eachother
+	Vec2D penentrationVector; //vector containing the penentration distance between two objects that are inside eachother //is facing 90 degrees out from contact edge
 
 };
 #endif // ! _SATCOLLISIONCHECK_

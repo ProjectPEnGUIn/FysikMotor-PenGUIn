@@ -35,26 +35,30 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(50.0f, 50.0f, 500 ,500, 20, 20);
+		testEngine.init(5.0f, 5.0f, 500 ,500, 20, 20);
 
 		VertexShape tShape1, tShape2; 
-		float radius = 9.0f;
+		float radius = 1.0f;
 
 
-	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/7.0f)
-	{
-		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
-	}
-
-
-
+	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/4.0f)
+	//{
+	//	tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+	//
+	//}
+	
+	    tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
+	    tShape1.addVertexPoint(Vec2D(0.0f, 1.0f));
+	    tShape1.addVertexPoint(Vec2D(1.0f, 1.0f));
+	    tShape1.addVertexPoint(Vec2D(1.0f, 0.0f));
+           
 		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
-		tShape2.addVertexPoint(Vec2D(0.0f, 10.0f));
-		tShape2.addVertexPoint(Vec2D(30.0f, 10.0f));
-		tShape2.addVertexPoint(Vec2D(30.0f, 0.0f));
+		tShape2.addVertexPoint(Vec2D(0.0f, 1.f));
+		tShape2.addVertexPoint(Vec2D(1.f, 1.f));
+		tShape2.addVertexPoint(Vec2D(1.f, 0.0f));
 
-	//	tShape1.setRotationDEGREES(0);
-		tShape2.setRotationDEGREES(277.0f);
+		tShape1.setRotationDEGREES(45.0f);
+	    tShape2.setRotationDEGREES(45.0f);
 
 
 		Entity tEntity1, tEntity2;
@@ -67,8 +71,8 @@ int main()
 		tEntity1.setEntityState(1);
 		tEntity2.setEntityState(0);
 
-		tEntity1.setPosition(Vec2D(25,40.0f));
-		tEntity2.setPosition(Vec2D(25.0f,10.0f));
+		tEntity1.setPosition(Vec2D(0.5f, 1.25f));
+		tEntity2.setPosition(Vec2D(1.0f, .5f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);

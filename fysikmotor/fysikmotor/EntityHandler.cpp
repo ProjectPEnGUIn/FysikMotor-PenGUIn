@@ -121,7 +121,7 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 	{
 		if (e.getEntityState() == 1)
 		{
-			//temp bruteforce check fornow
+			//temp bruteforce check for now
 			for (unsigned int i = 0; i < entities.size(); i++)
 			{
 				//checks so the entiteis are defined and that collisions are not being checked with one entity and itself
@@ -134,9 +134,23 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 
 					if (satCheck.SATCheck(e, entities[i]))
 					{
-						std::cout << "woo" << std::endl;
+						std::cout << "ol:" << satCheck.getOverlap() << " mt:" << satCheck.getPenentrationVector().getMagnitude() << " mtx:" << satCheck.getPenentrationVector().getX() << " mty:" << satCheck.getPenentrationVector().getY() << " mtv direction:" << satCheck.getPenentrationVector().getDirectionDEGREES() << std::endl;
+						//e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
+
 						e.setIsColliding(true);
 					}
+					
+					
+				//	for (const Vec2D& v :  e.getVertexShape().getVertices())
+				//	{
+				//		std::cout << "x:" << v.getX() << " y:" << v.getY() << std::endl;
+				//	}
+				//	std::cout << std::endl;
+				//	for (const Vec2D& v : entities[i].getVertexShape().getVertices())
+				//	{
+				//		std::cout << "x:" << v.getX() << " y:" << v.getY() << std::endl;
+				//	}
+				//	std::cin.get();
 
 
 					//if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
@@ -272,7 +286,7 @@ EntityHandler::EntityHandler()
 	worldMaxY(0),
 	worldMinY(0),
 
-	gravitationalAcceleration(0.0f, -9.82f),
+	gravitationalAcceleration(0.0f, 0.0f),
 	temp(false),
 	tempElapsedTime(0.0f)
 {

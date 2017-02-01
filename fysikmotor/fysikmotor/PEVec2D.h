@@ -62,7 +62,7 @@ public:
 	PEVec2D operator*(T inputScalar) const; //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
 	PEVec2D& operator+=(const PEVec2D& addToVector);
 	PEVec2D& operator-=(const PEVec2D& subtractFromVector);
-	PEVec2D& operator*=(T multiplyVectorWithScalar) const;
+	PEVec2D& operator*=(const float multiplyVectorWithScalar);
 	T operator*=(const PEVec2D& inputVectorToCrossProduct) const; //2d vector cross product
 	T operator*(const PEVec2D& inputVectorToCrossProduct) const; //2d vector cross product
 	//PEVec2D& operator*(const float& inputScalar); 
@@ -156,7 +156,7 @@ template <typename T> PEVec2D<T> PEVec2D<T>::getNormalisation() const //length =
 {
 	const auto currentLength = sqrt((x*x) + (y*y));
 
-	assert( currentLength > 0 && "Error: tried to normalize a vector of length 0 :(\n" );
+	//assert( currentLength > 0 && "Error: tried to normalize a vector of length 0 :(\n" );
 	
 	return PEVec2D<T>(x / currentLength, y / currentLength);
 }
@@ -212,11 +212,9 @@ template <typename T> PEVec2D<T>& PEVec2D<T>::operator-=(const PEVec2D<T>& subtr
 	y = y - subtractFromVector.getY();
 	return *this;
 }
-template <typename T> PEVec2D<T>& PEVec2D<T>::operator*=(T multiplyVectorWithScalar) const
+template <typename T> PEVec2D<T>& PEVec2D<T>::operator*=(const float multiplyVectorWithScalar)
 {
-	x = x * multiplyVectorWithScalar;
-	y = y * multiplyVectorWithScalar;
-	return *this;
+	return PEVec2D<T>(x * multiplyVectorWithScalar, y * multiplyVectorWithScalar);
 }
 template <typename T> T PEVec2D<T>::operator*=(const PEVec2D& inputVectorToCrossProduct) const //2d vector cross product
 {	

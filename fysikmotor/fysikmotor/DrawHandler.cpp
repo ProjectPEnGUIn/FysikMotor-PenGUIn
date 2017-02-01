@@ -153,7 +153,11 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			//go through each of the acting forces and draw it from the cente ofmass of entity
 			for (const Vec2D& f : e.getActingForces())
 			{		
-				 rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f, sf::Color::Blue, 0.1f));
+				//doesnt draw forces that have both x and y as 0, pointless and draws a horisontal line on screen
+				if (!(f.getX() == 0 && f.getY() == 0)) 
+				{
+					rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f, sf::Color::Blue, 0.1f));
+				}
 			}
 		}
 
