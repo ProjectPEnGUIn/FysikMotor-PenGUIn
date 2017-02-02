@@ -1,3 +1,5 @@
-﻿  main.cpp
-  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
-  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
+﻿  GJK.cpp
+c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\gjk.cpp(137): warning C4800: 'float': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\gjk.cpp(100): warning C4715: 'GJK::processSimplex': not all control paths return a value
+  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
+  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

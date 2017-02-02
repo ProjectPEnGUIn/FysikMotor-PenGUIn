@@ -221,8 +221,8 @@ Entity::Entity()
 
 	isColliding(false),
 
-	restitutionCoefficient(1),
-	dragCoefficient(0.15),
+	restitutionCoefficient(1.0f),
+	dragCoefficient(0.15f),
 	prevPos(),
 	prevVel(),
 	prevRot(),

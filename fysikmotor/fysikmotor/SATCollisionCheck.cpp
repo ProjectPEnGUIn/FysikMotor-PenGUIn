@@ -65,6 +65,8 @@ float SATCollisionCheck::getOverlapAmount(const float max1, const float min1, co
 
 	if (min1 > min2 && min1 < max2)
 		return max2 - min1;
+
+	return -FLT_MAX;
 }
 
 bool SATCollisionCheck::SATCheck(const Entity& inputEntity1, const Entity& inputEntity2)

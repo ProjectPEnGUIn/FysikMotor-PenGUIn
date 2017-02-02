@@ -17,6 +17,8 @@
 #include "AABBCheck.h"
 #include "SATCollisionCheck.h"
 
+#include "GJK.h"
+
 class EntityHandler
 {
 private:

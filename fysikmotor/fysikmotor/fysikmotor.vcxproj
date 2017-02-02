@@ -114,6 +114,7 @@
     <ClCompile Include="DrawHandler.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityHandler.cpp" />
+    <ClCompile Include="GJK.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PE.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="DrawHandler.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityHandler.h" />
+    <ClInclude Include="GJK.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="PE.h" />
     <ClInclude Include="PEVec2D.h" />
