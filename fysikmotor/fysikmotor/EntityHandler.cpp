@@ -98,8 +98,8 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 	{
 		if (e.getIsColliding() == 1)
 		{
-			std::cout << "press enter\n" << std::endl;
-			std::cin.get();
+			//std::cout << "press enter\n" << std::endl;
+			//std::cin.get();
 			e.setIsColliding(false);
 		}
 
@@ -139,7 +139,12 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 					if (gjkTest.collisionCheck(e.getVertexShape(), entities[i].getVertexShape()))
 					{
 						
-						std::cout << "DFDFFSFDSRF" << std::endl;
+						std::cout << "GJK collision occoured at next coords" << std::endl;
+						
+						
+						std::cout << e.getPosition().getY() << std::endl;
+						
+						std::cin.get();
 					
 						//std::cout << "ol:" << satCheck.getOverlap() << " mt:" << satCheck.getPenentrationVector().getMagnitude() << " mtx:" << satCheck.getPenentrationVector().getX() << " mty:" << satCheck.getPenentrationVector().getY() << " mtv direction:" << satCheck.getPenentrationVector().getDirectionDEGREES() << std::endl;
 						//e.setPosition(e.getPosition() + satCheck.getPenentrationVector());

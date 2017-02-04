@@ -17,6 +17,8 @@ http://www.dyn4j.org/2010/04/gjk-gilbert-johnson-keerthi/
 http://in2gpu.com/2014/05/12/gjk-algorithm-collision-detection-2d-in-c/
 http://entropyinteractive.com/2011/04/gjk-algorithm/
 
+https://www.youtube.com/watch?v=XIavUJ848Mk 2/2
+
 goals: detect n shaped convex polygon overlapping, get penentration vector/MTV/overlap, get collision coordinates
 
 Erik Magnusson 1/2 2017
@@ -29,24 +31,23 @@ Erik Magnusson 1/2 2017
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "PEVec2D.h"
-#include "Entity.h"
+#include "VertexShape.h"
 
 class GJK
 {
+
 private:
 	//functions
 	
-	enum simplexCorner{A, B, C};
+	bool isShapeConvex(const VertexShape& inputVertexShape1) const;
+	std::vector<VertexShape> getSubConvexVertexShapes(const VertexShape& inputVertexShape); //returns all the convex shapes that makes up the concave vertexshapes
 
-	bool isShapeConvex(const Entity& inputEntity) const;
-
-	void negateVector(Vec2D& inputVector);
-	bool processSimplex(Vec2D& direction);
-	Vec2D getFarthestPointInDirection(const VertexShape& inputShape, const Vec2D& inputDirection) const;
-	Vec2D support(const VertexShape& inputShape1, const VertexShape& inputShape2, const Vec2D& inputDirection) const;
-	bool isSameDirection(const Vec2D& inputVector1, const Vec2D& inputVector2) const;
+	Vec2D support(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2, const Vec2D& inputDirection); //returns a point in the minskowski differance
+	Vec2D getFarthestPointInDirection(const std::vector<Vec2D>& inputPoints, const Vec2D& inputDirection);
+	bool doSimplex(std::vector<Vec2D>& inputSimplex, Vec2D& inputDirection); //modifies theo input values
 
 public:
 	//functions
@@ -54,15 +55,12 @@ public:
 	Vec2D getMTV() const; //returns the minimum translation vector
 	std::vector<Vec2D> getContactPoints() const; //returns all the contact points in global coordinates
 	bool collisionCheck(const VertexShape& inputShape1, const VertexShape& inputShape2);
-	void reset() const; //resets all object variables
+	//void reset() const; //resets all object variables
 
 	GJK();
 
 private:
 	//members
-
-	Vec2D simplex[3] = { Vec2D(FLT_MAX, FLT_MAX), Vec2D(FLT_MAX, FLT_MAX), Vec2D(FLT_MAX, FLT_MAX) };
-
 
 	std::vector<Vec2D> contactPoints;
 	Vec2D minimumTranslationVector;

@@ -1,115 +1,30 @@
 #include "GJK.h"
-void GJK::negateVector(Vec2D& inputVector)
+bool GJK::isShapeConvex(const VertexShape& inputVertexShape) const
 {
-//http://planetside.co.uk/wiki/index.php?title=Negate_Vector
-//http://www.math.uiuc.edu/Macaulay2/doc/Macaulay2-1.9/share/doc/Macaulay2/Macaulay2Doc/html/_-_sp__List.html
+	//TODO
 
-
-	inputVector = Vec2D(-1.0f * inputVector.getX(), -1.0f * inputVector.getY());
+	return true;
 }
-bool GJK::processSimplex(Vec2D& direction)
+Vec2D GJK::support(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2, const Vec2D& inputDirection) //returns a point in the minskowski differance
 {
-	if (simplex[A].getX() != FLT_MAX && simplex[A].getY() != FLT_MAX && simplex[B].getX() != FLT_MAX && simplex[B].getY() != FLT_MAX && simplex[C].getX() == FLT_MAX && simplex[C].getY() == FLT_MAX)
-	{
-		//1 simplex
+	//https://www.youtube.com/watch?v=XIavUJ848Mk 2/2
 
-		if (isSameDirection(simplex[A] * -1.0f, simplex[B] - simplex[A]))
-		{
-			direction = (simplex[B] - simplex[A]).getRightNormal();
+	Vec2D p1 = getFarthestPointInDirection(inputVertexShape1.getVertices(), inputDirection),
+		p2 = getFarthestPointInDirection(inputVertexShape2.getVertices(), Vec2D(-inputDirection.getX(), -inputDirection.getY()));
 
-			direction.scaleVector((simplex[A] * -1.0f) * direction);
-
-			//simplex = [simplex.a, simplex.b]
-			simplex[A] = simplex[A];
-			simplex[B] = simplex[B];
-			simplex[C] = Vec2D(FLT_MAX, FLT_MAX);
-		}
-		else
-		{
-			direction = simplex[A] * -1.0f;
-
-			simplex[A] = simplex[A];
-			simplex[B] = Vec2D(FLT_MAX, FLT_MAX);
-			simplex[C] = Vec2D(FLT_MAX, FLT_MAX);
-		}
-	}
-	else
-	{
-		//2 simplex
-
-		Vec2D AB = simplex[B] - simplex[A],
-			AC = simplex[C] - simplex[A],
-			AO = simplex[A] * -1.0f;
-
-		Vec2D ACB = AB.getRightNormal();
-		ACB.scaleVector(ACB * (AC * -1.0f));
-
-		Vec2D ABC = AC.getRightNormal();
-		ABC.scaleVector(ABC * (AB * -1.0f));
-
-		if (isSameDirection(ACB, AO))
-		{
-			if (isSameDirection(AB, AO))
-			{
-				direction = ACB;
-
-				simplex[A] = simplex[A];
-				simplex[B] = simplex[B];
-				simplex[C] = Vec2D(FLT_MAX, FLT_MAX);
-
-				return false;
-			}
-			else
-			{
-				direction = AO;
-
-				simplex[A] = simplex[A];
-				simplex[B] = Vec2D(FLT_MAX, FLT_MAX);
-				simplex[C] = Vec2D(FLT_MAX, FLT_MAX);
-
-				return false;
-			}
-		}
-		else if (isSameDirection(ABC, AO))
-		{
-			if (isSameDirection(AC, AO))
-			{
-				direction = ABC;
-
-				simplex[A] = simplex[A];
-				simplex[B] = Vec2D(FLT_MAX, FLT_MAX);
-				simplex[C] = simplex[C];
-
-				return false;
-			}
-			else
-			{
-				direction = AO;
-
-				simplex[A] = simplex[A];
-				simplex[B] = Vec2D(FLT_MAX, FLT_MAX);
-				simplex[C] = Vec2D(FLT_MAX, FLT_MAX);
-
-				return false;
-			}
-
-		}
-		else
-			return true;
-	}
+	Vec2D p3 = Vec2D((p1 - p2).getX(), (p1 - p2).getY());
+	return p3;
 }
-Vec2D GJK::getFarthestPointInDirection(const VertexShape& inputShape, const Vec2D& inputDirection) const
+Vec2D GJK::getFarthestPointInDirection(const std::vector<Vec2D>& inputPoints, const Vec2D& inputDirection)
 {
- //http://in2gpu.com/2014/05/12/gjk-algorithm-collision-detection-2d-in-c/
+	//http://in2gpu.com/2014/05/12/gjk-algorithm-collision-detection-2d-in-c/ 1/2
 
 	int index = 0;
-	float maxDot = inputShape.getVertices()[index] * inputDirection.getNormalisation();
+	float maxDot = inputPoints[index] * inputDirection;
 
-	
-
-	for (unsigned int i = 1; i < inputShape.getVertices().size(); i++)
+	for (unsigned int i = 1; i < inputPoints.size(); i++)
 	{
-		float dot = inputShape.getVertices()[i] * inputDirection.getNormalisation();
+		float dot = inputPoints[i] * inputDirection;
 
 		if (dot > maxDot)
 		{
@@ -118,61 +33,133 @@ Vec2D GJK::getFarthestPointInDirection(const VertexShape& inputShape, const Vec2
 		}
 	}
 
-	return inputShape.getVertices()[index];
+	return inputPoints[index];
 }
-Vec2D GJK::support(const VertexShape& inputShape1, const VertexShape& inputShape2, const Vec2D& inputDirection) const
+bool GJK::doSimplex(std::vector<Vec2D>& inputSimplex, Vec2D& inputDirection) //modifies theo input values
 {
-//http://in2gpu.com/2014/05/12/gjk-algorithm-collision-detection-2d-in-c/
+	//https://www.youtube.com/watch?v=XIavUJ848Mk 2/2
+//http://in2gpu.com/2014/05/12/gjk-algorithm-collision-detection-2d-in-c/ 1/2
 
-	Vec2D p1 = getFarthestPointInDirection(inputShape1, inputDirection);
-	Vec2D p2 = getFarthestPointInDirection(inputShape2, inputDirection * -1.0f);
-
-	//Vec2D p3 = Vec2D(p1.getX() - p2.getX(), p1.getY() - p2.getY());
 	
+	if (inputSimplex.size() == 3)
+	{
+		//triangle
+	
+	   Vec2D AB = inputSimplex[inputSimplex.size() - 2] - inputSimplex[inputSimplex.size() - 1], //AB = B-A
+	   AC = inputSimplex[inputSimplex.size() - 3] - inputSimplex[inputSimplex.size() - 1], //AC = C - A
+	   AO = inputSimplex[inputSimplex.size() - 1] * -1.0f;
 
-	return  p1 - p2;
+	   inputDirection = Vec2D(-1.0f * AB.getY(), AB.getX());//away from C
+
+	   if (inputDirection * inputSimplex[inputSimplex.size() - 3] > 0)
+		   inputDirection = inputDirection * -1.0f;
+
+	   if (inputDirection * AO > 0) //same direction
+	   {
+	
+		   //removes C
+		   inputSimplex.erase(inputSimplex.begin() + 0);
+
+		   return false;
+	   }
+
+	   inputDirection = AC.getRightNormal();
+
+	   if (inputDirection * inputSimplex[inputSimplex.size() - 2] > 0)
+	   {
+		   inputDirection *= -1.0f;
+	   }
+
+	   if (inputDirection * AO > 0)
+	   {
+		   //remove b
+		   inputSimplex.erase(inputSimplex.begin() + 1);
+
+		   return false;
+	   }
+
+	   return true;
+
+	}
+	else 
+	{
+		//line segment
+
+		Vec2D A = inputSimplex[inputSimplex.size() - 1],
+			B = inputSimplex[inputSimplex.size() - 2],
+			AB = B - A,
+			AO = A * -1.0f;
+
+		inputDirection = AB.getRightNormal();
+
+		if (inputDirection * AO < 0)
+		{
+			inputDirection *= -1.0f;
+		}
+	}
+
+	
+	return false;
 }
-bool GJK::isSameDirection(const Vec2D& inputVector1, const Vec2D& inputVector2) const
+Vec2D GJK::getMTV() const //returns the minimum translation vector
 {
-	return inputVector1*inputVector2;
+	return minimumTranslationVector;
+}
+std::vector<Vec2D> GJK::getContactPoints() const //returns all the contact points in gl
+{
+	return contactPoints;
 }
 bool GJK::collisionCheck(const VertexShape& inputShape1, const VertexShape& inputShape2)
 {
-//http://in2gpu.com/2014/05/12/gjk-algorithm-collision-detection-2d-in-c/
-//http://entropyinteractive.com/2011/04/gjk-algorithm/
 
+	//https://www.youtube.com/watch?v=XIavUJ848Mk 2/2
+	//http://programyourfaceoff.blogspot.se/2012/01/gjk-algorithm.html
 
-	Vec2D direction = Vec2D(1, 0);
-
-	simplex[A] = Vec2D(FLT_MAX, FLT_MAX);
-	simplex[B] = Vec2D(FLT_MAX, FLT_MAX);
-	simplex[C] = Vec2D(FLT_MAX, FLT_MAX);
-
-
-	simplex[A] = support(inputShape1, inputShape2, direction);
-
-	direction = simplex[0] * 1.0f;
-
-	while (true)
+	if (isShapeConvex(inputShape1) && isShapeConvex(inputShape2))
 	{
-		if(simplex[A].getX() != FLT_MAX && simplex[A].getY() != FLT_MAX)
-			simplex[A] = support(inputShape1, inputShape2, direction);
+		int maxIterations = 100;
 
-		if (simplex[B].getX() != FLT_MAX && simplex[B].getY() != FLT_MAX)
-			simplex[B] = support(inputShape1, inputShape2, direction);
+		std::vector<Vec2D> simplex;
+		Vec2D direction(1, -1);
 
-		if (simplex[C].getX() != FLT_MAX && simplex[C].getY() != FLT_MAX)
-			simplex[C] = support(inputShape1, inputShape2, direction);
-
-		if (!isSameDirection(direction, simplex[A]))
-			return false;
+		Vec2D s = support(inputShape1, inputShape2, direction);
 		
-		
-		if (processSimplex(direction))
-			return true;
+		simplex.push_back(s);
+
+		direction = s * -1.0f;
+
+		while (maxIterations > 0)
+		{
+
+			
+			simplex.push_back(support(inputShape1, inputShape2, direction));
+
+			if (simplex[simplex.size() -1] * direction <= 0)
+				return false;
+			
+		//	simplex.push_back(a);
+
 		
 
+			if (doSimplex(simplex, direction))
+			{
+				
+				return true;
+			}
+
+			maxIterations--;
+		}
+
+		std::cout << "Reached max iterations; collision probably is true\n";
+		return true;
 	}
+	else
+	{
+		std::cout << "ERROR GJK; shapes needs to be convex\n";
+		return false;
+	}
+
+	return false;
 }
 GJK::GJK()
 	:

@@ -25,7 +25,7 @@ sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
 int main()
 {
-	
+
 	std::cout << "Press enter\n";
 	std::cin.get();
 
@@ -41,23 +41,23 @@ int main()
 		float radius = 10.0f;
 
 
-	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/4.0f)
-	//{
-	//	tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
-	//
-	//}
+	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/20.0f)
+	{
+		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
 	
-	    tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
-	    tShape1.addVertexPoint(Vec2D(0.0f, 1.0f));
-	    tShape1.addVertexPoint(Vec2D(10.0f, 10.0f));
-	    tShape1.addVertexPoint(Vec2D(10.0f, 0.0f));
+	}
+	
+	  //  tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
+	  //  tShape1.addVertexPoint(Vec2D(0.0f, 10.0f));
+	  //  tShape1.addVertexPoint(Vec2D(10.0f, 10.0f));
+	  //  tShape1.addVertexPoint(Vec2D(10.0f, 0.0f));
            
 		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
 		tShape2.addVertexPoint(Vec2D(0.0f, 10.f));
 		tShape2.addVertexPoint(Vec2D(10.f, 10.f));
 		tShape2.addVertexPoint(Vec2D(10.f, 0.0f));
 
-		tShape1.setRotationDEGREES(45.0f);
+		tShape1.setRotationDEGREES(33.0f);
 	    tShape2.setRotationDEGREES(45.0f);
 
 
