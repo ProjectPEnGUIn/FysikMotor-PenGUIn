@@ -31,6 +31,11 @@ Erik Magnusson NA3 12/1 2017
 http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
 
 
+//4/2
+https://www.codeproject.com/Articles/15573/D-Polygon-Collision-Detection
+http://elancev.name/oliver/2D%20polygon.htm#tut6
+http://www.sevenson.com.au/actionscript/sat/
+
 
 */
 
@@ -40,7 +45,7 @@ http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
 #include <cmath>
 #include <math.h>
 
-#include "Entity.h"
+#include "VertexShape.h"
 #include "PEVec2D.h"
 
 #pragma once
@@ -49,9 +54,10 @@ class SATCollisionCheck
 private:
 	//functions
 
-	bool isConvex(const Entity& inputEntity) const;
+	bool isConvex(const VertexShape& inputEntity) const;
 	void SATtest(const Vec2D& inputAxis, const std::vector<Vec2D>& inputPoints, float& minAlong, float& maxAlong);
-	std::vector<Vec2D> getNormalizedNormals(const std::vector<Vec2D>& inputVertices) const; //takes in all vertices and returns all normals
+//	std::vector<Vec2D> getNormalizedNormals(const std::vector<Vec2D>& inputVertices) const; //takes in all vertices and returns all normals
+	std::vector<Vec2D> getEdges(const std::vector<Vec2D>& inputVerticies); //returns all edges
 	bool overlaps(const float min1, const float max1, const float min2, const float max2);
 	inline bool isBetweenOrdered(const float val, const float lowerBound, const float upperBound) const;
 	float getOverlapAmount(const float max1, const float min1, const float max2, const float min2) const;
@@ -59,7 +65,7 @@ private:
 public:
 	//functions
 
-	bool SATCheck(const Entity& inputEntity1, const Entity& inputEntity2);
+	bool SATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2);
 	void clearVariables(); //resets all variables so it can take in new entities and compare
 	float getOverlap() const;
 	Vec2D getPenentrationVector() const; //returns

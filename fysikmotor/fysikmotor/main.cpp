@@ -41,7 +41,7 @@ int main()
 		float radius = 10.0f;
 
 
-	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/20.0f)
+	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/3.0f)
 	{
 		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
 	
@@ -151,9 +151,9 @@ int main()
 				testEngine.update(logicClock.restart().asSeconds()); // updates and restarts the clock
 			}
 
-			if (drawClock.getElapsedTime() >= drawTime) //the programs drawing part, draws things to the screen at a certain rate
-			{
-				drawClock.restart(); //restarts the clock
+			//if (drawClock.getElapsedTime() >= drawTime) //the programs drawing part, draws things to the screen at a certain rate
+			//{
+				//drawClock.restart(); //restarts the clock
 
 				window.clear(sf::Color::Black);  //clears screen to black
 				//starts to draw the current frame
@@ -161,7 +161,7 @@ int main()
 				testEngine.draw(window);
 
 				window.display(); //displays the current drawn frame
-			}
+			//}
 		}
 	}
 

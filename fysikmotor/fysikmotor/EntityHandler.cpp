@@ -96,6 +96,17 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 
 	for (Entity& e : entities)
 	{
+
+		if (e.getIsColliding() == true)
+		{
+
+			std::cout << "paused; press enter\n";
+
+			std::cin.get();
+
+			e.setIsColliding(false);
+		}
+
 		if (e.getIsColliding() == 1)
 		{
 			//std::cout << "press enter\n" << std::endl;
@@ -132,23 +143,14 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 					&& (e.getEntityID() != entities[i].getEntityID()))
 				{
 
-				//	SATCollisionCheck satCheck;
+					SATCollisionCheck satCheck;
 
-					GJK gjkTest;
-
-					if (gjkTest.collisionCheck(e.getVertexShape(), entities[i].getVertexShape()))
+					if (satCheck.SATCheck(e.getVertexShape(), entities[i].getVertexShape()) == true)
 					{
-						
-						std::cout << "GJK collision occoured at next coords" << std::endl;
-						
-						
-						std::cout << e.getPosition().getY() << std::endl;
-						
-						std::cin.get();
-					
-						//std::cout << "ol:" << satCheck.getOverlap() << " mt:" << satCheck.getPenentrationVector().getMagnitude() << " mtx:" << satCheck.getPenentrationVector().getX() << " mty:" << satCheck.getPenentrationVector().getY() << " mtv direction:" << satCheck.getPenentrationVector().getDirectionDEGREES() << std::endl;
-						//e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
-					
+						std::cout << "SAT collision has occoured\n";
+
+						std::cout << satCheck.getPenentrationVector().getX() << " " << satCheck.getPenentrationVector().getY() << " " << satCheck.getOverlap() << std::endl;
+
 						e.setIsColliding(true);
 					}
 					

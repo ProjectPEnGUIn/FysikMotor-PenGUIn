@@ -62,7 +62,7 @@ public:
 	PEVec2D operator*(T inputScalar) const; //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
 	PEVec2D& operator+=(const PEVec2D& addToVector);
 	PEVec2D& operator-=(const PEVec2D& subtractFromVector);
-	PEVec2D& operator*=(const float multiplyVectorWithScalar);
+	PEVec2D operator*=(const float multiplyVectorWithScalar);
 	T operator*=(const PEVec2D& inputVectorToCrossProduct) const; //2d vector cross product
 	T operator*(const PEVec2D& inputVectorToCrossProduct) const; //2d vector cross product
 	//PEVec2D& operator*(const float& inputScalar); 
@@ -212,7 +212,7 @@ template <typename T> PEVec2D<T>& PEVec2D<T>::operator-=(const PEVec2D<T>& subtr
 	y = y - subtractFromVector.getY();
 	return *this;
 }
-template <typename T> PEVec2D<T>& PEVec2D<T>::operator*=(const float multiplyVectorWithScalar)
+template <typename T> PEVec2D<T> PEVec2D<T>::operator*=(const float multiplyVectorWithScalar)
 {
 	return PEVec2D<T>(x * multiplyVectorWithScalar, y * multiplyVectorWithScalar);
 }

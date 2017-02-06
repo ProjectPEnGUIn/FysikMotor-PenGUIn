@@ -1,3 +1,0 @@
-//list for components to have within the program, objects etc...
-
--custom vector class, vector math functions, overloading operators

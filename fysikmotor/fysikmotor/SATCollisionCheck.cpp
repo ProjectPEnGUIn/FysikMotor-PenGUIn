@@ -1,6 +1,6 @@
 #include "SATCollisionCheck.h"
 
-bool SATCollisionCheck::isConvex(const Entity& inputEntity) const
+bool SATCollisionCheck::isConvex(const VertexShape& inputEntity) const
 {
 	//TODO LOGIC
 
@@ -28,24 +28,43 @@ void SATCollisionCheck::SATtest(const Vec2D& inputAxis, const std::vector<Vec2D>
 			inputMaxAlong = dotValue;
 	}
 }
-std::vector<Vec2D> SATCollisionCheck::getNormalizedNormals(const std::vector<Vec2D>& inputVertices) const //takes in all vertices and returns all normals
+//std::vector<Vec2D> SATCollisionCheck::getNormalizedNormals(const std::vector<Vec2D>& inputVertices) const //takes in all vertices and returns all normals
+//{
+//	std::vector<Vec2D> returnNormals;
+//
+//	for (unsigned int i = 0; i < inputVertices.size(); i++)
+//	{
+//		//ERROR direction of plane is NOT taken in count
+//		
+//		Vec2D temp;
+//
+//		temp = inputVertices[i] - inputVertices[(i + 1)%inputVertices.size()];
+//
+//	//	std::cout << temp.getDirectionDEGREES() << " ERROR edge degree is not being counted" << std::endl;
+//
+//		returnNormals.push_back((temp.getRightNormal()).getNormalisation());
+//	}
+//
+//	return returnNormals;
+//}
+std::vector<Vec2D> SATCollisionCheck::getEdges(const std::vector<Vec2D>& inputVerticies) //returns all edges
 {
 	std::vector<Vec2D> returnNormals;
-
-	for (unsigned int i = 0; i < inputVertices.size(); i++)
-	{
-		//ERROR direction of plane is NOT taken in count
-		
-		Vec2D temp;
-
-		temp = inputVertices[i] - inputVertices[(i + 1)%inputVertices.size()];
-
-	//	std::cout << temp.getDirectionDEGREES() << " ERROR edge degree is not being counted" << std::endl;
-
-		returnNormals.push_back((temp.getRightNormal()).getNormalisation());
-	}
-
-	return returnNormals;
+	
+		for (unsigned int i = 0; i <inputVerticies.size(); i++)
+		{
+			//ERROR direction of plane is NOT taken in count
+			
+			Vec2D temp;
+	
+			temp = inputVerticies[i] - inputVerticies[(i + 1)% inputVerticies.size()];
+	
+		//	std::cout << temp.getDirectionDEGREES() << " ERROR edge degree is not being counted" << std::endl;
+	
+			returnNormals.push_back(temp);
+		}
+	
+		return returnNormals;
 }
 bool SATCollisionCheck::overlaps(const float min1, const float max1, const float min2, const float max2)
 {
@@ -60,31 +79,43 @@ inline bool SATCollisionCheck::isBetweenOrdered(const float val, const float low
 }
 float SATCollisionCheck::getOverlapAmount(const float max1, const float min1, const float max2, const float min2) const
 {
-	if (min2 > min1 && min2 < max1)
-		return max1 - min2;
+//	if (min2 > min1 && min2 < max1)
+//		return max1 - min2;
+//
+//	if (min1 > min2 && min1 < max2)
+//		return max2 - min1;
+//
 
-	if (min1 > min2 && min1 < max2)
-		return max2 - min1;
+	//https://www.codeproject.com/Articles/15573/D-Polygon-Collision-Detection 4/2	
+	//proper overlap amounts
 
-	return -FLT_MAX;
+	if (min1 < min2)
+		return min2 - max1;
+
+	else
+		return min1 - max2;
+
+
+//	return -FLT_MAX;
 }
 
-bool SATCollisionCheck::SATCheck(const Entity& inputEntity1, const Entity& inputEntity2)
+bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2)
 {
 	//mainly use http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection 30/1
 	//http://www.dyn4j.org/2010/01/sat/#sat-mtv 31/1
 	//aswell as previously mentioned sources
 
-	if (isConvex(inputEntity1) && isConvex(inputEntity2))
+	if (isConvex(inputVertexShape1) && isConvex(inputVertexShape2))
 	{
+		Vec2D tempMTVHolder;
+
 		//test normals on shape 1 for overlapping on shape 2 axis
-		for (const Vec2D& n : getNormalizedNormals(inputEntity1.getVertexShape().getVertices()))
+		for (const Vec2D& n : getEdges(inputVertexShape1.getVertices()))
 		{
 			float shape1Max = -FLT_MAX, shape1Min = FLT_MAX, shape2Max = -FLT_MAX, shape2Min = FLT_MAX;
 
-
-			SATtest(n, inputEntity1.getVertexShape().getVertices(), shape1Min, shape1Max);
-			SATtest(n, inputEntity2.getVertexShape().getVertices(), shape2Min, shape2Max);
+			SATtest(n.getRightNormal().getNormalisation(), inputVertexShape1.getVertices(), shape1Min, shape1Max);
+			SATtest(n.getRightNormal().getNormalisation(), inputVertexShape2.getVertices(), shape2Min, shape2Max);
 			if (!overlaps(shape1Min, shape1Max, shape2Min, shape2Max))
 			{
 				return false;
@@ -95,26 +126,19 @@ bool SATCollisionCheck::SATCheck(const Entity& inputEntity1, const Entity& input
 
 				if (tempOverlap < overlap)
 				{
-					//std::cout << n.getDirectionDEGREES() << std::endl;
 					overlap = tempOverlap;
-					penentrationVector = n;
-					penentrationVector = penentrationVector.getLeftNormal();
-					penentrationVector.setVectorMagnitude(overlap);
-				
+					tempMTVHolder = n;
 				}
-
 			}
-		
 		}
 
 		//test normals on shape 2 for overlapping on shape 2 axis
-		for (const Vec2D& n : getNormalizedNormals(inputEntity2.getVertexShape().getVertices()))
+		for (const Vec2D& n : getEdges(inputVertexShape2.getVertices()))
 		{
 			float shape1Max = -FLT_MAX, shape1Min = FLT_MAX, shape2Max = -FLT_MAX, shape2Min = FLT_MAX;
 
-			SATtest(n, inputEntity1.getVertexShape().getVertices(), shape1Min, shape1Max);
-			SATtest(n, inputEntity2.getVertexShape().getVertices(), shape2Min, shape2Max);
-
+			SATtest(n.getRightNormal().getNormalisation(), inputVertexShape1.getVertices(), shape1Min, shape1Max);
+			SATtest(n.getRightNormal().getNormalisation(), inputVertexShape2.getVertices(), shape2Min, shape2Max);
 			if (!overlaps(shape1Min, shape1Max, shape2Min, shape2Max))
 			{
 				return false;
@@ -126,14 +150,15 @@ bool SATCollisionCheck::SATCheck(const Entity& inputEntity1, const Entity& input
 				if (tempOverlap < overlap)
 				{
 					overlap = tempOverlap;
-					penentrationVector = n;
-					penentrationVector = penentrationVector.getLeftNormal();
-					penentrationVector.setVectorMagnitude(overlap);
-					
+					tempMTVHolder = n;
 				}
 			}
 		}
 
+
+		penentrationVector = tempMTVHolder; // .getNormalisation();
+	//	penentrationVector = Vec2D(fabs(penentrationVector.getX()), fabs(penentrationVector.getY()));
+		penentrationVector.setVectorMagnitude(fabs(overlap));
 
 		return true;
 	}
