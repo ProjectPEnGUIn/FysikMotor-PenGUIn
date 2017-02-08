@@ -14,17 +14,26 @@
 #include "PE.h"
 
 //global variables
-int screenWidth = 1280;
-int screenHeight = 720;
-int drawTickrate = 60; //amount of times it tries to draw each second, min = 1 tick/sec
-int logicTickrate = 60; //amount of times it tries to do logic each seconds, min = 1 tick/sec
+const int screenWidth = 1280;
+const int screenHeight = 720;
+const int drawTickrate = 60; //amount of times it tries to draw each second, min = 1 tick/sec
+const int logicTickrate = 60; //amount of times it tries to do logic each seconds, min = 1 tick/sec
 sf::Time drawTime = sf::seconds((1.0f / drawTickrate));
 sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
-
-
 int main()
 {
+
+
+
+	Vec2D b = Vec2D(6, 3).getAntiClockWiseNormal().getAntiClockWiseNormal(),
+		a = Vec2D(6, 3);
+	std::cout << b.getDirectionDEGREES() << " " << a.getDirectionDEGREES() << std::endl;
+
+	std::cout << "bx:" << b.getX() << " by:" << b.getY() << std::endl;
+	std::cout << "ax:" << a.getX() << " ay:" << a.getY() << std::endl;
+
+
 
 	std::cout << "Press enter\n";
 	std::cin.get();
@@ -41,24 +50,40 @@ int main()
 		float radius = 10.0f;
 
 
-	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/3.0f)
-	{
-		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+//	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/4.0f)
+//	{
+//		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+//
+//
+//		tShape2.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+//	
+//	}
 	
-	}
-	
-	  //  tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
-	  //  tShape1.addVertexPoint(Vec2D(0.0f, 10.0f));
-	  //  tShape1.addVertexPoint(Vec2D(10.0f, 10.0f));
-	  //  tShape1.addVertexPoint(Vec2D(10.0f, 0.0f));
+	   tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
+	   tShape1.addVertexPoint(Vec2D(0.0f, 10.0f));
+	   tShape1.addVertexPoint(Vec2D(10.0f, 10.0f));
+	   tShape1.addVertexPoint(Vec2D(10.0f, 0.0f));
            
 		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
 		tShape2.addVertexPoint(Vec2D(0.0f, 10.f));
 		tShape2.addVertexPoint(Vec2D(10.f, 10.f));
 		tShape2.addVertexPoint(Vec2D(10.f, 0.0f));
 
-		tShape1.setRotationDEGREES(33.0f);
-	    tShape2.setRotationDEGREES(45.0f);
+
+
+	//   tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
+	//   tShape1.addVertexPoint(Vec2D(5.0f, 10.0f));
+	//   tShape1.addVertexPoint(Vec2D(20.0f, 0.0f));
+	// 
+	//       
+	//	tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
+	//	tShape2.addVertexPoint(Vec2D(7.0f, 20.f));
+	//	tShape2.addVertexPoint(Vec2D(14.f, 0.f));
+		
+
+
+//	   tShape1.setRotationDEGREES(10.0f);
+	//   tShape2.setRotationDEGREES(10.0f);
 
 
 		Entity tEntity1, tEntity2;
@@ -71,18 +96,14 @@ int main()
 		tEntity1.setEntityState(1);
 		tEntity2.setEntityState(0);
 
-		tEntity1.setPosition(Vec2D(6.0f, 45.f));
-		tEntity2.setPosition(Vec2D(6.0f, 10.f));
+		tEntity1.setPosition(Vec2D(25.f, 19.5f));
+		tEntity2.setPosition(Vec2D(16.0f, 10.f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);
 
-		//for (Vec2D v : tEntity1.getVertexShape().getVertices())
-		//{
-		//	std::cout << "x:" << v.getX() << " y:" << v.getY() << "\n";
-		//}
 
-		
+
 		sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "PEnGUIn");  //creates the sfml window  //Physics Engine (a)n(d) Graphical User Interface n(noegenesis)
 		window.setPosition(sf::Vector2i(0, 0));
 		sf::Clock drawClock;  //clock that keeps track of how much time has passed from last time it was restarted

@@ -135,7 +135,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 
 		rTexture.draw(makeIntoConvexShape(e.getVertexShape()));
 
-		if (drawCenterOfMass)
+		if (drawCenterOfMass && e.getEntityState() != 0)
 		{
 			//Draw it as a point, aka small circle
 			//maybe error with centering point, no offset? ehh will see if error occurs during runtime

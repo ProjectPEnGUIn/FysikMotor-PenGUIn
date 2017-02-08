@@ -52,9 +52,10 @@ public:
 	float getDirectionRADIANS() const; //gets the direction of vector in radians, avoid calling if neccesary due to performancy hit with sine/cosine/tan usage
 	T getMagnitude() const; //returns the magnitude/length
 
+
 	PEVec2D getNormalisation() const; //length = 1
-	PEVec2D getRightNormal() const; //90 degree normal to current vector
-	PEVec2D getLeftNormal() const; //90 degree normal to current vector
+	PEVec2D getClockWiseNormal() const; //90 degree normal to current vector
+	PEVec2D getAntiClockWiseNormal() const; //90 degree normal to current vector
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 	PEVec2D operator+(const PEVec2D& inputVectorToAdd) const; //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
@@ -104,7 +105,7 @@ template <typename T> void PEVec2D<T>::setXY(T inputX, T inputY) //sets both x a
 
 template <typename T> void PEVec2D<T>::setVectorMagnitude(T inputLength) //sets the length of the vector, keeps the direction
 {
-	T angle = getDirectionRADIANS(); //gets the direction to temp store it
+	float angle = getDirectionRADIANS(); //gets the direction to temp store it
 
 	//gives x and y new values, but keeps the direction
 	x = cos(angle) * inputLength;
@@ -112,10 +113,20 @@ template <typename T> void PEVec2D<T>::setVectorMagnitude(T inputLength) //sets 
 }
 template <typename T> void PEVec2D<T>::setDirectionDEGREES(T inputDirectionInDegrees) //set the direction of vector in degrees
 {
+	//https://www.siggraph.org/education/materials/HyperGraph/modeling/mod_tran/2drota.htm 7/2
+	//x' = x cos f - y sin f
+    //y' = y cos f + x sin f
+	
+	T oldX = x,
+		oldY = y;
+
+	x = oldX * cos(inputDirectionInDegrees * 180.0f / PI) - oldY * sin(inputDirectionInDegrees * 180.0f / PI);
+	y = oldY * cos(inputDirectionInDegrees * 180.0f / PI) + oldX * sin(inputDirectionInDegrees * 180.0f / PI);
 
 }
 template <typename T> void PEVec2D<T>::setDirectionRADIANS(T inputDirectionInRadians) //set the diredtion of vector in radians
 {
+	
 
 }
 template <typename T> PEVec2D<T> PEVec2D<T>::scaleVector(T inputScaleAmount) //scales the vector so many times
@@ -139,34 +150,41 @@ template <typename T> T PEVec2D<T>::getY() const //returns y component
 
 template <typename T> float PEVec2D<T>::getDirectionDEGREES() const //gets the direction of vector in degrees
 {
-	if (x == 0 && y == 0) //stops erroirs
+	if (x == 0 && y == 0) //stops errors
+	{
+	//	std::cout << "Warning: tried to get angle of vector with both x and y as 0!\n";
 		return 0;
+	}
 
-	return (atan(y / x) * 180.0f) / PI; //atan returns in radians, must convert
+	return atan(y / x) * 180.0f / PI; //atan returns in radians, must convert
 }
 template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the direction of vector in radians
 {
 	if (x == 0 && y == 0) //stops errors
+	{
+		//std::cout << "Warning: tried to get angle of vector with both x and y as 0!\n";
 		return 0;
+	}
+
 
 	return atan(y / x);
 }
 
 template <typename T> PEVec2D<T> PEVec2D<T>::getNormalisation() const //length = 1
 {
-	const auto currentLength = sqrt((x*x) + (y*y));
+	const float currentLength = sqrt((x*x) + (y*y));
 
 	//assert( currentLength > 0 && "Error: tried to normalize a vector of length 0 :(\n" );
 	
 	return PEVec2D<T>(x / currentLength, y / currentLength);
 }
-template <typename T> PEVec2D<T> PEVec2D<T>::getRightNormal() const //90 degree normal to current vector
-{
-	return PEVec2D<T>(-y, x);
-}
-template <typename T> PEVec2D<T> PEVec2D<T>::getLeftNormal() const //90 degree normal to current vector
+template <typename T> PEVec2D<T> PEVec2D<T>::getClockWiseNormal() const //90 degree normal to current vector
 {
 	return PEVec2D<T>(y, -x);
+}
+template <typename T> PEVec2D<T> PEVec2D<T>::getAntiClockWiseNormal() const //90 degree normal to current vector
+{
+	return PEVec2D<T>(-y, x);
 }
 template <typename T> T PEVec2D<T>::getMagnitude() const //returns the magnitude/length
 {

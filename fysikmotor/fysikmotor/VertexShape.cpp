@@ -160,16 +160,6 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 {
 	float maxX = -FLT_MAX, minX = FLT_MAX, maxY = -FLT_MAX, minY = FLT_MAX; //has to be inited to something
 
-//	if (vertices.size() > 1)
-//	{
-//		//init proper base values to maxx,minx,maxy,miny with values from the fist point
-//		maxX = vertices[0].getX();
-//		maxY = vertices[0].getX();
-//		minX = vertices[0].getX();
-//		minY = vertices[0].getY();
-//	}
-
-	//searches through all the vertiuces for the max and min values
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
 		if (vertices[i].getX() > maxX)
@@ -193,12 +183,11 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
 	rotation.rotate(rotationOffsetDEGREES, sf::Vector2f(trueCenterPosition.getX() + rotationCenterOffset.getX() , trueCenterPosition.getY() + rotationCenterOffset.getY()));//, trueCenterPosition.getX(), trueCenterPosition.getY());
-	sf::Vector2f temp; //use sfml vector
+
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
-		temp.x = 0;
-		temp.y = 0;
+		sf::Vector2f temp; //use sfml vector
 
 	    //transforms the vertex point and stores it in temp
 		temp = rotation.transformPoint(vertices[i].getX() + rotationCenterOffset.getX(), vertices[i].getY() + rotationCenterOffset.getY());

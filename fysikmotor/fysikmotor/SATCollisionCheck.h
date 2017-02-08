@@ -83,3 +83,43 @@ private:
 
 };
 #endif // ! _SATCOLLISIONCHECK_
+
+
+////------------------------------------------------------------------------------
+//
+//#pragma once
+//
+//#ifndef  _SATCOLLISIONCHECK_
+//#define _SATCOLLISIONCHECK_
+//
+////http://elancev.name/oliver/2D%20polygon.htm#tut6 6/2 2017
+//
+//
+//#include "VertexShape.h"
+//#include "PEVec2D.h"
+//
+//class SATCollisionCheck
+//{
+//private:
+//	//functions
+//	std::vector<Vec2D> getEdges(const std::vector<Vec2D> inputVerticies);
+//	void calculateIntervall(const Vec2D& inputAxis, const std::vector<Vec2D>& inputEdges, float& inputMin, float& inputMax);
+//	bool axisSeparatePolygons(Vec2D& inputAxis, const std::vector<Vec2D>& inputShape1Edges, const std::vector<Vec2D>& inputShape2Edges);
+//
+//
+//public:
+//	//functions
+//
+//	bool collisioncheck(const VertexShape& inputShape1, const VertexShape& inputShape2); //returns true if overlaping
+//
+//private:
+//	//members
+//
+//	std::vector<Vec2D> contactPoints;
+//	Vec2D penentrationVector;
+//
+//};
+//
+//
+//#endif // ! _SATCOLLISIONCHECK_
+//
