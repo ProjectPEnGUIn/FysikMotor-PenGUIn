@@ -36,6 +36,7 @@ https://www.codeproject.com/Articles/15573/D-Polygon-Collision-Detection
 http://elancev.name/oliver/2D%20polygon.htm#tut6
 http://www.sevenson.com.au/actionscript/sat/
 
+http://elancev.name/oliver/2D%20polygon.htm#tut6 6/2 2017
 
 */
 
@@ -60,7 +61,6 @@ private:
 	std::vector<Vec2D> getEdges(const std::vector<Vec2D>& inputVerticies); //returns all edges
 	bool overlaps(const float min1, const float max1, const float min2, const float max2);
 	inline bool isBetweenOrdered(const float val, const float lowerBound, const float upperBound) const;
-	float getOverlapAmount(const float max1, const float min1, const float max2, const float min2) const;
 
 public:
 	//functions
@@ -69,7 +69,7 @@ public:
 	void clearVariables(); //resets all variables so it can take in new entities and compare
 	float getOverlap() const;
 	Vec2D getPenentrationVector() const; //returns
-	Vec2D getContactPoint() const; //coords of contact point between
+	std::vector<Vec2D> getContactPoints() const; //coords of contact point between
 
 	SATCollisionCheck();
 
@@ -77,49 +77,8 @@ private:
 	//members
 	
 	float overlap;
-
-	Vec2D contactPoint; //the point, pos, at which the entities are touching
+	std::vector<Vec2D> contactPoints; //global world coordinates where collision occoured
 	Vec2D penentrationVector; //vector containing the penentration distance between two objects that are inside eachother //is facing 90 degrees out from contact edge
 
 };
 #endif // ! _SATCOLLISIONCHECK_
-
-
-////------------------------------------------------------------------------------
-//
-//#pragma once
-//
-//#ifndef  _SATCOLLISIONCHECK_
-//#define _SATCOLLISIONCHECK_
-//
-////http://elancev.name/oliver/2D%20polygon.htm#tut6 6/2 2017
-//
-//
-//#include "VertexShape.h"
-//#include "PEVec2D.h"
-//
-//class SATCollisionCheck
-//{
-//private:
-//	//functions
-//	std::vector<Vec2D> getEdges(const std::vector<Vec2D> inputVerticies);
-//	void calculateIntervall(const Vec2D& inputAxis, const std::vector<Vec2D>& inputEdges, float& inputMin, float& inputMax);
-//	bool axisSeparatePolygons(Vec2D& inputAxis, const std::vector<Vec2D>& inputShape1Edges, const std::vector<Vec2D>& inputShape2Edges);
-//
-//
-//public:
-//	//functions
-//
-//	bool collisioncheck(const VertexShape& inputShape1, const VertexShape& inputShape2); //returns true if overlaping
-//
-//private:
-//	//members
-//
-//	std::vector<Vec2D> contactPoints;
-//	Vec2D penentrationVector;
-//
-//};
-//
-//
-//#endif // ! _SATCOLLISIONCHECK_
-//

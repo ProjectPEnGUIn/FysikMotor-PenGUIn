@@ -156,7 +156,14 @@ template <typename T> float PEVec2D<T>::getDirectionDEGREES() const //gets the d
 		return 0;
 	}
 
-	return atan(y / x) * 180.0f / PI; //atan returns in radians, must convert
+	float angle = atan2(y, x) * 180.0f / PI;
+
+	if (angle < 0)
+		return angle + 360.0f;
+	else
+		return angle;
+
+	//return atan2(y , x) * 180.0f / PI; //atan returns in radians, must convert
 }
 template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the direction of vector in radians
 {
@@ -167,7 +174,12 @@ template <typename T> float PEVec2D<T>::getDirectionRADIANS() const //gets the d
 	}
 
 
-	return atan(y / x);
+	float angle = atan2(y, x);
+
+	if (angle < 0)
+		return angle + 2 * PI;
+	else
+		return atan2(y , x);
 }
 
 template <typename T> PEVec2D<T> PEVec2D<T>::getNormalisation() const //length = 1
@@ -240,7 +252,10 @@ template <typename T> T PEVec2D<T>::operator*=(const PEVec2D& inputVectorToCross
 }
 template <typename T> T PEVec2D<T>::operator*(const PEVec2D& inputVectorToCrossProduct) const//2d vector cross product
 {
-	return x * inputVectorToCrossProduct.getY() - y * inputVectorToCrossProduct.getX();
+	//return x * inputVectorToCrossProduct.getY() + y * inputVectorToCrossProduct.getX();
+
+	//according to http://mines.lumpylumpy.com/Electronics/Computers/Software/Cpp/Graphics/Vector/DotProduct.php#.WJsdoG_hCM8 8/2
+	return x * inputVectorToCrossProduct.getX() + y * inputVectorToCrossProduct.getY();
 }
 //template <typename T> PEVec2D<T> PEVec2D<T>::operator*(const float& inputScalar)
 //{

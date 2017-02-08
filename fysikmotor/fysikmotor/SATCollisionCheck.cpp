@@ -81,22 +81,6 @@ inline bool SATCollisionCheck::isBetweenOrdered(const float val, const float low
 {
 	return lowerBound <= val && val <= upperBound;
 }
-float SATCollisionCheck::getOverlapAmount(const float min1, const float max1, const float min2, const float max2) const
-{
-
-//	//https://www.codeproject.com/Articles/15573/D-Polygon-Collision-Detection 4/2	
-//	//proper overlap amounts
-//
-//	if (min1 < min2)
-//		return min2 - max1;
-//
-//	else
-//		return min1 - max2;
-
-
-	return -FLT_MAX;
-}
-
 bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2)
 {
 	//mainly use http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection 30/1
@@ -115,8 +99,8 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		{
 			float shape1Max = -FLT_MAX, shape1Min = FLT_MAX, shape2Max = -FLT_MAX, shape2Min = FLT_MAX;
 
-			SATtest(n.getAntiClockWiseNormal().getNormalisation(), inputVertexShape1.getVertices(), shape1Min, shape1Max);
-			SATtest(n.getAntiClockWiseNormal().getNormalisation(), inputVertexShape2.getVertices(), shape2Min, shape2Max);
+			SATtest(n.getClockWiseNormal().getNormalisation(), inputVertexShape1.getVertices(), shape1Min, shape1Max);
+			SATtest(n.getClockWiseNormal().getNormalisation(), inputVertexShape2.getVertices(), shape2Min, shape2Max);
 			if (!overlaps(shape1Min, shape1Max, shape2Min, shape2Max))
 			{
 				return false;
@@ -130,7 +114,7 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 					if (tempOverlap < overlap)
 					{
 						overlap = tempOverlap;
-						overlapAxis = n.getAntiClockWiseNormal().getNormalisation();
+						overlapAxis = n.getClockWiseNormal().getNormalisation();
 					}
 			}
 		}
@@ -141,8 +125,8 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		{
 			float shape1Max = -FLT_MAX, shape1Min = FLT_MAX, shape2Max = -FLT_MAX, shape2Min = FLT_MAX;
 
-			SATtest(n.getAntiClockWiseNormal().getNormalisation(), inputVertexShape1.getVertices(), shape1Min, shape1Max);
-			SATtest(n.getAntiClockWiseNormal().getNormalisation(), inputVertexShape2.getVertices(), shape2Min, shape2Max);
+			SATtest(n.getClockWiseNormal().getNormalisation(), inputVertexShape1.getVertices(), shape1Min, shape1Max);
+			SATtest(n.getClockWiseNormal().getNormalisation(), inputVertexShape2.getVertices(), shape2Min, shape2Max);
 			if (!overlaps(shape1Min, shape1Max, shape2Min, shape2Max))
 			{
 				return false;
@@ -157,7 +141,7 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 				if (tempOverlap < overlap)
 				{
 					overlap = tempOverlap;
-					overlapAxis = n.getAntiClockWiseNormal().getNormalisation();
+					overlapAxis = n.getClockWiseNormal().getNormalisation();
 				}
 			}
 		}
@@ -166,11 +150,14 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		overlapAxis.setVectorMagnitude(overlap);
 		penentrationVector = overlapAxis;
 
-		//having to implement this due to float rounding errors, 0 becomes -0.000000001 which messes with returning vector diredction
-		if (penentrationVector.getX() < 0.0f && penentrationVector.getX() > -0.000001f)
-			penentrationVector.setX(0.0f);
-		if (penentrationVector.getY() < 0.0f && penentrationVector.getY() > -0.000001f)
-			penentrationVector.setY(0.0f);
+	//	if (overlap < 0.000001)
+	//		return false;
+
+	//	//having to implement this due to float rounding errors, 0 becomes -0.000000001 which messes with returning vector diredction
+	//	if (penentrationVector.getX() < 0.0f && penentrationVector.getX() > -0.0001f)
+	//		penentrationVector.setX(0.0f);
+	//	if (penentrationVector.getY() < 0.0f && penentrationVector.getY() > -0.0001f)
+	//		penentrationVector.setY(0.0f);
 	
 		return true;
 	}
@@ -181,12 +168,13 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 	return false;
 }
 
-
-
 void SATCollisionCheck::clearVariables() //resets all variables so it can take in new entities and compare
 {
+
+	overlap = FLT_MAX;
+	contactPoints.clear();
 	penentrationVector.setXY(0, 0);
-	contactPoint.setXY(FLT_MAX, FLT_MAX);
+	
 }
 float SATCollisionCheck::getOverlap() const
 {
@@ -196,112 +184,14 @@ Vec2D SATCollisionCheck::getPenentrationVector() const //returns
 {
 	return penentrationVector;
 }
-Vec2D SATCollisionCheck::getContactPoint() const //coords of contact point between
+std::vector<Vec2D> SATCollisionCheck::getContactPoints() const //coords of contact point between
 {
-	return contactPoint;
+	return contactPoints;
 }
 SATCollisionCheck::SATCollisionCheck()
 	:
 	overlap(FLT_MAX),
-	penentrationVector(),
-	contactPoint()
+	contactPoints(),
+	penentrationVector()
 {
 }
-
-
-
-//std::vector<Vec2D> SATCollisionCheck::getEdges(const std::vector<Vec2D> inputVerticies)
-//{
-//	std::vector<Vec2D> edges;
-//	
-//		for (unsigned int i = 0; i <inputVerticies.size(); i++)
-//		{
-//			Vec2D temp;
-//	
-//			temp = inputVerticies[i] - inputVerticies[(i + 1)% inputVerticies.size()];
-//
-//			edges.push_back(temp);
-//		}
-//	
-//		return edges;
-//}
-//void SATCollisionCheck::calculateIntervall(const Vec2D& inputAxis, const std::vector<Vec2D>& inputEdges, float& inputMin, float& inputMax)
-//{
-//	//http://elancev.name/oliver/2D%20polygon.htm#tut6
-//
-//	float d = inputAxis * inputEdges[0];
-//
-//	inputMin = d;
-//	inputMax = d;
-//
-//	for (unsigned int i = 0; i < inputEdges.size(); i++)
-//	{
-//		d = inputEdges[i] * inputAxis;
-//
-//		if (d < inputMin)
-//			inputMin = d;
-//
-//		if (d > inputMax)
-//			inputMax = d;
-//	}
-//
-//}
-//bool SATCollisionCheck::axisSeparatePolygons(Vec2D& inputAxis, const std::vector<Vec2D>& inputShape1Edges, const std::vector<Vec2D>& inputShape2Edges)
-//{
-////http://elancev.name/oliver/2D%20polygon.htm#tut6
-//
-//	float min1, max1,
-//		min2, max2;
-//
-//	calculateIntervall(inputAxis, inputShape1Edges, min1, max1);
-//	calculateIntervall(inputAxis, inputShape2Edges, min2, max2);
-//
-//	std::cout << "min1:" << min1 << " max1:" << max1 << " min2:" << min2 << " max2:" << max2 << std::endl;
-//	std::cin.get();
-//
-//
-//	if (min1 > max2 || min2 > max1)
-//		return true;
-//
-//	//find interval overlap
-//	float d0 = max1 - min2;
-//	float d1 = max2 - min1;
-//	float depth = (d0 < d1) ? d0 : d1;
-//
-//	float axisLengthSquared = inputAxis * inputAxis;
-//
-//	inputAxis *= (depth / axisLengthSquared);
-//
-//	return false;
-//
-//}
-//bool SATCollisionCheck::collisioncheck(const VertexShape& inputShape1, const VertexShape& inputShape2) //returns true if overlaping
-//{
-//
-//	//http://elancev.name/oliver/2D%20polygon.htm#tut6
-//
-//	std::vector<Vec2D> potentialPushVectors;
-//
-//
-//	for (Vec2D& n : getEdges(inputShape1.getVertices()))
-//	{
-//		if (axisSeparatePolygons(n, inputShape1.getVertices(), inputShape2.getVertices()))
-//		{
-//			std::cout << "exited at frist looop"<< std::endl;
-//			return false;
-//		}
-//	}
-//
-//
-//	for (Vec2D& n : getEdges(inputShape2.getVertices()))
-//	{
-//		if (axisSeparatePolygons(n, inputShape1.getVertices(), inputShape2.getVertices()))
-//		{
-//			std::cout << "e3sxited at 2nd loop" << std::endl;
-//			return false;
-//		}
-//	}
-//
-//	std::cout << "exited at bottom" << std::endl;
-//	return true;
-//}

@@ -150,7 +150,7 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 						std::cout << "SAT collision has occoured\n";
 
 						std::cout << satCheck.getPenentrationVector().getX() << " " << satCheck.getPenentrationVector().getY() << " magnitutde:" << satCheck.getPenentrationVector().getMagnitude() << " overlap:" << satCheck.getOverlap() << " rotation:"<< satCheck.getPenentrationVector().getDirectionDEGREES() <<  std::endl;
-						//std::cin.get();
+					//	std::cin.get();
 					
 						e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
 
@@ -303,7 +303,7 @@ EntityHandler::EntityHandler()
 	worldMaxY(0),
 	worldMinY(0),
 
-	gravitationalAcceleration(0.0f, 0.0f),
+	gravitationalAcceleration(0.0f, -9.82f),
 	temp(false),
 	tempElapsedTime(0.0f)
 {
