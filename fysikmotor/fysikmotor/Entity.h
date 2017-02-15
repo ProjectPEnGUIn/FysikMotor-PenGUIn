@@ -24,6 +24,7 @@
 
 #include "PEVec2D.h" //2d vector, x and y componten, has overloading operators to it
 #include "VertexShape.h" //define entity shapes using vertices
+#include "Force.h"
 
 class Entity
 {
@@ -48,7 +49,7 @@ public:
 	void setPosition(const Vec2D& inputPos); //Sets the pos using a PEVec2D object
 	void setVelocity(const Vec2D& inputVel); //sets velocity using pevec2d object
 	void setAcceleration(const Vec2D& inputAcc); //sets the velocity using pevec2d object
-	void setActingForces(std::vector<Vec2D> inputActingForces); //sets all the acting forces on the current object using a vector of vec2d objects
+	void setForces(std::vector<Force>& inputForces); //sets all the acting forces on the current object using a vector of vec2d objects
 	void setMass(float inputMass); //sets the mass in kg
 	void setCenterOfMass(const Vec2D& inputCenterOfMass); //sets the center of mass
 	void setAngleRotationDEGREES(float inputRotationDEGREES); //sets the entity rotation in degrees
@@ -57,7 +58,7 @@ public:
 	void setRestitutionCoefficient(float inputDouble); //between 0 and 1
 	void setDragCoefficient(float inputDouble);
 	void setVertexShape(const VertexShape& inputShape);
-	void addForce(const Vec2D& inputForce); //adds it to acting forces vector
+	void addForce(const Force& inputForce); //adds it to acting forces vector
 	void setEntityState(const int inputState); //0 for static non movable, 0 for movable
 	void setEnttityID(const int inputIDNumber);
 	void setPreviousVelocity(const Vec2D& inputPrevVel);
@@ -71,7 +72,7 @@ public:
 	Vec2D getPosition() const; //gets the pos
 	Vec2D getVelocity() const; //gets the vel, in meters per second
 	Vec2D getAcceleration() const; //gets the acc, in meters per second squared
-	std::vector<Vec2D> getActingForces() const; //gets all the acting forces
+	std::vector<Force> getForces() const; //gets all the acting forces
 	float getMass() const; //gets the mass in kg
 	Vec2D  getCenterOfmassOffset() const; //returns the Center of mass
 	float getAngleRotationDEGREES() const; //gets the rotation of entity in degrees
@@ -112,7 +113,7 @@ private:
 	Vec2D position; //pos of entity, is in the center
 	Vec2D velocity; //velocity of entity, has a magnitude and direction, in meters per second
 	Vec2D acceleration; //acceleration, in meters per seconds squared
-	std::vector<Vec2D> actingForces; //all of the acting forces on the entity at this moment, in Newtons
+	std::vector<Force> forces; //all of the acting forces on the entity at this moment, in Newtons
 	Vec2D resultingForce;
 
 	float mass; //mass of entity in kg, -1 if not set

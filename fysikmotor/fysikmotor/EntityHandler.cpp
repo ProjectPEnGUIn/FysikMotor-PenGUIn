@@ -1,20 +1,5 @@
 #include "EntityHandler.h"
 
-//collision checks
-
-bool EntityHandler::SATCheck(const Entity& entity1, const Entity& entity2) //does a thurough check using SAT, seperating axis theorem, very resource intensive, lots of math functions, ex sqrt, cosine, sine. very accurate
-{
-	//seperating axis theorem check, 20/12 2016
-	//very thurough collision check, downside: very resource intensive, lots of math functions need to be called with sqrt, sine, cosine, tan
-	//pros: one type of collision check between all possible shapes of entities
-	//handle both convec shapes and non convex shape by splitting up non convex shapes into convex sub parts
-	//mainly use http://www.dyn4j.org/2010/01/sat/ for this
-
-
-	
-	//SAT check if false
-	return false;
-}
 //collision countermeasures
 void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector, const Vec2D& contactPoint) //handles collision between entities
 {
@@ -144,15 +129,21 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 				{
 
 					SATCollisionCheck satCheck;
-
+					
 					if (satCheck.SATCheck(e.getVertexShape(), entities[i].getVertexShape()) == true)
 					{
 						std::cout << "SAT collision has occoured\n";
 
-						std::cout << satCheck.getPenentrationVector().getX() << " " << satCheck.getPenentrationVector().getY() << " magnitutde:" << satCheck.getPenentrationVector().getMagnitude() << " overlap:" << satCheck.getOverlap() << " rotation:"<< satCheck.getPenentrationVector().getDirectionDEGREES() <<  std::endl;
+					//	std::cout << satCheck.getPenentrationVector().getX() << " " << satCheck.getPenentrationVector().getY() << " magnitutde:" << satCheck.getPenentrationVector().getMagnitude() << " overlap:" << satCheck.getOverlap() << " rotation:"<< satCheck.getPenentrationVector().getDirectionDEGREES() <<  std::endl;
 					//	std::cin.get();
-					
-						e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
+
+						std::cout << "Penentration depth:" << satCheck.getPenentrationVector().getMagnitude() << " angle: " << satCheck.getPenentrationVector().getDirectionDEGREES()<< " x:" << satCheck.getPenentrationVector().getX() << " y:" << satCheck.getPenentrationVector().getY() << std::endl;
+						std::cout << "Amount of contactpoints:" << satCheck.getContactPoints().size() << std::endl;
+						for (unsigned int i = 0; i < satCheck.getContactPoints().size(); i++)
+						{
+							std::cout << "point" << i << " x:" << satCheck.getContactPoints()[i].getX() << " y:" << satCheck.getContactPoints()[i].getY() << std::endl;
+						}
+					//	e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
 
 						e.setIsColliding(true);
 					}
@@ -226,24 +217,24 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 		Vec2D resultingForce;
 
 		//add gravity force
-		inputEntity.addForce(Vec2D(gravitationalAcceleration.getX() * inputEntity.getMass(), gravitationalAcceleration.getY() * inputEntity.getMass()));
+		inputEntity.addForce(Force(Vec2D(gravitationalAcceleration.getX() * inputEntity.getMass(), gravitationalAcceleration.getY() * inputEntity.getMass()), Vec2D(0, 0)));
 		
 		//add air resistance
 		//inputEntity.addForce(getAirResistance(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), 12.56f, inputEntity.getPosition().getY()));
 
-		for (Vec2D& f : inputEntity.getActingForces())
+		for (const Force& f : inputEntity.getForces())
 		{
-			resultingForce += f;
+			resultingForce += f.getForce();
 		}
 
 		inputEntity.setResultingForce(resultingForce);
 }
 void EntityHandler::clearActingForces(Entity& inputEntity)
 {
-	std::vector<Vec2D> a; //has no values
+	std::vector<Force> a; //has no values
 
 	inputEntity.setResultingForce(Vec2D(0, 0));
-	inputEntity.setActingForces(a);
+	inputEntity.setForces(a);
 }
 void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
 {
@@ -299,11 +290,11 @@ EntityHandler::EntityHandler()
 	:
 	worldMaxX(0),
 	worldMinX(0),
-
 	worldMaxY(0),
 	worldMinY(0),
 
-	gravitationalAcceleration(0.0f, -9.82f),
+	gravitationalAcceleration(0.0f, 0.0f),
+
 	temp(false),
 	tempElapsedTime(0.0f)
 {

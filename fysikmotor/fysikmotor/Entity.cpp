@@ -18,9 +18,9 @@ void Entity::setAcceleration(const Vec2D& inputAcc) //sets the velocity using pe
 {
 	acceleration = inputAcc;
 }
-void Entity::setActingForces(std::vector<Vec2D> inputActingForces) //sets all the acting forces on the current object using a vector of vec2d objects
+void Entity::setForces(std::vector<Force>& inputForces) //sets all the acting forces on the current object using a vector of vec2d objects
 {
-	actingForces = inputActingForces;
+	forces = inputForces;
 }
 void Entity::setMass(float inputMass) //sets the mass in kg
 {
@@ -54,9 +54,9 @@ void Entity::setVertexShape(const VertexShape& inputShape)
 {
 	shape = inputShape;
 }
-void Entity::addForce(const Vec2D& inputForce) //adds it to acting forces vector
+void Entity::addForce(const Force& inputForce) //adds it to acting forces vector
 {
-	actingForces.push_back(inputForce);
+	forces.push_back(inputForce);
 
 }
 void Entity::setEntityState(const int inputState) //0 for static non movable, 0 for movable
@@ -106,9 +106,9 @@ Vec2D Entity::getAcceleration() const //gets the acc, in meters per second squar
 {
 	return acceleration;
 }
-std::vector<Vec2D> Entity::getActingForces() const //gets all the acting forces
+std::vector<Force> Entity::getForces() const //gets all the acting forces
 {
-	return actingForces;
+	return forces;
 }
 float Entity::getMass() const//gets the mass in kg
 {
@@ -199,7 +199,7 @@ void Entity::updateVelocity() //updates speed
 void Entity::updatePosition()
 {
 	//adds velocity to position
-	position += velocity;
+	//position += velocity;
 }
 
 //Constructor
@@ -211,7 +211,7 @@ Entity::Entity()
 	position(),
 	velocity(),
 	acceleration(),
-	actingForces(),
+	forces(),
 	resultingForce(),
 
 	mass(1.0f),
@@ -233,26 +233,3 @@ Entity::Entity()
 
 
 }
-
-
-
-//Entity& Entity::operator=(const Entity& inputEntity)
-//{
-//	if (this != &inputEntity)
-//	{
-//		entityID = inputEntity.getEntityID();
-//		entityState = inputEntity.getEntityState();
-//		position = inputEntity.getPosition();
-//		velocity = inputEntity.getPosition();
-//		acceleration = inputEntity.getAcceleration();
-//		actingForces = inputEntity.getActingForces();
-//		mass = inputEntity.getMass();
-//		centerOfMassOffset = inputEntity.getCenterOfmassOffset();
-//		shape = inputEntity.getVertexShape();
-//		isColliding = inputEntity.getIsColliding();
-//		restitutionCoefficient = inputEntity.getRestitutionCoefficient();
-//		dragCoefficient = inputEntity.getAirDrag();
-//	}
-//
-//	return *this;
-//}

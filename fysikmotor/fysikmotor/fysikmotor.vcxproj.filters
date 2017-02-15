@@ -51,6 +51,9 @@
     <ClCompile Include="GJK.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Force.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PEVec2D.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GJK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Force.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

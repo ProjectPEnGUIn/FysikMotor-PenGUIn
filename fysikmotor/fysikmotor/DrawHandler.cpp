@@ -93,11 +93,28 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 
 	if (drawSquareGrid)
 	{
-		for (float yLines = maxY / squareGridSpacing; yLines > 0; yLines--)
+		//lines splitting up x axis
+		for (float x = 0.0f; x < maxX; x += squareGridSpacing)
 		{
-			//for(int xLines = 
+			sf::RectangleShape line;
+			line.setSize(sf::Vector2f(1, viewPixelSize.y));
+			line.setFillColor(sf::Color(30, 30, 30, 90));
+			line.setPosition(toPixelCoords(Vec2D(x, maxY)));
+			rTexture.draw(line);
+		}
+
+		//lines splitting up y axis
+		//lines splitting up x axis
+		for (float y = 0.0f; y < maxY; y += squareGridSpacing)
+		{
+			sf::RectangleShape line;
+			line.setSize(sf::Vector2f(viewPixelSize.x, 1));
+			line.setFillColor(sf::Color(30, 30, 30, 90));
+			line.setPosition(toPixelCoords(Vec2D(0, y)));
+			rTexture.draw(line);
 		}
 	}
+
 
 	//go through each of the entityies and draw its shape onto the texture
 	for (Entity e : inputEntities)
@@ -151,17 +168,25 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 		if (drawActingForces)
 		{
 			//go through each of the acting forces and draw it from the cente ofmass of entity
-			for (const Vec2D& f : e.getActingForces())
+			for (const Force& f : e.getForces())
 			{		
 				//doesnt draw forces that have both x and y as 0, pointless and draws a horisontal line on screen
-				if (!(f.getX() == 0 && f.getY() == 0)) 
+				if (!(f.getForce().getX() == 0 && f.getForce().getY() == 0)) 
 				{
-					rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), f, sf::Color::Blue, 0.1f));
+					rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX() + f.getOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY() + f.getOffset().getY(), f.getForce(), sf::Color::Blue, 0.1f));
 				}
 			}
 		}
 
 	}
+
+
+	//sf::CircleShape c;
+	//c.setRadius(5);
+	//c.setPosition(toPixelCoords(Vec2D(6, 4)));
+	//c.setFillColor(sf::Color::Green);
+	//rTexture.draw(c);
+
 	rTexture.display(); //displays it onto the rtexture
 	
 	sprite.setTexture(rTexture.getTexture()); //sets the sprite texture to the rtexture
@@ -337,7 +362,7 @@ DrawHandler::DrawHandler()
 	squareGridSpacing(1.0f),
 
 	drawActingForces(true),
-	drawSquareGrid(false),
+	drawSquareGrid(true),
 	drawVertexPoints(false),
 	drawfilledVertexShapes(false),
 	drawVertexIDs(false),

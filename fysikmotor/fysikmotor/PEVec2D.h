@@ -56,6 +56,7 @@ public:
 	PEVec2D getNormalisation() const; //length = 1
 	PEVec2D getClockWiseNormal() const; //90 degree normal to current vector
 	PEVec2D getAntiClockWiseNormal() const; //90 degree normal to current vector
+	PEVec2D getCrossProductWithScalar(const T& inputScalar) const; //gets the vector CROSS product
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 	PEVec2D operator+(const PEVec2D& inputVectorToAdd) const; //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
@@ -63,7 +64,7 @@ public:
 	PEVec2D operator*(T inputScalar) const; //allows usage of vec1 * scalar = vec3. will return PEVec2D<T> object
 	PEVec2D& operator+=(const PEVec2D& addToVector);
 	PEVec2D& operator-=(const PEVec2D& subtractFromVector);
-	PEVec2D operator*=(const float multiplyVectorWithScalar);
+	PEVec2D& operator*=(const float multiplyVectorWithScalar);
 	T operator*=(const PEVec2D& inputVectorToCrossProduct) const; //2d vector cross product
 	T operator*(const PEVec2D& inputVectorToCrossProduct) const; //2d vector cross product
 	//PEVec2D& operator*(const float& inputScalar); 
@@ -205,6 +206,12 @@ template <typename T> T PEVec2D<T>::getMagnitude() const //returns the magnitude
 
 	return sqrt((x * x) + (y * y));
 }
+template <typename T> PEVec2D<T> PEVec2D<T>::getCrossProductWithScalar(const T& inputScalar) const //gets the vector CROSS product
+{
+	//http://www.dyn4j.org/2011/11/contact-points-using-clipping/ 9/2 2017
+
+	return PEVec2D<T>(y * inputScalar, -x *inputScalar);
+}
 
 //overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 template <typename T> PEVec2D<T> PEVec2D<T>::operator+(const PEVec2D<T>& inputVectorToAdd) const //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
@@ -242,9 +249,15 @@ template <typename T> PEVec2D<T>& PEVec2D<T>::operator-=(const PEVec2D<T>& subtr
 	y = y - subtractFromVector.getY();
 	return *this;
 }
-template <typename T> PEVec2D<T> PEVec2D<T>::operator*=(const float multiplyVectorWithScalar)
+template <typename T> PEVec2D<T>& PEVec2D<T>::operator*=(const float multiplyVectorWithScalar)
 {
-	return PEVec2D<T>(x * multiplyVectorWithScalar, y * multiplyVectorWithScalar);
+	//wrong, updated 14/2
+	//return PEVec2D<T>(x * multiplyVectorWithScalar, y * multiplyVectorWithScalar);
+
+	x = x * multiplyVectorWithScalar;
+	y = y * multiplyVectorWithScalar;
+	
+	return *this;
 }
 template <typename T> T PEVec2D<T>::operator*=(const PEVec2D& inputVectorToCrossProduct) const //2d vector cross product
 {	

@@ -38,6 +38,7 @@ http://www.sevenson.com.au/actionscript/sat/
 
 http://elancev.name/oliver/2D%20polygon.htm#tut6 6/2 2017
 
+http://www.dyn4j.org/2011/11/contact-points-using-clipping/ 9/2 2017
 */
 
 #ifndef  _SATCOLLISIONCHECK_
@@ -61,6 +62,10 @@ private:
 	std::vector<Vec2D> getEdges(const std::vector<Vec2D>& inputVerticies); //returns all edges
 	bool overlaps(const float min1, const float max1, const float min2, const float max2);
 	inline bool isBetweenOrdered(const float val, const float lowerBound, const float upperBound) const;
+	
+	void calculateContactPoints(const VertexShape& inputShape1, const VertexShape& inputShape2) ; //sets the proper contactpoints
+	std::vector<Vec2D> getNearestEdge(const std::vector<Vec2D>& inputShapeVertices, const Vec2D& inputNormal);
+	std::vector<Vec2D> getClippedPoints(const Vec2D& v1, const Vec2D& v2, const Vec2D& n, const float o);
 
 public:
 	//functions

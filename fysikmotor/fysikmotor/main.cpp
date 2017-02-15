@@ -23,17 +23,6 @@ sf::Time logicTime = sf::seconds((1.0f / logicTickrate));
 
 int main()
 {
-	Vec2D a = Vec2D(-0.34202f, 0.9396f),
-		b = a.getAntiClockWiseNormal(),
-		c = b.getAntiClockWiseNormal();
-
-	std::cout << "org dir:" << a.getDirectionDEGREES() << " x:" << a.getX() << " y:" << a.getY() << std::endl;
-	std::cout << "b dir:" << b.getDirectionDEGREES() << " x:" << b.getX() << " y:" << b.getY() << std::endl;
-	std::cout << "c dir:" << c.getDirectionDEGREES() << " x:" << c.getX() << " y:" << c.getY() << std::endl;
-
-
-
-	
 	std::cout << "Press enter\n";
 	std::cin.get();
 
@@ -43,44 +32,48 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(50.0f, 50.0f, 500 ,500, 20, 20);
+		testEngine.init(20.0f, 20.0f, 500 ,500, 20, 20);
 
 		VertexShape tShape1, tShape2; 
-		float radius = 10.0f;
+		float radius = 5.0f;
 
 
-//	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/4.0f)
-//	{
-//		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
-//
-//
-//		tShape2.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
-//	
-//	}
+	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/3.0f)
+	//{
+	//	tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+	//
+	//
+	//	tShape2.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+	//
+	//}
 	
-	//   tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
-	//   tShape1.addVertexPoint(Vec2D(0.0f, 10.0f));
-	//   tShape1.addVertexPoint(Vec2D(10.0f, 10.0f));
-	//   tShape1.addVertexPoint(Vec2D(10.0f, 0.0f));
-    //       
-	//	tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
-	//	tShape2.addVertexPoint(Vec2D(0.0f, 10.f));
-	//	tShape2.addVertexPoint(Vec2D(10.f, 10.f));
-	//	tShape2.addVertexPoint(Vec2D(10.f, 0.0f));
+	    tShape2.addVertexPoint(Vec2D(4.0f, 2.0f));
+	    tShape2.addVertexPoint(Vec2D(4.0f, 5.0f));
+	    tShape2.addVertexPoint(Vec2D(12.0f, 5.0f));
+	    tShape2.addVertexPoint(Vec2D(12.0f, 2.0f));
+           
+	//	tShape1.addVertexPoint(Vec2D(6.0f, 4.0f));
+	//	tShape1.addVertexPoint(Vec2D(2.0f, 8.f));
+	//	tShape1.addVertexPoint(Vec2D(5.f, 11.f));
+	//	tShape1.addVertexPoint(Vec2D(9.f, 7.0f));
 
 
+		tShape1.addVertexPoint(Vec2D(8.0f, 4.0f));
+		tShape1.addVertexPoint(Vec2D(8.0f, 9.f));
+		tShape1.addVertexPoint(Vec2D(14.f, 9.f));
+		tShape1.addVertexPoint(Vec2D(14.f, 4.0f));
 
-	   tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
-	   tShape1.addVertexPoint(Vec2D(5.0f, 10.0f));
-	   tShape1.addVertexPoint(Vec2D(20.0f, 0.0f));
-	 
-	       
-		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
-		tShape2.addVertexPoint(Vec2D(7.0f, 20.f));
-		tShape2.addVertexPoint(Vec2D(14.f, 0.f));
-		
-	   tShape1.setRotationDEGREES(10.0f);
-	  tShape2.setRotationDEGREES(33.0f);
+//	   tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
+//	   tShape1.addVertexPoint(Vec2D(5.0f, 10.0f));
+//	   tShape1.addVertexPoint(Vec2D(20.0f, 0.0f));
+//	 
+//	       
+//		tShape2.addVertexPoint(Vec2D(0.0f, 0.0f));
+//		tShape2.addVertexPoint(Vec2D(7.0f, 20.f));
+//		tShape2.addVertexPoint(Vec2D(14.f, 0.f));
+//		
+	   //tShape1.setRotationDEGREES(10.0f);
+	   //tShape2.setRotationDEGREES(270.0f);
 
 
 		Entity tEntity1, tEntity2;
@@ -93,8 +86,8 @@ int main()
 		tEntity1.setEntityState(1);
 		tEntity2.setEntityState(0);
 
-		tEntity1.setPosition(Vec2D(16.f, 45.0f));
-		tEntity2.setPosition(Vec2D(25.0f, 10.f));
+		//tEntity1.setPosition(Vec2D(25.f, 45.0f));
+		//tEntity2.setPosition(Vec2D(25.0f, 10.f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);
@@ -165,7 +158,6 @@ int main()
 
 			if (logicClock.getElapsedTime() >= logicTime) //the programs logic part, all programs logic happens here at a certain rate
 			{
-				
 				testEngine.update(logicClock.restart().asSeconds()); // updates and restarts the clock
 			}
 
