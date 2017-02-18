@@ -133,10 +133,10 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 					if (satCheck.SATCheck(e.getVertexShape(), entities[i].getVertexShape()) == true)
 					{
 						std::cout << "SAT collision has occoured\n";
-
+		
 					//	std::cout << satCheck.getPenentrationVector().getX() << " " << satCheck.getPenentrationVector().getY() << " magnitutde:" << satCheck.getPenentrationVector().getMagnitude() << " overlap:" << satCheck.getOverlap() << " rotation:"<< satCheck.getPenentrationVector().getDirectionDEGREES() <<  std::endl;
 					//	std::cin.get();
-
+		
 						std::cout << "Penentration depth:" << satCheck.getPenentrationVector().getMagnitude() << " angle: " << satCheck.getPenentrationVector().getDirectionDEGREES()<< " x:" << satCheck.getPenentrationVector().getX() << " y:" << satCheck.getPenentrationVector().getY() << std::endl;
 						std::cout << "Amount of contactpoints:" << satCheck.getContactPoints().size() << std::endl;
 						for (unsigned int i = 0; i < satCheck.getContactPoints().size(); i++)
@@ -144,7 +144,7 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 							std::cout << "point" << i << " x:" << satCheck.getContactPoints()[i].getX() << " y:" << satCheck.getContactPoints()[i].getY() << std::endl;
 						}
 					//	e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
-
+		
 						e.setIsColliding(true);
 					}
 					
@@ -293,7 +293,7 @@ EntityHandler::EntityHandler()
 	worldMaxY(0),
 	worldMinY(0),
 
-	gravitationalAcceleration(0.0f, 0.0f),
+	gravitationalAcceleration(0.0f, -9.82f),
 
 	temp(false),
 	tempElapsedTime(0.0f)

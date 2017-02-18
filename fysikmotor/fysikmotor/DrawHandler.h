@@ -83,6 +83,8 @@ public:
 	void setSimulationBounds(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
 	void setViewPixelPos(const sf::Vector2f& inputViewPixelPos);
 	void setViewSimulationPos(const Vec2D& inputSimulationPos);
+	void test(sf::Vector2f& simPos, sf::Vector2f& simSize);
+
 
 	//get functions
 	bool getDrawActingForces() const;
@@ -112,7 +114,7 @@ private:
 		maxY,
 		minY;
 	
-	sf::View simulationView; //its pos is in its center
+	sf::View view; //its pos is in its center
 	Vec2D viewPos; //top right corner in the plane
 
 	sf::Vector2f viewPixelPos;

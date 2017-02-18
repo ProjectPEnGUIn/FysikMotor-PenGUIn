@@ -88,7 +88,6 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	//3 draw entities
 
 	rTexture.clear(sf::Color(255, 255, 255)); //clears imga to white
-
 	//draw lines etc onto the rtexture
 
 	if (drawSquareGrid)
@@ -181,11 +180,15 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	}
 
 
-	//sf::CircleShape c;
-	//c.setRadius(5);
-	//c.setPosition(toPixelCoords(Vec2D(6, 4)));
-	//c.setFillColor(sf::Color::Green);
-	//rTexture.draw(c);
+	sf::CircleShape c;
+	c.setRadius(3);
+	//c.setOrigin(2, 2);
+	c.setFillColor(sf::Color::Black);
+
+	c.setPosition(toPixelCoords(Vec2D(9.38, 9.61)));
+	rTexture.draw(c);
+	c.setPosition(toPixelCoords(Vec2D(11.76, 14.5)));
+	rTexture.draw(c);
 
 	rTexture.display(); //displays it onto the rtexture
 	
@@ -193,7 +196,9 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 
 	sprite.setPosition(viewPixelPos);
 
+//	inputRenderWindow.setView(view);
 	inputRenderWindow.draw(sprite); //Draws the sprite onto the renderwindow
+	inputRenderWindow.setView(inputRenderWindow.getDefaultView());
 }
 void DrawHandler::setViewPosition(const sf::Vector2f& inputViewPosition) //sets the view pos on the simulation plane
 {
@@ -201,11 +206,11 @@ void DrawHandler::setViewPosition(const sf::Vector2f& inputViewPosition) //sets 
 }
 void DrawHandler::moveViewPosition(const sf::Vector2f& inputMoveAmount) //moves the view by the input amount
 {
-	simulationView.move(inputMoveAmount);
+	view.move(inputMoveAmount);
 }
 void DrawHandler::setZoom(const sf::Vector2f& inputZoomFactor) //sets the zoomfactor with sf vec2f
 {
-	simulationView.setViewport(sf::FloatRect(sf::Vector2f(viewPos.getX(), viewPos.getY()), inputZoomFactor));
+	view.setViewport(sf::FloatRect(sf::Vector2f(viewPos.getX(), viewPos.getY()), inputZoomFactor));
 }
 //void showEntireSimulation() const; //changes variables to show entire sim window at once, easy preset thingy
 
@@ -275,6 +280,13 @@ void DrawHandler::setViewPixelPos(const sf::Vector2f& inputViewPixelPos)
 {
 	viewPixelPos = inputViewPixelPos;
 }
+void DrawHandler::test(sf::Vector2f& simPos, sf::Vector2f& simSize)
+{
+//	view.setCenter(toPixelCoords(simPos));
+	view.setSize(sf::Vector2f(500, 500));
+	view.zoom(2.f);
+}
+
 //get functions
 bool DrawHandler::getDrawActingForces() const
 {
@@ -326,7 +338,7 @@ bool DrawHandler::getDrawTrejectory() const
 }
 sf::View DrawHandler::getView() const
 {
-	return simulationView;
+	return view;
 }
 float DrawHandler::getSquareGridSpacing() const
 {
@@ -353,7 +365,7 @@ DrawHandler::DrawHandler()
 	minX(0.0f),
 	maxY(0.0f),
 	minY(0.0f),
-	simulationView(),
+	view(),
 	viewPos(),
 	viewPixelPos(),
 	viewPixelSize(),

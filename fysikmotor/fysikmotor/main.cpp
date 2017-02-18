@@ -32,36 +32,57 @@ int main()
 	{
 
 		PE testEngine;
-		testEngine.init(20.0f, 20.0f, 500 ,500, 20, 20);
+		testEngine.init(20.0f, 20.0f, 500 ,500, 50, 50);
 
 		VertexShape tShape1, tShape2; 
-		float radius = 5.0f;
+		float radius = 2.0f;
 
 
-	//for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/3.0f)
-	//{
-	//	tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
-	//
-	//
-	//	tShape2.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
-	//
-	//}
+	for (float i = 0.0f; i < 2*3.14159265f; i+= (2.0f * 3.14159265f)/4.0f)
+	{
+		tShape1.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
 	
-	    tShape2.addVertexPoint(Vec2D(4.0f, 2.0f));
-	    tShape2.addVertexPoint(Vec2D(4.0f, 5.0f));
-	    tShape2.addVertexPoint(Vec2D(12.0f, 5.0f));
-	    tShape2.addVertexPoint(Vec2D(12.0f, 2.0f));
-           
-	//	tShape1.addVertexPoint(Vec2D(6.0f, 4.0f));
-	//	tShape1.addVertexPoint(Vec2D(2.0f, 8.f));
-	//	tShape1.addVertexPoint(Vec2D(5.f, 11.f));
-	//	tShape1.addVertexPoint(Vec2D(9.f, 7.0f));
+	
+		tShape2.addVertexPoint(Vec2D(cos(i) * radius, sin(i) * radius));
+	
+	}
+	
+
+	//	tShape2.addVertexPoint(Vec2D(.0f, .0f));
+	//	tShape2.addVertexPoint(Vec2D(5.0f, 10.0f));
+	//	tShape2.addVertexPoint(Vec2D(5.0f, 0.0f));
+	//
+	//	   
+	//	tShape1.addVertexPoint(Vec2D(.0f, .0f));
+	//	tShape1.addVertexPoint(Vec2D(5.0f, 0.0f));
+	//	tShape1.addVertexPoint(Vec2D(3.0f, 8.0f));
+		
+		
 
 
-		tShape1.addVertexPoint(Vec2D(8.0f, 4.0f));
-		tShape1.addVertexPoint(Vec2D(8.0f, 9.f));
-		tShape1.addVertexPoint(Vec2D(14.f, 9.f));
-		tShape1.addVertexPoint(Vec2D(14.f, 4.0f));
+	    //tShape2.addVertexPoint(Vec2D(4.0f, 2.0f));
+	    //tShape2.addVertexPoint(Vec2D(4.0f, 5.0f));
+	    //tShape2.addVertexPoint(Vec2D(12.0f, 5.0f));
+	    //tShape2.addVertexPoint(Vec2D(12.0f, 2.0f));
+        //   
+		//
+		//tShape1.addVertexPoint(Vec2D(9.0f, 4.0f));
+		//tShape1.addVertexPoint(Vec2D(10.0f, 8.f));
+		//tShape1.addVertexPoint(Vec2D(14.f, 7.f));
+		//tShape1.addVertexPoint(Vec2D(13.f, 3.0f));
+
+
+		//tShape1.addVertexPoint(Vec2D(6.0f, 4.0f));
+		//tShape1.addVertexPoint(Vec2D(2.0f, 8.f));
+		//tShape1.addVertexPoint(Vec2D(5.f, 11.f));
+		//tShape1.addVertexPoint(Vec2D(9.f, 7.0f));
+		
+		//tShape1.addVertexPoint(Vec2D(8.0f, 4.0f));
+		//tShape1.addVertexPoint(Vec2D(8.0f, 9.f));
+		//tShape1.addVertexPoint(Vec2D(14.f, 9.f));
+		//tShape1.addVertexPoint(Vec2D(14.f, 4.0f));
+
+
 
 //	   tShape1.addVertexPoint(Vec2D(0.0f, 0.0f));
 //	   tShape1.addVertexPoint(Vec2D(5.0f, 10.0f));
@@ -86,8 +107,8 @@ int main()
 		tEntity1.setEntityState(1);
 		tEntity2.setEntityState(0);
 
-		//tEntity1.setPosition(Vec2D(25.f, 45.0f));
-		//tEntity2.setPosition(Vec2D(25.0f, 10.f));
+		tEntity1.setPosition(Vec2D(12.5f, 19.0f));
+		tEntity2.setPosition(Vec2D(10.f, 3.f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);

@@ -76,6 +76,8 @@ void SATCollisionCheck::calculateContactPoints(const VertexShape& inputShape1, c
 	std::cout << "e2max: " << edge2[0].getX() << " " << edge2[0].getY() << std::endl;
 	std::cout << "e1 * n = " << edge1v * n << std::endl;
 	std::cout << "e2 * n = " << edge2v * n << std::endl;
+	std::cout << "press enter\n";
+	std::cin.get();
 
 	std::vector<Vec2D> ref, inc;
 	bool flipped = false;
@@ -90,6 +92,8 @@ void SATCollisionCheck::calculateContactPoints(const VertexShape& inputShape1, c
 		ref = edge2;
 		inc = edge1;
 		flipped = true;
+
+		std::cout << "-DID THE FLIP-" << std::endl;
 	}
 
 	Vec2D refv = ref[1] - ref[2];
@@ -103,7 +107,7 @@ void SATCollisionCheck::calculateContactPoints(const VertexShape& inputShape1, c
 	std::vector<Vec2D> tempClippedPoints = getClippedPoints(inc[1], inc[2], refv, o1);
 	if (tempClippedPoints.size() < 2)
 	{
-		std::cout << "cancel point calc\n";
+		//std::cout << "cancel point calc\n";
 		return;
 	}
 
@@ -120,7 +124,7 @@ void SATCollisionCheck::calculateContactPoints(const VertexShape& inputShape1, c
 	tempClippedPoints = getClippedPoints(tempClippedPoints[0], tempClippedPoints[1], refv * -1.0f, -o2);
 	if (tempClippedPoints.size() < 2)
 	{
-		std::cout << "cancel point calc2jgijfijgfij\n";
+		//std::cout << "cancel point calc2jgijfijgfij\n";
 		return;
 	}
 	std::cout << "points so far:\n";
@@ -131,16 +135,18 @@ void SATCollisionCheck::calculateContactPoints(const VertexShape& inputShape1, c
 	////////////////////////////^works so far
 
 	//Vec2D refNorm = refv.getCrossProductWithScalar(-1.0f);
-	Vec2D refNorm = refv.getClockWiseNormal();
+	Vec2D refNorm = refv.getCrossProductWithScalar(-1.0f);
 
 	std::cout << "refNorm: " << refNorm.getX() << " " << refNorm.getY() << std::endl;
+	std::cout << "flipped status: " << flipped << std::endl;
 
-	if (flipped)
-		refNorm *= -1.0f;
-	std::cout << "refNorm (if flipped): " << refNorm.getX() << " " << refNorm.getY() << std::endl;
+	//if (flipped)
+	//	refNorm *= -1.0f;
+	//std::cout << "refNorm (if flipped): " << refNorm.getX() << " " << refNorm.getY() << std::endl;
 
 	float max = refNorm * ref[0]; //////////////////////////////////error getting max value
 
+	std::cout << "ref[max]: " << ref[0].getX() << " " << ref[0].getY() << std::endl;
 	std::cout << "ref: " << ref[0].getX() << " " << ref[0].getY() << std::endl;
 	std::cout << "max: " << max << std::endl;
 
@@ -170,12 +176,16 @@ std::vector<Vec2D> SATCollisionCheck::getNearestEdge(const std::vector<Vec2D>& i
 	{
 		float projection = inputShapeVertices[i] * inputNormal;
 		
-		if (projection >= max)
+		if (projection > max)
 		{
 			index = i;
 			max = projection;
 		}
 	}
+
+	std::cout << "--getNearestEdge--\n"
+		<< "index: " << index << std::endl
+		<< "maxp: " << max << std::endl;
 
 	Vec2D v = inputShapeVertices[index],
 		vNext = inputShapeVertices[(index + 1) % inputShapeVertices.size()],
@@ -189,17 +199,24 @@ std::vector<Vec2D> SATCollisionCheck::getNearestEdge(const std::vector<Vec2D>& i
 	if (right * inputNormal <= left * inputNormal)
 	{
 	//right
+
+		std::cout << "-Right-\n";
+
 		edge.push_back(v);
 		edge.push_back(v);
 		edge.push_back(vNext);
 	}
 	else
 	{
+		std::cout << "-Left-\n";
+
 		//left
 		edge.push_back(v);
 		edge.push_back(vPrevious);
 		edge.push_back(v);
 	}
+
+	std::cout << "-----\n";
 
 	return edge;
 }
@@ -330,6 +347,10 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		if (penentrationVector.getY() < 0.0f && penentrationVector.getY() > -0.0000001)
 			penentrationVector.setY(roundf(penentrationVector.getY() * 100.0f / 100.0f));
 	
+		//if (penentrationVector.getX() == -0)
+		//	penentrationVector.setX(0.0f);
+		//if (penentrationVector.getY() == -0)
+		//	penentrationVector.setY(0.0f);
 
 		//calc contactpoints
 		calculateContactPoints(inputVertexShape1, inputVertexShape2);

@@ -37,6 +37,6 @@ PE::PE()
 	entityHandler(),
 	drawHandler()
 {
-	
+	drawHandler.test(sf::Vector2f(5, 5), sf::Vector2f(20, 20));
 }
 
