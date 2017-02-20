@@ -63,9 +63,12 @@ private:
 	bool overlaps(const float min1, const float max1, const float min2, const float max2);
 	inline bool isBetweenOrdered(const float val, const float lowerBound, const float upperBound) const;
 	
-	void calculateContactPoints(const VertexShape& inputShape1, const VertexShape& inputShape2) ; //sets the proper contactpoints
-	std::vector<Vec2D> getNearestEdge(const std::vector<Vec2D>& inputShapeVertices, const Vec2D& inputNormal);
-	std::vector<Vec2D> getClippedPoints(const Vec2D& v1, const Vec2D& v2, const Vec2D& n, const float o);
+//	void calculateContactPoints(const VertexShape& inputShape1, const VertexShape& inputShape2) ; //sets the proper contactpoints
+//	std::vector<Vec2D> getNearestEdge(const std::vector<Vec2D>& inputShapeVertices, const Vec2D& inputNormal);
+//	std::vector<Vec2D> getClippedPoints(const Vec2D& v1, const Vec2D& v2, const Vec2D& n, const float o);
+
+	void calculateContactPoints(const std::vector<Vec2D>& shape1Vertices, const std::vector<Vec2D>& shape2Vertices); //returns the two points forming an edge
+	std::vector<Vec2D> getEdge(const std::vector<Vec2D>& shapeVertices, const Vec2D& collisionNormal) const;
 
 public:
 	//functions
