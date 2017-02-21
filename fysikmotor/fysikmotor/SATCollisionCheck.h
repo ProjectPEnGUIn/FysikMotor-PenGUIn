@@ -72,7 +72,7 @@ private:
 
 public:
 	//functions
-
+	bool binarySATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2, const float& deltaTime, const Vec2D& v1, const Vec2D& v2);
 	bool SATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2);
 	void clearVariables(); //resets all variables so it can take in new entities and compare
 	float getOverlap() const;

@@ -182,8 +182,11 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 }
 void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
+	rotation = sf::Transform{};
 	rotation.rotate(rotationOffsetDEGREES, sf::Vector2f(trueCenterPosition.getX() + rotationCenterOffset.getX() , trueCenterPosition.getY() + rotationCenterOffset.getY()));//, trueCenterPosition.getX(), trueCenterPosition.getY());
+	
 
+	//std::cout << rotation.
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
@@ -194,6 +197,12 @@ void VertexShape::updateRotationOnVertices() //updates the vertices points
 		
 		vertices[i].setXY(temp.x, temp.y); //give the vertex the new temppos
 	}
+
+	//for (unsigned int i = 0; i < vertices.size(); i++)
+	//{
+	//	std::cout << vertices[i].getX() << " " << vertices[i].getY() << std::endl;
+	//}
+	//std::cin.get();
 }
 void VertexShape::updateCenterPos() //updates the centerpos location of the vertices shape
 {

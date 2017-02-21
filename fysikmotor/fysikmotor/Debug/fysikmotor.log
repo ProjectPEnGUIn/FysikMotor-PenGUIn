@@ -1,6 +1,3 @@
-﻿  DrawHandler.cpp
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(188): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(190): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(364): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
-  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
-  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
+﻿  main.cpp
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
+  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

@@ -1,59 +1,67 @@
 #include "EntityHandler.h"
 
-//collision countermeasures
-void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector, const Vec2D& contactPoint) //handles collision between entities
+////collision countermeasures
+//void EntityHandler::entityCollision(Entity& inputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector, const Vec2D& contactPoint) //handles collision between entities
+//{
+//	//asumes the entities are colliding, they are inside of eachother which means there is a penentrationvector 
+//
+//	//used https://en.wikipedia.org/wiki/Coefficient_of_restitution 12/1 2017
+//	//and Fysik 1, Impuls Written by Lars Frankel, Daniel Gottfridsson and  Ulf Jonasson and published by GLEERUPS in 2011
+//	//Used pages 167, 168, 169 and the chapter summerisation
+//
+//
+//	//use penentrationvector to accuratly handle collisions, exact time.
+//	//use it to move entities around as if they never traveled useless distance while inside of eachother
+//
+//	//store inital velocities of both entities
+//	Vec2D  entity1V0 = inputEntity1.getVelocity(), entity2V0 = inputEntity2.getVelocity();
+//
+//	//average resutution coefficient, not sure how to handle different entities with different restutuions yet
+//	float restitution = (inputEntity1.getRestitutionCoefficient() + inputEntity2.getRestitutionCoefficient()) / 2.0f;
+//
+//	//set both new speeds and position on entity
+//	Vec2D entity1Vf, entity2Vf; //final velocities
+//
+//	//set new speeds in x axis
+//	entity1Vf.setX(((entity1V0.getX() * inputEntity1.getMass()) + (entity2V0.getX() *  inputEntity2.getMass()) + ((entity2V0.getX() - entity1V0.getX()) * inputEntity2.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
+//	entity2Vf.setX(((entity1V0.getX() * inputEntity1.getMass()) + (entity2V0.getX() *  inputEntity2.getMass()) + ((entity2V0.getX() - entity1V0.getX()) * inputEntity1.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
+//
+//	//set new speeds in y axis
+//	entity1Vf.setY(((entity1V0.getY() * inputEntity1.getMass()) + (entity2V0.getY() *  inputEntity2.getMass()) + ((entity2V0.getY() - entity1V0.getY()) * inputEntity2.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
+//	entity2Vf.setY(((entity1V0.getY() * inputEntity1.getMass()) + (entity2V0.getY() *  inputEntity2.getMass()) + ((entity2V0.getY() - entity1V0.getY()) * inputEntity1.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
+//
+//	//calculate how long the entities have been inside of eachother using both v0 and the penentration vector(distance traveled)
+//	//the penentrationvector magnitude is the distance
+//	//use distancce = velocity * time
+//
+//	//in seconds
+//	float overlapTime = penentrationVector.getMagnitude() / (inputEntity1.getVelocity().getMagnitude() + inputEntity2.getVelocity().getMagnitude());
+//
+//	//corrects their position to when they were just touching, proceed to set new speed to them at that time and then move time forwoard said overlappping time
+//	//will be just as if they didnt overlapp and collision occoured at the moment they tocuh and time moved forward
+//	//correction: use the contactpoint between the entity shapes to apply physics to said shapes ( take in count what type both of entities are; static/movable)
+//	//THEN move time forward
+//
+//	//moves them back to contact point with original speed
+//	inputEntity1.setPosition(inputEntity1.getPosition() + Vec2D(entity1V0.getX() * -overlapTime, entity1V0.getY() * -overlapTime));
+//	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2V0.getX() * -overlapTime, entity2V0.getY() * -overlapTime));
+//
+//
+//
+//	//HANDLE PHYSICS YO, torque etc, take use of contactpoint
+//
+//
+//	//move time forward, time = overlaptime, with new speed
+//	inputEntity1.setPosition(inputEntity1.getPosition() + Vec2D(entity1Vf.getX() * overlapTime, entity1Vf.getY() * overlapTime));
+//	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2Vf.getX() * overlapTime, entity2Vf.getY() * overlapTime));
+//
+//}
+void EntityHandler::impulseCollision(const Entity& e1, const Entity& e2) //resolves collision
 {
-	//asumes the entities are colliding, they are inside of eachother which means there is a penentrationvector 
 
-	//used https://en.wikipedia.org/wiki/Coefficient_of_restitution 12/1 2017
-	//and Fysik 1, Impuls Written by Lars Frankel, Daniel Gottfridsson and  Ulf Jonasson and published by GLEERUPS in 2011
-	//Used pages 167, 168, 169 and the chapter summerisation
-
-
-	//use penentrationvector to accuratly handle collisions, exact time.
-	//use it to move entities around as if they never traveled useless distance while inside of eachother
-
-	//store inital velocities of both entities
-	Vec2D  entity1V0 = inputEntity1.getVelocity(), entity2V0 = inputEntity2.getVelocity();
-
-	//average resutution coefficient, not sure how to handle different entities with different restutuions yet
-	float restitution = (inputEntity1.getRestitutionCoefficient() + inputEntity2.getRestitutionCoefficient()) / 2.0f;
-
-	//set both new speeds and position on entity
-	Vec2D entity1Vf, entity2Vf; //final velocities
-
-	//set new speeds in x axis
-	entity1Vf.setX(((entity1V0.getX() * inputEntity1.getMass()) + (entity2V0.getX() *  inputEntity2.getMass()) + ((entity2V0.getX() - entity1V0.getX()) * inputEntity2.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
-	entity2Vf.setX(((entity1V0.getX() * inputEntity1.getMass()) + (entity2V0.getX() *  inputEntity2.getMass()) + ((entity2V0.getX() - entity1V0.getX()) * inputEntity1.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
-
-	//set new speeds in y axis
-	entity1Vf.setY(((entity1V0.getY() * inputEntity1.getMass()) + (entity2V0.getY() *  inputEntity2.getMass()) + ((entity2V0.getY() - entity1V0.getY()) * inputEntity2.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
-	entity2Vf.setY(((entity1V0.getY() * inputEntity1.getMass()) + (entity2V0.getY() *  inputEntity2.getMass()) + ((entity2V0.getY() - entity1V0.getY()) * inputEntity1.getMass() * restitution)) / (inputEntity1.getMass() + inputEntity2.getMass()));
-
-	//calculate how long the entities have been inside of eachother using both v0 and the penentration vector(distance traveled)
-	//the penentrationvector magnitude is the distance
-	//use distancce = velocity * time
-
-	//in seconds
-	float overlapTime = penentrationVector.getMagnitude() / (inputEntity1.getVelocity().getMagnitude() + inputEntity2.getVelocity().getMagnitude());
-
-	//corrects their position to when they were just touching, proceed to set new speed to them at that time and then move time forwoard said overlappping time
-	//will be just as if they didnt overlapp and collision occoured at the moment they tocuh and time moved forward
-	//correction: use the contactpoint between the entity shapes to apply physics to said shapes ( take in count what type both of entities are; static/movable)
-	//THEN move time forward
-
-	//moves them back to contact point with original speed
-	inputEntity1.setPosition(inputEntity1.getPosition() + Vec2D(entity1V0.getX() * -overlapTime, entity1V0.getY() * -overlapTime));
-	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2V0.getX() * -overlapTime, entity2V0.getY() * -overlapTime));
-
-
-
-	//HANDLE PHYSICS YO, torque etc, take use of contactpoint
-
-
-	//move time forward, time = overlaptime, with new speed
-	inputEntity1.setPosition(inputEntity1.getPosition() + Vec2D(entity1Vf.getX() * overlapTime, entity1Vf.getY() * overlapTime));
-	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2Vf.getX() * overlapTime, entity2Vf.getY() * overlapTime));
+}
+void EntityHandler::elapseTime(Entity& inputEntity, const float deltaTime) //elapses time for the entitiy
+{
 
 }
 float EntityHandler::getAirDensity(const float inputHeight) const
@@ -63,7 +71,7 @@ float EntityHandler::getAirDensity(const float inputHeight) const
 
 	return float(1.25f);
 }
-Vec2D EntityHandler::getAirResistance(const Vec2D& inputVelocity, const float inputDragCoefficient, const float inputSillhouetteArea, const float inputHeight) const //returns the air resistance force vector
+Vec2D EntityHandler::getAirDragForce(const Vec2D& inputVelocity, const float inputDragCoefficient, const float inputSillhouetteArea, const float inputHeight) const //returns the air resistance force vector
 {
 	//F = C * ( (A * airDensity * V^2)/2
 	//ifrån utdelat häfte, inte säker ännu om det är hastighet nu eller hastighet nu+1tick som används
@@ -81,16 +89,6 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 
 	for (Entity& e : entities)
 	{
-
-		if (e.getIsColliding() == true)
-		{
-
-			std::cout << "paused; press enter\n";
-
-			std::cin.get();
-
-			e.setIsColliding(false);
-		}
 
 		if (e.getIsColliding() == 1)
 		{
@@ -127,57 +125,53 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 					&& (entities[i].getEntityID() != -1)
 					&& (e.getEntityID() != entities[i].getEntityID()))
 				{
+					//collision check
 
-					SATCollisionCheck satCheck;
-					
-					if (satCheck.SATCheck(e.getVertexShape(), entities[i].getVertexShape()) == true)
+					if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]))
 					{
-						std::cout << "SAT collision has occoured\n";
-		
-					//	std::cout << satCheck.getPenentrationVector().getX() << " " << satCheck.getPenentrationVector().getY() << " magnitutde:" << satCheck.getPenentrationVector().getMagnitude() << " overlap:" << satCheck.getOverlap() << " rotation:"<< satCheck.getPenentrationVector().getDirectionDEGREES() <<  std::endl;
-					//	std::cin.get();
-		
-						std::cout << "Penentration depth:" << satCheck.getPenentrationVector().getMagnitude() << " angle: " << satCheck.getPenentrationVector().getDirectionDEGREES()<< " x:" << satCheck.getPenentrationVector().getX() << " y:" << satCheck.getPenentrationVector().getY() << std::endl;
-						std::cout << "Amount of contactpoints:" << satCheck.getContactPoints().size() << std::endl;
-						for (unsigned int i = 0; i < satCheck.getContactPoints().size(); i++)
+						//collison could have occoured and they could currently be intersecting
+
+						std::cout << "hit" << std::endl;
+
+						SATCollisionCheck sat;
+
+						if (sat.SATCheck(e.getVertexShape(), entities[i].getVertexShape()))
 						{
-							std::cout << "point" << i << " x:" << satCheck.getContactPoints()[i].getX() << " y:" << satCheck.getContactPoints()[i].getY() << std::endl;
+							//they are coliding
+
+							//resolve/handle collision
+
+						
 						}
-					//	e.setPosition(e.getPosition() + satCheck.getPenentrationVector());
-		
-						e.setIsColliding(true);
 					}
-					
-				//	std::cin.get();
-				//	for (const Vec2D& v :  e.getVertexShape().getVertices())
-				//	{
-				//		std::cout << "x:" << v.getX() << " y:" << v.getY() << std::endl;
-				//	}
-				//	std::cout << std::endl;
-				//	for (const Vec2D& v : entities[i].getVertexShape().getVertices())
-				//	{
-				//		std::cout << "x:" << v.getX() << " y:" << v.getY() << std::endl;
-				//	}
-				//	std::cin.get();
+					else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime))
+					{
+						//collision could possibly occour during this tick
+						//make sure by doing a binary sat check, check for collison during different interevals in this tick
 
+						//check at smallar and smaller intervals for collision
 
-					//if (minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true)
-					//{
-					//	//entiteis are directly coliding
-					//
-					//	std::cout << "Entities have directly collided " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() << " time:" << tempElapsedTime << std::endl;
-					//	e.setIsColliding(true);
-					////	std::cin.get();
-					//
-					//}
-					//else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == true)
-					//{
-					//	//entiteis have colided this tick
-					//	std::cout << "Entities collided this tick nut passed through eachother " << "currentPos " << e.getPosition().getY() << " lastPos" << e.getPreviousPosition().getY() << " vy " << e.getVelocity().getY() <<  " time:" << tempElapsedTime << std::endl;
-					//	e.setIsColliding(true);
-					//	//	std::cin.get();
-					//
-					//}
+						float collisionTime = deltaTime / 2; //the time at which collision occoured during this tick
+
+						bool collision = false;
+						while (!collision)
+						{
+							if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == false)
+							{
+								//not colided
+								//try at later time interval
+
+								collisionTime *= 1.5;
+							}
+							else
+							{
+								//coliding between prev tick and half the time
+								//try at previous time interval
+
+								collisionTime /= 1.5;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -195,17 +189,11 @@ void EntityHandler::updateAcceleration(Entity& inputEntity) //updates accelerati
 }
 void EntityHandler::updateVelocity(Entity& inputEntity, const float InputDeltaTime) //updates velócitiyes on entiteis
 {
-	
 	    inputEntity.setVelocity(Vec2D(inputEntity.getVelocity().getX() + ((inputEntity.getResultingForce().getX() * InputDeltaTime) / inputEntity.getMass()), inputEntity.getVelocity().getY() + ((inputEntity.getResultingForce().getY() * InputDeltaTime) / inputEntity.getMass())));
-	
-		
-		//	std::cout << inputEntity.getVelocity().getY() << std::endl; std::cin.get();
 }
 void EntityHandler::updatePosition(const float deltaTime, Entity& inputEntity)
-{
-	
-	    inputEntity.setPosition(inputEntity.getPosition() + inputEntity.getVelocity().scaleVector(deltaTime));
-	
+{	
+	    inputEntity.setPosition(inputEntity.getPosition() + inputEntity.getVelocity().scaleVector(deltaTime));	
 }
 void EntityHandler::updateActingForces(Entity& inputEntity)
 {

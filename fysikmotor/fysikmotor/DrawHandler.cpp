@@ -180,20 +180,20 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	}
 
 
-	sf::CircleShape c;
-	c.setRadius(3);
-	//c.setOrigin(2, 2);
-	c.setFillColor(sf::Color::Red);
-
-	c.setPosition(toPixelCoords(Vec2D(12.92, 4.68)));
-	rTexture.draw(c);
-	c.setPosition(toPixelCoords(Vec2D(11.5, 6.1)));
-	rTexture.draw(c);
-	c.setFillColor(sf::Color::Blue);
-	c.setPosition(toPixelCoords(Vec2D(9, 2)));
-	rTexture.draw(c);
-	c.setPosition(toPixelCoords(Vec2D(2, 11)));
-	rTexture.draw(c);
+//	sf::CircleShape c;
+//	c.setRadius(3);
+//	//c.setOrigin(2, 2);
+//	c.setFillColor(sf::Color::Red);
+//
+//	c.setPosition(toPixelCoords(Vec2D(11.5, 3.37)));
+//	rTexture.draw(c);
+//	c.setPosition(toPixelCoords(Vec2D(10.1, 4.8)));
+//	rTexture.draw(c);
+//	c.setFillColor(sf::Color::Blue);
+//	c.setPosition(toPixelCoords(Vec2D(11, 4)));
+//	rTexture.draw(c);
+//	c.setPosition(toPixelCoords(Vec2D(9, 4)));
+//	rTexture.draw(c);
 
 	rTexture.display(); //displays it onto the rtexture
 	

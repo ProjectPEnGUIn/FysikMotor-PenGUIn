@@ -71,13 +71,11 @@ int main()
 		tEntity1.setEntityState(1);
 		tEntity2.setEntityState(0);
 
-		tEntity1.setPosition(Vec2D(11.5f, 19.0f));
+		tEntity1.setPosition(Vec2D(12.35f, 19.0f));
 		tEntity2.setPosition(Vec2D(10.f, 3.f));
 
 		testEngine.addEntity(tEntity1);
 		testEngine.addEntity(tEntity2);
-
-
 
 		sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "PEnGUIn");  //creates the sfml window  //Physics Engine (a)n(d) Graphical User Interface n(noegenesis)
 		window.setPosition(sf::Vector2i(0, 0));

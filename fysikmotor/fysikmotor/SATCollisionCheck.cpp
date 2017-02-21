@@ -271,42 +271,69 @@ void SATCollisionCheck::calculateContactPoints(const std::vector<Vec2D>& shape1V
 	//1 find the edge from each shape
 
 	Vec2D normal = penentrationVector.getNormalisation(); //points to shape1
-	std::vector<Vec2D> edge1 = getEdge(shape1Vertices, normal.getAntiClockWiseNormal().getAntiClockWiseNormal()),
+	std::vector<Vec2D> edge1 = getEdge(shape1Vertices, normal * -1.0f),
 		edge2 = getEdge(shape2Vertices, normal);
 }
 std::vector<Vec2D> SATCollisionCheck::getEdge(const std::vector<Vec2D>& shapeVertices, const Vec2D& collisionNormal) const //returns two points forming an edge
 {
 	//roughly based on http://www.dyn4j.org/2011/11/contact-points-using-clipping/ 19/2
 
-	int indexMax = -1, indexNextUpMax = -1;
-	float max = -FLT_MAX, nextUpMax = -FLT_MAX;
+	//int indexMax = -1, indexNextUpMax = -1;
+	//float max = -FLT_MAX, nextUpMax = -FLT_MAX;
+	//
+	//for (unsigned int i = 0; i < shapeVertices.size(); i++)
+	//{
+	//	float projection = collisionNormal * shapeVertices[i];
+	//
+	//	if (projection > max)
+	//	{
+	//		indexNextUpMax = indexMax;
+	//		nextUpMax = max;
+	//
+	//		max = projection;
+	//		indexMax = i;
+	//	}
+	//	else if (projection > nextUpMax)
+	//	{
+	//		nextUpMax = projection;
+	//		indexNextUpMax = i;
+	//	}
+	//}
+	//
+	//
+	//Vec2D maxV = shapeVertices[indexMax],
+	//	almostMaxV = shapeVertices[indexNextUpMax];
 
+	//std::cout << "maxv: " << maxV.getX() << " " << maxV.getY() << std::endl;
+	//std::cout << "almost maxv " << almostMaxV.getX() << " " << almostMaxV.getY() << std::endl;
+	//std::cin.get();
+
+	int indexMin = -1, indexNextUpMin = -1;
+	float min = FLT_MAX, nextUpMin = FLT_MAX;
 	for (unsigned int i = 0; i < shapeVertices.size(); i++)
 	{
 		float projection = collisionNormal * shapeVertices[i];
 
-		if (projection > max)
+		if (projection < min)
 		{
-			indexNextUpMax = indexMax;
-			nextUpMax = max;
+			indexNextUpMin = indexMin;
+			nextUpMin = min;
 
-			max = projection;
-			indexMax = i;
+			indexMin = i;
+			min = projection;
 		}
-		else if (projection > nextUpMax)
+		else if (projection < nextUpMin)
 		{
-			nextUpMax = projection;
-			indexNextUpMax = i;
+			indexNextUpMin = i;
+			min = projection;
 		}
 	}
 
+	Vec2D vertex1 = shapeVertices[indexMin],
+		vertex2 = shapeVertices[indexNextUpMin];
 
-	Vec2D maxV = shapeVertices[indexMax],
-		almostMaxV = shapeVertices[indexNextUpMax];
-
-	std::cout << "maxv: " << maxV.getX() << " " << maxV.getY() << std::endl;
-	std::cout << "almost maxv " << almostMaxV.getX() << " " << almostMaxV.getY() << std::endl;
-	std::cin.get();
+	std::cout << "V1: " << vertex1.getX() << " " << vertex2.getY() <<
+		"\nV2: " << vertex2.getX() << " " << vertex2.getY() << std::endl;
 
 	return std::vector<Vec2D>{};
 }
@@ -396,7 +423,7 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		//	penentrationVector.setY(0.0f);
 
 		//calc contactpoints
-		calculateContactPoints(inputVertexShape1.getVertices(), inputVertexShape2.getVertices());
+	//	calculateContactPoints(inputVertexShape1.getVertices(), inputVertexShape2.getVertices());
 
 		return true;
 	}
@@ -406,7 +433,12 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 
 	return false;
 }
+bool SATCollisionCheck::binarySATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2, const float& deltaTime, const Vec2D& v1, const Vec2D& v2)
+{
+	//do binary search for collision i ntime between currentpos and pos at next tick
 
+	return false;
+}
 void SATCollisionCheck::clearVariables() //resets all variables so it can take in new entities and compare
 {
 
