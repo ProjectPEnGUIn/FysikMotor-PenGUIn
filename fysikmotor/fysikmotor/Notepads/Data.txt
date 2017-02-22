@@ -1,0 +1,6 @@
+Window_Width= 1600
+Window_Heigth= 900
+SetFrameRateLimit= 60
+Antialiasing= 0
+SetVerticalSyncEnabled= false
+SetFullscreen= true

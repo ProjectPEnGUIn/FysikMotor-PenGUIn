@@ -126,6 +126,8 @@
     <ClCompile Include="PEVec2D.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="SATCollisionCheck.cpp" />
+    <ClCompile Include="Sound_system.cpp" />
+    <ClCompile Include="Texture_System.cpp" />
     <ClCompile Include="VertexShape.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,13 +135,19 @@
     <ClInclude Include="DrawHandler.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityHandler.h" />
+    <ClInclude Include="Font_System.h" />
     <ClInclude Include="Force.h" />
+    <ClInclude Include="Game_System.h" />
     <ClInclude Include="GJK.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="Menu_System.h" />
     <ClInclude Include="PE.h" />
     <ClInclude Include="PEVec2D.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="SATCollisionCheck.h" />
+    <ClInclude Include="Sound_system.h" />
+    <ClInclude Include="Splashscreen.h" />
+    <ClInclude Include="Texture_System.h" />
     <ClInclude Include="VertexShape.h" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +158,9 @@
     <Import Project="..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets" Condition="Exists('..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets')" />
     <Import Project="..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets" Condition="Exists('..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets')" />
     <Import Project="..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets" Condition="Exists('..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets')" />
+    <Import Project="..\packages\sfml-audio.redist.2.4.0.0\build\native\sfml-audio.redist.targets" Condition="Exists('..\packages\sfml-audio.redist.2.4.0.0\build\native\sfml-audio.redist.targets')" />
+    <Import Project="..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets" Condition="Exists('..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets')" />
+    <Import Project="..\packages\sfml-audio.2.4.0.0\build\native\sfml-audio.targets" Condition="Exists('..\packages\sfml-audio.2.4.0.0\build\native\sfml-audio.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -158,5 +169,8 @@
     <Error Condition="!Exists('..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets'))" />
     <Error Condition="!Exists('..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets'))" />
     <Error Condition="!Exists('..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-audio.redist.2.4.0.0\build\native\sfml-audio.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-audio.redist.2.4.0.0\build\native\sfml-audio.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-audio.2.4.0.0\build\native\sfml-audio.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-audio.2.4.0.0\build\native\sfml-audio.targets'))" />
   </Target>
 </Project>
