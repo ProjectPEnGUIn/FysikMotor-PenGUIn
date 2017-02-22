@@ -27,7 +27,7 @@ int main()
 	
 	SplashScreen splashScreen(renderWindow, e, clock, elapsed);
 	Main_Menu mainmenu(renderWindow, e, clock, elapsed); //EROR
-	Game_System game(renderWindow, e, clock, elapsed);
+	Game_System game(renderWindow, e, clock, elapsed );
 
 
 	std::cout << "succesful\nPress enter\n";

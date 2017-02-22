@@ -1,31 +1,61 @@
-﻿  main.cpp
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(26): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(136): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(137): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(149): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(150): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(236): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(237): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(427): warning C4305: 'argument': truncation from 'int' to 'sf::Uint8'
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(427): warning C4309: 'argument': truncation of constant value
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(460): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(461): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(473): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(474): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(486): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(487): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(500): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(501): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(513): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(514): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(564): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(565): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(652): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(653): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(739): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(740): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(32): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
-  fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
+﻿Build started 2017-02-22 13:55:45.
+     1>Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-audio.2.4.0.0\build\native\../..//build/native/include/" /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/include/" /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-graphics.2.4.0.0\build\native\../..//build/native/include/" /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-window.2.4.0.0\build\native\../..//build/native/include/" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D HAS_SFML /D HAS_SFML /D HAS_SFML /D HAS_SFML /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt AABBCheck.cpp DrawHandler.cpp Entity.cpp EntityHandler.cpp Force.cpp GJK.cpp InputHandler.cpp main.cpp PE.cpp PEVec2D.cpp QuadTree.cpp SATCollisionCheck.cpp Sound_system.cpp Texture_System.cpp VertexShape.cpp
+         AABBCheck.cpp
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\aabbcheck.cpp : fatal error C1041: cannot open program database 'C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\Debug\vc140.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         Generating Code...
+         Compiling...
+         DrawHandler.cpp
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(364): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+         Generating Code...
+         Compiling...
+         VertexShape.cpp
+         Texture_System.cpp
+         Sound_system.cpp
+         SATCollisionCheck.cpp
+         QuadTree.cpp
+         PE.cpp
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(7): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+         main.cpp
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(26): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(136): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(137): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(149): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(150): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(236): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(237): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(427): warning C4305: 'argument': truncation from 'int' to 'sf::Uint8'
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(427): warning C4309: 'argument': truncation of constant value
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(460): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(461): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(473): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(474): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(486): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(487): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(500): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(501): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(513): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(514): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(564): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(565): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(652): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(653): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(739): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(740): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(32): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+         InputHandler.cpp
+         EntityHandler.cpp
+         Entity.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         PEVec2D.cpp
+         GJK.cpp
+         Force.cpp
+     1>Done Building Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:16.33
