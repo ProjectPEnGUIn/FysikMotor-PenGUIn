@@ -13,6 +13,11 @@ Erik Magnusson 15/1 2017
 #include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+
 #include "EntityHandler.h"
 #include "DrawHandler.h"
 
@@ -20,6 +25,8 @@ class PE
 {
 private:
 	//functions
+
+	
 
 	void updateEntityHandlerLogic();
 	void updateDrawHandlerLogic();
@@ -33,6 +40,7 @@ public:
 	void draw(sf::RenderWindow& inputRenderwindow);
 	void update(const float& deltaTime);
 	void inputEvent(sf::Event& inputEvent);
+	void loadSimulation(const std::string& filename); //loads simulation scenaria
 
 	PE();
 

@@ -56,13 +56,53 @@
 //	inputEntity2.setPosition(inputEntity2.getPosition() + Vec2D(entity2Vf.getX() * overlapTime, entity2Vf.getY() * overlapTime));
 //
 //}
-void EntityHandler::impulseCollision(const Entity& e1, const Entity& e2) //resolves collision
+void EntityHandler::impulseCollision(Entity& e1, Entity& e2) //resolves collision
 {
+	// https://en.wikipedia.org/wiki/Coefficient_of_restitution 26/2 2017
+
+
+	//1: change linear velocities
+	Vec2D e1Vf, e2Vf; //final velocities
+
+	//approximating CoR
+	float cor = (e1.getRestitutionCoefficient() + e2.getRestitutionCoefficient()) / 2.0f; //coeficcient of restitution
+
+	e1Vf.setX((e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX() + e2.getMass() * cor * (e2.getVelocity().getX() - e1.getVelocity().getX())) / (e1.getMass() + e2.getMass()));
+	e1Vf.setY((e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY() + e2.getMass() * cor * (e2.getVelocity().getY() - e1.getVelocity().getY())) / (e1.getMass() + e2.getMass()));
+
+	e2Vf.setX((e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX() + e1.getMass() * cor * (e1.getVelocity().getX() - e2.getVelocity().getX())) / (e1.getMass() + e2.getMass()));
+	e2Vf.setY((e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY() + e1.getMass() * cor * (e1.getVelocity().getY() - e2.getVelocity().getY())) / (e1.getMass() + e2.getMass()));
+
+	//2: change rotational velocityies etc
+
+
+	//3: apply values to entiteis if they are NOT static
+
+
+	Vec2D e1Old = e1.getVelocity(), e2Old = e2.getVelocity();
+
+	//std::cout << "----\nE1 old: " << e1Old.getX() << " " << e1Old.getY() <<
+	//	"\nE1 new: " << e1Vf.getX() << " " << e1Vf.getY() <<
+	//	"\nE2 old: " << e2Old.getX() << " " << e2Old.getY() <<
+	//	"\nE2 new: " << e2Vf.getX() << " " << e2Vf.getY() << "\nCoR: " << cor << "\n---------";
+//	std::cin.get();
+
+
+	if (e1.getEntityState() != 0)
+	{
+		e1.setVelocity(e1Vf);
+	}
+
+	if (e2.getEntityState() != 0)
+	{
+		e2.setVelocity(e2Vf);
+	}
+
 
 }
 void EntityHandler::elapseTime(Entity& inputEntity, const float deltaTime) //elapses time for the entitiy
 {
-
+	
 }
 float EntityHandler::getAirDensity(const float inputHeight) const
 {
@@ -131,47 +171,50 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 					{
 						//collison could have occoured and they could currently be intersecting
 
-						std::cout << "hit" << std::endl;
+					//	std::cout << "hit" << std::endl;
 
-						SATCollisionCheck sat;
+						impulseCollision(e, entities[i]);
 
-						if (sat.SATCheck(e.getVertexShape(), entities[i].getVertexShape()))
-						{
-							//they are coliding
-
-							//resolve/handle collision
-
-						
-						}
+					//	SATCollisionCheck sat;
+					//
+					//	if (sat.SATCheck(e.getVertexShape(), entities[i].getVertexShape()))
+					//	{
+					//		//they are coliding
+					//
+					//		//resolve/handle collision
+					//
+					//
+					//
+					//	}
 					}
-					else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime))
-					{
-						//collision could possibly occour during this tick
-						//make sure by doing a binary sat check, check for collison during different interevals in this tick
-
-						//check at smallar and smaller intervals for collision
-
-						float collisionTime = deltaTime / 2; //the time at which collision occoured during this tick
-
-						bool collision = false;
-						while (!collision)
-						{
-							if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == false)
-							{
-								//not colided
-								//try at later time interval
-
-								collisionTime *= 1.5;
-							}
-							else
-							{
-								//coliding between prev tick and half the time
-								//try at previous time interval
-
-								collisionTime /= 1.5;
-							}
-						}
-					}
+					//else if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime))
+					//{
+					//	//collision could possibly occour during this tick
+					//	//make sure by doing a binary sat check, check for collison during different interevals in this tick
+					//
+					//	//check at smallar and smaller intervals for collision
+					//
+					//  float collisionTime = deltaTime / 2; //the time at which collision occoured during this tick
+					//  
+					//  bool collision = false;
+					//  while (!collision)
+					//  {
+					//  	if (sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == false)
+					//  	{
+					//  		//not colided
+					//  		//try at later time interval
+					//  
+					//  		collisionTime *= 1.5;
+					//  	}
+					//  	else
+					//  	{
+					//  		//coliding between prev tick and half the time
+					//  		//try at previous time interval
+					//  
+					//  		collisionTime /= 1.5;
+					//  	}
+					//  }
+					//}
 				}
 			}
 		}

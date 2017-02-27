@@ -214,7 +214,7 @@ Entity::Entity()
 	forces(),
 	resultingForce(),
 
-	mass(1.0f),
+	mass(-1.0f),
 	centerOfMassOffset(),
 
 	shape(),
