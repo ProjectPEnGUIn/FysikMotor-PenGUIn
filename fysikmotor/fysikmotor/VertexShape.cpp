@@ -75,6 +75,10 @@ void VertexShape::setRotationDEGREES(float inputRotationDEGREES)
 	rotationOffsetDEGREES = fmod(rotationOffsetDEGREES + delta, 360.0f);
 	rotationOffsetRADIANS = fmod((rotationOffsetDEGREES * 0.017453292f), (2 * PI));
 
+	//std::cout << "rot: " << inputRotationDEGREES << " - newrot: " << rotationOffsetDEGREES << std::endl;
+	//std::cout << "pres enter yo\n";
+	//std::cin.get();
+
 	//update vertices shape with the new vertex added
 	updateCenterPos();
 	updateRotationOnVertices();
@@ -184,9 +188,6 @@ void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
 	rotation = sf::Transform{};
 	rotation.rotate(rotationOffsetDEGREES, sf::Vector2f(trueCenterPosition.getX() + rotationCenterOffset.getX() , trueCenterPosition.getY() + rotationCenterOffset.getY()));//, trueCenterPosition.getX(), trueCenterPosition.getY());
-	
-
-	//std::cout << rotation.
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
@@ -198,11 +199,6 @@ void VertexShape::updateRotationOnVertices() //updates the vertices points
 		vertices[i].setXY(temp.x, temp.y); //give the vertex the new temppos
 	}
 
-	//for (unsigned int i = 0; i < vertices.size(); i++)
-	//{
-	//	std::cout << vertices[i].getX() << " " << vertices[i].getY() << std::endl;
-	//}
-	//std::cin.get();
 }
 void VertexShape::updateCenterPos() //updates the centerpos location of the vertices shape
 {
@@ -226,6 +222,7 @@ void VertexShape::updateCenterPos() //updates the centerpos location of the vert
 
 VertexShape::VertexShape()
 	:
+	PI(3.14159265f),
 	trueCenterPosition(),
 	rotationCenterOffset(),
 	rotationOffsetDEGREES(0),

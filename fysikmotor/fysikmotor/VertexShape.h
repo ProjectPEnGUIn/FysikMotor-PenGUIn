@@ -72,7 +72,7 @@ public:
 	
 public:
 	//members
-	const float PI = 3.141592f;
+	const float PI;
 private:
 	//members
 

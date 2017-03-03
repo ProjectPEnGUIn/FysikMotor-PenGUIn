@@ -123,6 +123,7 @@ private:
 
 	bool isColliding; //can change the outline to show that it is colliding
 
+	float frictionConstant;
 	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
 	float dragCoefficient; //air drag of the body
 

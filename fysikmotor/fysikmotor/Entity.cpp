@@ -5,9 +5,20 @@
 // set functions
 void Entity::setPosition(const Vec2D& inputPos) //Sets the pos using a PEVec2D object
 {
-	prevAABBBR = shape.getBottomRightAABBCorner();
-	prevAABBTL = shape.getTopLeftAABBCorner();
-	prevPos = shape.getCenterPos();
+	if (entityState == 0)
+	{
+
+		prevAABBBR = shape.getBottomRightAABBCorner();
+		prevAABBTL = shape.getTopLeftAABBCorner();
+		prevPos = inputPos;
+	}
+	else
+	{
+		prevAABBBR = shape.getBottomRightAABBCorner();
+		prevAABBTL = shape.getTopLeftAABBCorner();
+		prevPos = shape.getCenterPos();
+	}
+	
 	shape.setPosition(inputPos);
 }
 void Entity::setVelocity(const Vec2D& inputVel) //sets velocity using pevec2d object
@@ -183,24 +194,24 @@ Vec2D Entity::getResultingForce() const
 	return resultingForce;
 }
 
-//update functions
-void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
-{
-
-}
-void Entity::updateAcceleration(const Vec2D& inputResultingForce) //updates acceleration
-{
-	//using F = ma, a = F/m
-}
-void Entity::updateVelocity() //updates speed
-{
-	velocity += acceleration;
-}
-void Entity::updatePosition()
-{
-	//adds velocity to position
-	//position += velocity;
-}
+////update functions
+//void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
+//{
+//
+//}
+//void Entity::updateAcceleration(const Vec2D& inputResultingForce) //updates acceleration
+//{
+//	//using F = ma, a = F/m
+//}
+//void Entity::updateVelocity() //updates speed
+//{
+//	velocity += acceleration;
+//}
+//void Entity::updatePosition()
+//{
+//	//adds velocity to position
+//	//position += velocity;
+//}
 
 //Constructor
 Entity::Entity()
@@ -221,13 +232,14 @@ Entity::Entity()
 
 	isColliding(false),
 
+	frictionConstant(0.5),
 	restitutionCoefficient(1.0f),
 	dragCoefficient(0.15f),
-	prevPos(),
-	prevVel(),
-	prevRot(),
-	prevAABBTL(),
-	prevAABBBR()
+	prevPos(FLT_MAX, FLT_MAX),
+	prevVel(FLT_MAX, FLT_MAX),
+	prevRot(FLT_MAX),
+	prevAABBTL(FLT_MAX, FLT_MAX),
+	prevAABBBR(FLT_MAX, FLT_MAX)
 	
 {
 
