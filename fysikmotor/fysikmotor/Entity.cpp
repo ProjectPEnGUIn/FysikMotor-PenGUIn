@@ -102,6 +102,10 @@ void Entity::setResultingForce(const Vec2D& inputResultingForce)
 {
 	resultingForce = inputResultingForce;
 }
+void Entity::setFrictionCoefficient(const float inputFrictionCoefficient)
+{
+	frictionCoefficient = inputFrictionCoefficient;
+}
 
 
 //get functions
@@ -193,6 +197,10 @@ Vec2D Entity::getResultingForce() const
 {
 	return resultingForce;
 }
+float Entity::getFrictionCoefficient() const
+{
+	return frictionCoefficient;
+}
 
 ////update functions
 //void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
@@ -232,8 +240,8 @@ Entity::Entity()
 
 	isColliding(false),
 
-	frictionConstant(0.5),
-	restitutionCoefficient(1.0f),
+	frictionCoefficient(FLT_MAX),
+	restitutionCoefficient(FLT_MAX),
 	dragCoefficient(0.15f),
 	prevPos(FLT_MAX, FLT_MAX),
 	prevVel(FLT_MAX, FLT_MAX),

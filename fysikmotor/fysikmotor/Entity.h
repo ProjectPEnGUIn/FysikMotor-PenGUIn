@@ -67,6 +67,7 @@ public:
 	void setPreviousAABBTL(const Vec2D& inputAABBTL);
 	void setPreviousAABBBR(const Vec2D& inputAABBBR);
 	void setResultingForce(const Vec2D& inputResultingForce);
+	void setFrictionCoefficient(const float inputFrictionCoefficient);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -91,6 +92,7 @@ public:
 	Vec2D getPreviousAABBTL() const;
 	Vec2D getPreviousAABBBR() const;
 	Vec2D getResultingForce() const;
+	float getFrictionCoefficient() const;
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
@@ -123,7 +125,7 @@ private:
 
 	bool isColliding; //can change the outline to show that it is colliding
 
-	float frictionConstant;
+	float frictionCoefficient;
 	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
 	float dragCoefficient; //air drag of the body
 

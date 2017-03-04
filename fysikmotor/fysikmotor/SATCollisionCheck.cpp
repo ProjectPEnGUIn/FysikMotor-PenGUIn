@@ -67,13 +67,14 @@ void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Ver
 
 	//shape1, fidn the vertice closest to shape2
 
-	Vec2D nNormal = normal.getClockWiseNormal().getClockWiseNormal(); //flips it
+	//Vec2D nNormal = normal.getClockWiseNormal().getClockWiseNormal(); //flips it
+	Vec2D nNormal1 = (normal.getDirectionDEGREES() >= 180.0f) ? normal : normal.getClockWiseNormal().getClockWiseNormal();
 
 	int index1 = 0; 
-	float maxp1 = nNormal * shape1Vertices[0];
+	float maxp1 = nNormal1 * shape1Vertices[0];
 	for (unsigned int i = 0; i < shape1Vertices.size(); i++)
 	{
-		float newp = nNormal * shape1Vertices[i];
+		float newp = nNormal1 * shape1Vertices[i];
 		
 		if (newp > maxp1)
 		{
@@ -84,12 +85,14 @@ void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Ver
 
 	//shape 2: find the vertice closests to shape1, invert normal
 	
+	Vec2D nNormal2 = (normal.getDirectionDEGREES() >= 180.0f) ? normal.getClockWiseNormal().getClockWiseNormal() : normal;
+
+
 	int index2 = 0;
-	float maxp2 = normal * shape2Vertices[0];
-	
+	float maxp2 = nNormal2 * shape2Vertices[0];
 	for (unsigned int i = 0; i < shape2Vertices.size(); i++)
 	{
-		float newp = normal * shape2Vertices[i];
+		float newp = nNormal2 * shape2Vertices[i];
 
 		if (newp > maxp2)
 		{
@@ -123,42 +126,44 @@ void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Ver
 
 	//error vertices building edges must be in right order
 
-	if (s1R * nNormal <= s1L * nNormal)
+	if (s1R * nNormal1 <= s1L * nNormal1)
 	{
 		s1cP2 = p1Previous;
 
-	//	edge1 = s1cP2 - s1cP1;
+		edge1 = s1cP1 - s1cP2;
 	}
 	else
 	{
 		s1cP2 = p1Next;
 
-		//edge1 = s1cP2 - s1cP1;
+		edge1 = s1cP2 - s1cP1;
 	}
 
-	if (s2R * normal <= s2L * normal)
+	if (s2R * nNormal2 <= s2L * nNormal2)
 	{
 		s2cP2 = p2Previous;
 
-		//edge2 = s2cP2 - s2cP1;
+		edge2 = s2cP1 - s2cP2;
 	}
 	else
 	{
 		s2cP2 = p2Next;
 
-	//	edge2 = s2cP2 - s2cP1;
+		edge2 = s2cP2 - s2cP1;
 	}
 
 	//edges are in anticlockwise direction, but it works so im leaving it here, if it needs adjusting i'll do it later
 
-	edge1 = s1cP2 - s1cP1;
-	edge2 = s2cP2 - s2cP1;
+	
 
 	//std::cout << "edge 1: " << edge1.getX() << " " << edge1.getY() << " angle: " << edge1.getDirectionDEGREES() << std::endl;
 	//std::cout << "edge 2: " << edge2.getX() << " " << edge2.getY() << " angle: " << edge2.getDirectionDEGREES() << std::endl;
 	////std::cin.get();
 	//std::cout << "points on shape1: p1: " << s1cP1.getX() << " " << s1cP1.getY() << " p2: " << s1cP2.getX() << " " << s1cP2.getY()
 	//	<< "\nPoints on shape2: p1: " << s2cP1.getX() << " " << s2cP1.getY() << " p2: " << s2cP2.getX() << " " << s2cP2.getY() << std::endl;
+	//
+	//std::cout << "Normal dir: " << normal.getDirectionDEGREES() << std::endl << " n1N: " << nNormal1.getDirectionDEGREES() << " n2N: " << nNormal2.getDirectionDEGREES() << std::endl;
+	//
 	//std::cout << "Paused: Press Enter\n";
 	//std::cin.get();
 	

@@ -50,6 +50,17 @@ void EntityHandler::elapseTime(Entity& inputEntity, const float deltaTime) //ela
 {
 	
 }
+void EntityHandler::updateResultingForce(Entity& e)
+{
+	Vec2D resultingForce;
+
+	for (const Force& f : e.getForces())
+	{
+		resultingForce += f.getForce();
+	}
+
+	e.setResultingForce(resultingForce);
+}
 float EntityHandler::getAirDensity(const float inputHeight) const
 {
 
@@ -93,7 +104,8 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 		if (e.getEntityState() == 1)
 		{
 		
-			updateAcceleration(e);
+			//updateAcceleration(e);
+			updateResultingForce(e); //updates the resulting force in case there has been forces added in a collison since last update
 			updateVelocity(e, deltaTime);
 			updatePreviousEntityData(e);
 			updatePosition(deltaTime, e);
@@ -172,18 +184,20 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 								done = true; //wont iterate another time
 
 
-								//HANDLE LOGIC
+								//Find time of impact
 								Vec2D normal = collisionTest.getPenentrationVector().getNormalisation(); //lenght = 1
 								//	https://en.wikipedia.org/wiki/Vector_projection 1/3 2017
-								//project e velocity onto normal axis
+							    //project e velocity onto normal axis
 								float e1Proj = (e.getVelocity() * normal),
 									e2Proj = (entities[i].getVelocity() * normal);
 
 								float overlapTime = FLT_MAX;
-								if (e1Proj + e2Proj == 0)
-									overlapTime = collisionTest.getOverlap(); //NOT SURE IF THIS IS RIGHT BUT IT WORKS ¯\_(´_` )_/¯
-								else
+								if (e1Proj + e2Proj == 0 && collisionTest.getOverlap() != 0.0f)
+									overlapTime = collisionTest.getOverlap()/2; //NOT SURE IF THIS IS RIGHT BUT IT WORKS ¯\_(´_` )_/¯
+								else if (collisionTest.getOverlap() != 0.0f)
 									overlapTime = fabs(collisionTest.getOverlap() / (e1Proj + e2Proj)); //the time that they have been overlapping for
+								else
+									overlapTime = 0;
 
 								elapsedTime -= overlapTime;
 
@@ -202,12 +216,13 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 							//	std::cout << "v1 * t + v2 * t: " << e1Proj * overlapTime + e2Proj*overlapTime << " <- must take the absolute value, fabs" << std::endl;
 							//	std::cout << "elapsed: " << elapsedTime << std::endl;
 
-								//move the entities back to when they were not íntersecting using the time calculated
+								//move the entities to when they were not íntersecting using the time calculated
 								if (e.getEntityState() != 0)
 									e.setPosition(e.getPreviousPosition() + (e.getVelocity() * elapsedTime));
 
 								if (entities[i].getEntityState() != 0)
 									entities[i].setPosition(entities[i].getPreviousPosition() + (entities[i].getVelocity() * elapsedTime));
+								
 
 								//do the impulse collision for linear movement
 								impulseCollision(e, entities[i]);
@@ -216,30 +231,42 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 								//TODO
 
 
-								//add force and corresponding antiforce to each entity, calc friction
+								//add forces acting on both objects
 
-								Vec2D e1Fr = e.getResultingForce(),
-									e2Fr = entities[i].getResultingForce();
+								Vec2D force = e.getResultingForce(),
+									normalForce = force.getRotatedVectorDEGREES(collisionTest.getEdge2().getDirectionDEGREES()).getAntiClockWiseNormal().getAntiClockWiseNormal();
 
-								//e acts on e[i] with its Fr
-								entities[i].addForce(Force(e1Fr, Vec2D(0, 0))); 
-								//e[i] excerts a force (back?) on e, split it up in two seperate forces
-								e.addForce(Force(e1Fr * sin(collisionTest.getEdge2().getDirectionRADIANS()), Vec2D(0, 0))); //x part of that force
-								e.addForce(Force(e1Fr * cos(collisionTest.getEdge2().getDirectionRADIANS()), Vec2D(0, 0))); //y part of that force
+								float frictionForce = normalForce.getY() * ((e.getFrictionCoefficient() + entities[i].getFrictionCoefficient()) / 2);
+							
+								//e acts on e[i] with this force
+								entities[i].addForce(Force(normalForce.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D()));  //rotates it 180 degrees and applies to e[i]
+								
+								//only apply friction if the force in the direction is great enoug
+								//TODO: SPlit up forces into sepeate forces, will then see the frictionforce acting in the right direction
+								if (fabs(normalForce.getX()) > fabs(frictionForce))
+									e.addForce(Force(Vec2D(normalForce.getX() - frictionForce, normalForce.getY()), Vec2D()));
+								else
+									e.addForce(Force(Vec2D(0.0f, normalForce.getY()), Vec2D()));
+								//e.addForce(Force(normalForce.getRotatedVectorRADIANS(collisionTest.getEdge2().getDirectionRADIANS()), Vec2D()));
+							
+								//std::cout << "nforce: x:" << normalForce.getX() << " " << normalForce.getY() << std::endl;
 
-
-								//std::cout << "rad: " << collisionTest.getEdge2().getDirectionDEGREES() << std::endl;
+								//std::cout << "normalfroce degrees: " << normalForce.getDirectionDEGREES() << std::endl;
+								//std::cin.get();
 								//
-								//std::cout << e.getForces().size() << std::endl;
-								//for (unsigned int i = 0; i < e.getForces().size(); i++)
+								//std::cout << "force: " << force.getX() << " " << force.getY() << " angle:" << force.getDirectionDEGREES() << std::endl;
+								//std::cout << "edge2: " << collisionTest.getEdge2().getX() << " " << collisionTest.getEdge2().getY() << " angle rad: " << collisionTest.getEdge2().getDirectionRADIANS() << " degrees: " << collisionTest.getEdge2().getDirectionDEGREES() << std::endl;
+								//for (Force f : e.getForces())
 								//{
-								//	std::cout << e.getForces()[i].getForce().getX() << " " << e.getForces()[i].getForce().getY() << std::endl;
+								//	std::cout << "x: " << f.getForce().getX() << " y: " << f.getForce().getY() << std::endl;
 								//}
 								//std::cin.get();
 
 								float remainingTime = deltaTime - elapsedTime; //the amount of time left in this tick
 								if (remainingTime > 0)
 								{
+
+									std::cout << "time left in tick: "<< remainingTime << std::endl;
 									//move time forward for each entity
 
 									//update linear / angular movement
@@ -268,13 +295,13 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 }
 
 
-void EntityHandler::updateAcceleration(Entity& inputEntity) //updates acceleration on entitis
-{
-	//get resulting force of each entity and use F = ma, a = F/m
-
-	
-	//	inputEntity.setAcceleration(Vec2D(resultingForce.getX() / inputEntity.getMass(), resultingForce.getY() / inputEntity.getMass()));
-}
+//void EntityHandler::updateAcceleration(Entity& inputEntity) //updates acceleration on entitis
+//{
+//	//get resulting force of each entity and use F = ma, a = F/m
+//
+//	
+//	//	inputEntity.setAcceleration(Vec2D(resultingForce.getX() / inputEntity.getMass(), resultingForce.getY() / inputEntity.getMass()));
+//}
 void EntityHandler::updateVelocity(Entity& inputEntity, const float InputDeltaTime) //updates velócitiyes on entiteis
 {
 	    inputEntity.setVelocity(Vec2D(inputEntity.getVelocity().getX() + ((inputEntity.getResultingForce().getX() * InputDeltaTime) / inputEntity.getMass()), inputEntity.getVelocity().getY() + ((inputEntity.getResultingForce().getY() * InputDeltaTime) / inputEntity.getMass())));
@@ -307,10 +334,9 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 }
 void EntityHandler::clearActingForces(Entity& inputEntity)
 {
-	std::vector<Force> a; //has no values
 
 	inputEntity.setResultingForce(Vec2D(0, 0));
-	inputEntity.setForces(a);
+	inputEntity.setForces(std::vector<Force>{});
 }
 void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
 {

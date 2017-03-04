@@ -25,12 +25,13 @@ Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float c
 	e.setPosition(pos);
 	e.setMass(mass);
 	e.setRestitutionCoefficient(cor);
+	e.setFrictionCoefficient(0.5);
 	e.setEnttityID(ID);
 	
 	e.setVelocity(vel);
 	
 	//if (state != 0)
-		e.setAngleRotationDEGREES(210);
+		e.setAngleRotationDEGREES(-45);
 	//else
 	//	e.setAngleRotationDEGREES(-30);
 
@@ -43,12 +44,14 @@ public:
 	Game_System(sf::RenderWindow& renderwindow, sf::Event& e, sf::Clock clock, sf::Time& elapsed)
 	{
 
+
+
 		PE physicsEngine;
 		physicsEngine.init(10, 10, 500, 500, 50, 50);
 
-		physicsEngine.addEntity(getEntitySquare(Vec2D(5, 5), 9, 1, 100, 0.35, 3, 0, Vec2D(0, 0)));
+		physicsEngine.addEntity(getEntitySquare(Vec2D(5, 3), 2, 1, 100, 0.35, 3, 0, Vec2D(0, 0)));
 	//	physicsEngine.addEntity(getEntitySquare(Vec2D(5, 12), 2, 2, 10, 0.4, 1, 1, Vec2D(0 ,0)));
-		physicsEngine.addEntity(getEntitySquare(Vec2D(3, 10), 3, 1, 5, 0.35, 2, 1, Vec2D(0, 0)));
+		physicsEngine.addEntity(getEntitySquare(Vec2D(4.5, 7), 1, 0.5, 5, 0.35, 2, 1, Vec2D(0, 0)));
 	
 		sf::Time logicTime = sf::seconds(1 / 60.f);
 		sf::Clock logicTimer;

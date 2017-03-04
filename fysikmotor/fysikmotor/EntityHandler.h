@@ -27,7 +27,8 @@ private:
 	void impulseCollision( Entity& e1, Entity& e2); //resolves collision
 	void elapseTime(Entity& inputEntity, const float deltaTime); //elapses time for the entitiy
 
-	void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
+	void updateResultingForce(Entity& e);
+	//void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
 	void updateVelocity(Entity& inputEntity, const float inputDeltaTime); //updates velócitiyes on entiteis
 	void updatePosition(const float deltaTime, Entity& inputEntity);
 	void updateActingForces(Entity& inputEntity);
