@@ -8,14 +8,14 @@ void Entity::setPosition(const Vec2D& inputPos) //Sets the pos using a PEVec2D o
 	if (entityState == 0)
 	{
 
-		prevAABBBR = shape.getBottomRightAABBCorner();
-		prevAABBTL = shape.getTopLeftAABBCorner();
+		//prevAABBBR = shape.getBottomRightAABBCorner();
+		//prevAABBTL = shape.getTopLeftAABBCorner();
 		prevPos = inputPos;
 	}
 	else
 	{
-		prevAABBBR = shape.getBottomRightAABBCorner();
-		prevAABBTL = shape.getTopLeftAABBCorner();
+		//prevAABBBR = shape.getBottomRightAABBCorner();
+		//prevAABBTL = shape.getTopLeftAABBCorner();
 		prevPos = shape.getCenterPos();
 	}
 	

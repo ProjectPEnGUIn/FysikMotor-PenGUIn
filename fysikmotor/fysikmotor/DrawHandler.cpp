@@ -172,7 +172,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 				//doesnt draw forces that have both x and y as 0, pointless and draws a horisontal line on screen
 				if (!(f.getForce().getX() == 0 && f.getForce().getY() == 0)) 
 				{
-					rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX() + f.getOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY() + f.getOffset().getY(), f.getForce(), sf::Color::Blue, 0.1f));
+					rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX() + f.getOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY() + f.getOffset().getY(), f.getForce(), f.getColour(), 0.0000001f));
 				}
 			}
 		}

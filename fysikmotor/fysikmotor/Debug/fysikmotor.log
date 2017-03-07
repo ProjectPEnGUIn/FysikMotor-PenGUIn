@@ -27,7 +27,9 @@ c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(739): warning C4244: '
 c:\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(740): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
 c:\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(32): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
 c:\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(52): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(54): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(43): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(44): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(45): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(46): warning C4305: 'argument': truncation from 'double' to 'float'
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
   fysikmotor.vcxproj -> C:\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
