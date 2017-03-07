@@ -11,15 +11,41 @@
 
 #include "PE.h" //physics engine module
 
+Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float cor, int ID, int state, Vec2D vel, float rot)
+{
+	Entity e;
+	VertexShape s;
+	e.setEntityState(state);
+	s.addVertexPoint(Vec2D(0, 0));
+	s.addVertexPoint(Vec2D(0, height));
+	s.addVertexPoint(Vec2D(width, height));
+	s.addVertexPoint(Vec2D(width, 0));
+	e.setVertexShape(s);
+	e.setPosition(pos);
+	e.setMass(mass);
+	e.setRestitutionCoefficient(cor);
+	e.setFrictionCoefficient(0.5);
+	e.setEnttityID(ID);
+	e.setVelocity(vel);
+	e.setAngleRotationDEGREES(rot);
+
+	return e;
+}
+
 class Game_System
 {
 public:
 	Game_System(sf::RenderWindow& renderwindow, sf::Event& e, sf::Clock clock, sf::Time& elapsed)
 	{
 		PE physicsEngine;
-		physicsEngine.init(30, 30, 500, 500, 50, 50);
+		physicsEngine.init(10, 10, 500, 500, 50, 50);
 
-		sf::Time logicTime = sf::seconds(1 / 60);
+		physicsEngine.addEntity(getEntitySquare(Vec2D(6.5, 8), 5, 1, 100, 0.35, 3, 0, Vec2D(0, 0), 35));
+		physicsEngine.addEntity(getEntitySquare(Vec2D(5, 3), 5, 1, 100, 0.35, 3, 0, Vec2D(0, 0), -35));
+		physicsEngine.addEntity(getEntitySquare(Vec2D(5.5, 12), 0.5, 0.5, 2, 0.35, 1, 1, Vec2D(0 ,0), 23));
+		physicsEngine.addEntity(getEntitySquare(Vec2D(5, 10), 1, 0.5, 5, 0.35, 2, 1, Vec2D(-1, 0),0));
+	
+		sf::Time logicTime = sf::seconds(1 / 60.f);
 		sf::Clock logicTimer;
 
 		bool game = true;
@@ -36,12 +62,13 @@ public:
 			if (logicTimer.getElapsedTime() >= logicTime)
 			{
 				//logic; TODO; split up timer in smaller segments if it ets too big
-				physicsEngine.update(logicTimer.restart().asSeconds());
+				physicsEngine.update(logicTimer.restart().asSeconds() );
 			}
 
 			elapsed = clock.getElapsedTime();
 			physicsEngine.draw(renderwindow);
 			renderwindow.display();
+
 		}
 	}
 };

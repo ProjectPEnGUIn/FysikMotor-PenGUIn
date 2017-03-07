@@ -1,6 +1,12 @@
 #include "PE.h"
 
+void PE::loadSimulation(const std::string& filename) //loads simulation scenario
+{
+	//filenames is the end of 
 
+	std::string path = "/Saves/" + filename; // the full path to the savefile text document
+
+}
 void PE::init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight, const float imageSCreenXPos, const float imageScreenYPos)
 {
 	//tissue

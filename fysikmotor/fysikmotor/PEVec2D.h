@@ -57,6 +57,8 @@ public:
 	PEVec2D getClockWiseNormal() const; //90 degree normal to current vector
 	PEVec2D getAntiClockWiseNormal() const; //90 degree normal to current vector
 	PEVec2D getCrossProductWithScalar(const T& inputScalar) const; //gets the vector CROSS product
+	PEVec2D getRotatedVectorDEGREES(const T& inputDEGREES) const; //returns the vector rotated in a direction
+	PEVec2D getRotatedVectorRADIANS(const T& inputRADIANS) const; // returns the vector rotate in a dircetion
 
 	//overloading operators, allows one to use + - * / = with PEVec2D<T> objects
 	PEVec2D operator+(const PEVec2D& inputVectorToAdd) const; //allowes usage of vec1 + vec2 = vec3. will return PEVec2D object
@@ -120,9 +122,11 @@ template <typename T> void PEVec2D<T>::setDirectionDEGREES(T inputDirectionInDeg
 	
 	T oldX = x,
 		oldY = y;
+	float cosAngle = cos(inputDirectionInDegrees * 180.0f / PI),
+		sinAngle = sin(inputDirectionInDegrees * 180.0f / PI);
 
-	x = oldX * cos(inputDirectionInDegrees * 180.0f / PI) - oldY * sin(inputDirectionInDegrees * 180.0f / PI);
-	y = oldY * cos(inputDirectionInDegrees * 180.0f / PI) + oldX * sin(inputDirectionInDegrees * 180.0f / PI);
+	x = oldX *cosAngle - oldY * sinAngle;
+	y = oldY * cosAngle + oldX * sinAngle;
 
 }
 template <typename T> void PEVec2D<T>::setDirectionRADIANS(T inputDirectionInRadians) //set the diredtion of vector in radians
@@ -130,6 +134,8 @@ template <typename T> void PEVec2D<T>::setDirectionRADIANS(T inputDirectionInRad
 	
 
 }
+
+
 template <typename T> PEVec2D<T> PEVec2D<T>::scaleVector(T inputScaleAmount) //scales the vector so many times
 {
 	return Vec2D(x * inputScaleAmount, y * inputScaleAmount);
@@ -211,6 +217,22 @@ template <typename T> PEVec2D<T> PEVec2D<T>::getCrossProductWithScalar(const T& 
 	//http://www.dyn4j.org/2011/11/contact-points-using-clipping/ 9/2 2017
 
 	return PEVec2D<T>(y * inputScalar, -x *inputScalar);
+}
+template <typename T> PEVec2D<T> PEVec2D<T>::getRotatedVectorDEGREES(const T& inputDEGREES) const //returns the vector rotated in a direction
+{
+	//EASY, convert degrees to radians
+	return getRotatedVectorRADIANS(inputDEGREES * 0.0174532925f);
+}
+template <typename T> PEVec2D<T> PEVec2D<T>::getRotatedVectorRADIANS(const T& inputRADIANS) const // returns the vector rotate in a dircetion
+{
+
+	T oldX = x,
+		oldY = y,
+	//	angle = getDirectionRADIANS()
+	   cosAngle = cos(inputRADIANS),
+		sinAngle = sin(inputRADIANS);
+
+	return PEVec2D<T>(oldX *cosAngle - oldY * sinAngle, oldY * cosAngle + oldX * sinAngle);
 }
 
 //overloading operators, allows one to use + - * / = with PEVec2D<T> objects

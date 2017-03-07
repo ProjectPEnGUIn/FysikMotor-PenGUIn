@@ -23,17 +23,12 @@ class EntityHandler
 private:
 	//functions
 
-	//collision checks
-	//bool SATCheck(const Entity& entity1, const Entity& entity2); //does a thurough check using SAT, seperating axis theorem, very resource intensive, lots of math functions, ex sqrt, cosine, sine. very accurate
-
-	//collision countermeasures
-//	void entityCollision(Entity& inpputEntity1, Entity& inputEntity2, const Vec2D& penentrationVector, const Vec2D& contactPoint); //handles collision between entities
-
-	void impulseCollision(const Entity& e1, const Entity& e2); //resolves collision
-	//void impulseCollision(const Entity& e1, const Entity& e2, const float deltaTime); //resolves collision
+	
+	void impulseCollision( Entity& e1, Entity& e2); //resolves collision
 	void elapseTime(Entity& inputEntity, const float deltaTime); //elapses time for the entitiy
 
-	void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
+	void updateResultingForce(Entity& e);
+	//void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
 	void updateVelocity(Entity& inputEntity, const float inputDeltaTime); //updates velócitiyes on entiteis
 	void updatePosition(const float deltaTime, Entity& inputEntity);
 	void updateActingForces(Entity& inputEntity);
