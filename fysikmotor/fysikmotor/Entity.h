@@ -39,9 +39,7 @@ public:
 private:
 	//functions
 
-	void updateAcceleration(const Vec2D& inputResultingForce); //updates acceleration
-	void updateVelocity(); //updates speed
-	void updatePosition();
+
 public:
 	//functions
 
@@ -68,6 +66,7 @@ public:
 	void setPreviousAABBBR(const Vec2D& inputAABBBR);
 	void setResultingForce(const Vec2D& inputResultingForce);
 	void setFrictionCoefficient(const float inputFrictionCoefficient);
+	void setLostTime(const float inputLostTime);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -93,6 +92,7 @@ public:
 	Vec2D getPreviousAABBBR() const;
 	Vec2D getResultingForce() const;
 	float getFrictionCoefficient() const;
+	float getLostTime() const;
 
 	//update functions
 	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
@@ -112,38 +112,32 @@ private:
 	int entityID; //the id of the entity, -1 if not set
 	int entityState; //what state it is in, -1 if not set
 
-	Vec2D position; //pos of entity, is in the center
-	Vec2D velocity; //velocity of entity, has a magnitude and direction, in meters per second
-	Vec2D acceleration; //acceleration, in meters per seconds squared
-	std::vector<Force> forces; //all of the acting forces on the entity at this moment, in Newtons
-	Vec2D resultingForce;
+	//curent entity data:
+	Vec2D velocity,
+		acceleration,
+		resultingForce;
+	    //position is stored in vertexshape
 
-	float mass; //mass of entity in kg, -1 if not set
-	Vec2D centerOfMassOffset; //pos of center of mass, is in the center of entity by default
+	std::vector<Force> forces; //all acting forces on entity
 
-	VertexShape shape; //the shape of entity, define it with verticies, has rotation, centerpos / pos in middle
+	float mass;
+	Vec2D centerOfMassOffset;
 
-	bool isColliding; //can change the outline to show that it is colliding
+	//coefficients for entity
+	float frictionCoefficient,
+		restitutionCoefficient,
+		dragCoefficient;
 
-	float frictionCoefficient;
-	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
-	float dragCoefficient; //air drag of the body
+	VertexShape shape; //entity shape
 
-	//variables containing prev tick entity data
-	Vec2D prevPos;
-	Vec2D prevVel;
+	//prev tick entity data:
+	Vec2D prevPos,
+		prevVel,
+		prevAABBTL, 
+		prevAABBBR;
 	float prevRot;
-	Vec2D prevAABBTL, prevAABBBR; 
 
-	//physics variabeles
-	
-
-	//torque members
-	Vec2D torque; //M = F*L
-	Vec2D momentOfInertia;
-
-	//angular momentum
-	Vec2D angularMomentum;
-
+	float lostTime; 
+	bool isColliding;
 };
 #endif // !_ENTITY_

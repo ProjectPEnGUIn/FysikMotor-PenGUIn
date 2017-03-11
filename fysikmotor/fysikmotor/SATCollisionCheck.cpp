@@ -67,9 +67,9 @@ void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Ver
 
 	//shape1, fidn the vertice closest to shape2
 
-	//Vec2D nNormal = normal.getClockWiseNormal().getClockWiseNormal(); //flips it
+	
 	Vec2D nNormal1 = (normal.getDirectionDEGREES() >= 180.0f) ? normal : normal.getClockWiseNormal().getClockWiseNormal();
-
+	
 	int index1 = 0; 
 	float maxp1 = nNormal1 * shape1Vertices[0];
 	for (unsigned int i = 0; i < shape1Vertices.size(); i++)
@@ -85,9 +85,9 @@ void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Ver
 
 	//shape 2: find the vertice closests to shape1, invert normal
 	
+	
 	Vec2D nNormal2 = (normal.getDirectionDEGREES() >= 180.0f) ? normal.getClockWiseNormal().getClockWiseNormal() : normal;
-
-
+	
 	int index2 = 0;
 	float maxp2 = nNormal2 * shape2Vertices[0];
 	for (unsigned int i = 0; i < shape2Vertices.size(); i++)
@@ -234,6 +234,11 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		
 		overlapAxis.setVectorMagnitude(overlap);
 		penentrationVector = overlapAxis;
+
+		//makes it so the vector points from e1 to e2
+		Vec2D d = inputVertexShape2.getCenterPos() - inputVertexShape1.getCenterPos();
+		if (d * penentrationVector.getNormalisation() > 0.0f)
+			penentrationVector = penentrationVector * -1.0f;
 
 		//minimizing rounding errors
 		if (penentrationVector.getX() < 0.0f && penentrationVector.getX() > -0.0000001)

@@ -122,8 +122,8 @@ template <typename T> void PEVec2D<T>::setDirectionDEGREES(T inputDirectionInDeg
 	
 	T oldX = x,
 		oldY = y;
-	float cosAngle = cos(inputDirectionInDegrees * 180.0f / PI),
-		sinAngle = sin(inputDirectionInDegrees * 180.0f / PI);
+	float cosAngle = cos(inputDirectionInDegrees * 0.0174532925f),
+		sinAngle = sin(inputDirectionInDegrees * 0.0174532925f);
 
 	x = oldX *cosAngle - oldY * sinAngle;
 	y = oldY * cosAngle + oldX * sinAngle;

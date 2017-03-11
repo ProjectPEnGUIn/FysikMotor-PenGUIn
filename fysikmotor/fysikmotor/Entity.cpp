@@ -106,7 +106,10 @@ void Entity::setFrictionCoefficient(const float inputFrictionCoefficient)
 {
 	frictionCoefficient = inputFrictionCoefficient;
 }
-
+void Entity::setLostTime(const float inputTime)
+{
+	lostTime = inputTime;
+}
 
 //get functions
 Vec2D Entity::getPosition() const //gets the pos
@@ -201,6 +204,10 @@ float Entity::getFrictionCoefficient() const
 {
 	return frictionCoefficient;
 }
+float Entity::getLostTime() const
+{
+	return lostTime;
+}
 
 ////update functions
 //void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
@@ -227,7 +234,6 @@ Entity::Entity()
 	entityID(-1),
 	entityState(-1),
 
-	position(),
 	velocity(),
 	acceleration(),
 	forces(),
@@ -242,12 +248,14 @@ Entity::Entity()
 
 	frictionCoefficient(FLT_MAX),
 	restitutionCoefficient(FLT_MAX),
-	dragCoefficient(0.15f),
+	dragCoefficient(FLT_MAX),
 	prevPos(FLT_MAX, FLT_MAX),
 	prevVel(FLT_MAX, FLT_MAX),
 	prevRot(FLT_MAX),
 	prevAABBTL(FLT_MAX, FLT_MAX),
-	prevAABBBR(FLT_MAX, FLT_MAX)
+	prevAABBBR(FLT_MAX, FLT_MAX),
+
+	lostTime(FLT_MAX)
 	
 {
 

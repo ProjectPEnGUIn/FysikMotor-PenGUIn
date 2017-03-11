@@ -25,12 +25,12 @@ private:
 
 	
 	void impulseCollision( Entity& e1, Entity& e2); //resolves collision
-	void elapseTime(Entity& inputEntity, const float deltaTime); //elapses time for the entitiy
+	void elapseEntityTime(Entity& inputEntity, const float time); //elapses time for entity
 
 	void updateResultingForce(Entity& e);
 	//void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
 	void updateVelocity(Entity& inputEntity, const float inputDeltaTime); //updates velócitiyes on entiteis
-	void updatePosition(const float deltaTime, Entity& inputEntity);
+	void updatePosition(Entity& inputEntity, const float deltaTime);
 	void updateActingForces(Entity& inputEntity);
 	void clearActingForces(Entity& inputEntity);
 
@@ -81,6 +81,7 @@ private:
 
 	bool temp;
 	float tempElapsedTime;
+	Vec2D tempVec;
 };
 
 #endif // !_ENTITYHANDLER_
