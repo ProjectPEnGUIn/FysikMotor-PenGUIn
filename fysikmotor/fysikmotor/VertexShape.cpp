@@ -2,28 +2,29 @@
 
 
 //set
-void VertexShape::setPosition(const Vec2D& inputPos) //sets the centerpos and all vertices
+
+void VertexShape::setPosition(const Vec2D& inputPos) //sets the centerpos and all vertices, global coords
 {
-	//1 check deltaPos //2 apply deltapos to all vertices
+	//1 check deltaPos //2 apply deltapos to all vertices and the centerpos
 
-	 Vec2D deltaPos = inputPos - trueCenterPosition;
+	 Vec2D deltaPos = inputPos - centerPosition;
 
-	 trueCenterPosition += deltaPos;
+	 centerPosition += deltaPos;
 
-	 //change vertices points
+	 //change vertices positions
 	 for (Vec2D& p : vertices)
 	 {
 		 p += deltaPos;
 	 }
 
-	 updateAABBBox();
+	 updateAABBBox(); //updates aabbbox with new vertices positions
 
 }
-void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all posistions
+void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments current position
 {
 	//move all positions around with input amount
 
-	trueCenterPosition += inputMoveAmount;
+	centerPosition += inputMoveAmount;
 	//rotationCenter += inputMoveAmount;
 
 	//moves the vertices pos
@@ -34,17 +35,9 @@ void VertexShape::movePosition(const Vec2D& inputMoveAmount) //increments all po
 
 	//update vertices shape with the new vertex added
 	
-	updateAABBBox();
+	updateAABBBox(); //updates aabbbox with new vertices positions
 }
-void VertexShape::setRotationCenterOffset(const Vec2D& inputRotationOffset) //rotationpoiint is offset by this amound from centerpos
-{
-	rotationCenterOffset = inputRotationOffset;
 
-	//update vertices shape with the new vertex added
-	updateCenterPos();
-	updateRotationOnVertices();
-	updateAABBBox();
-}
 void VertexShape::incrementRotationDEGREES(float inputRotationIncrementDEGREES) //adds to tyhe current rotation of shaped
 {
 	rotationOffsetDEGREES += inputRotationIncrementDEGREES;
@@ -96,7 +89,7 @@ void VertexShape::setRotationRADIANS(float inputRotationRADIANS)
 	updateAABBBox();
 }
 
-void VertexShape::addVertexPoint(const Vec2D& inputWorldCoordinate) //adds a vertex for the shape at the input world coo´rdinate, appends it to vertex vector
+void VertexShape::addVertexPoint(const Vec2D& inputWorldCoordinate)//CLOCKWISE DIRECTION, adds a vertex for the shape at the input world coo´rdinate, appends it to vertex vector
 {
 	vertices.push_back(inputWorldCoordinate);
 
@@ -118,39 +111,35 @@ void VertexShape::removeVertex(int inputVertexIndex) //removes the vertex at the
 }
 void VertexShape::clearVertices() //erases all vertex points
 {
-	vertices.clear();
+	vertices.clear(); //erases the vector
 }
 
 //get
-Vec2D VertexShape::getCenterPos() const
+Vec2D VertexShape::getCenterPos() const //returns centerpos of shape
 {
-	return trueCenterPosition;
+	return centerPosition;
 }
-Vec2D VertexShape::getRotationCenterOffset() const
-{
-	return rotationCenterOffset;
-}
-float VertexShape::getCurrentRotationDEGREES() const
+float VertexShape::getCurrentRotationDEGREES() const //returns current rotation in degrees
 {
 	return rotationOffsetDEGREES;
 }
-float VertexShape::getCurrentRotationRADIANS() const
+float VertexShape::getCurrentRotationRADIANS() const //returns current rottation in radians
 {
 	return rotationOffsetRADIANS;
 }
-int VertexShape::getAmountOfVertices() const
+int VertexShape::getAmountOfVertices() const //returns number of vertices as an int
 {
 	return vertices.size();
 }
-std::vector<Vec2D> VertexShape::getVertices() const //returnsa all vertices
+std::vector<Vec2D> VertexShape::getVertices() const //returns all vertices in a std::vector<>
 {
 	return vertices;
 }
-Vec2D VertexShape::getTopLeftAABBCorner() const
+Vec2D VertexShape::getTopLeftAABBCorner() const //return top left corner in world coordinates
 {
 	return aabbTL;
 }
-Vec2D VertexShape::getBottomRightAABBCorner() const
+Vec2D VertexShape::getBottomRightAABBCorner() const //returns bottom right corner in  world coordinates
 {
 	return aabbBR;
 }
@@ -164,6 +153,7 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 {
 	float maxX = -FLT_MAX, minX = FLT_MAX, maxY = -FLT_MAX, minY = FLT_MAX; //has to be inited to something
 
+	//goes through all vertices and finds the max/min values in x and y direction
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
 		if (vertices[i].getX() > maxX)
@@ -179,22 +169,21 @@ void VertexShape::updateAABBBox() //updates the aabb bounding box
 			minY = vertices[i].getY();
 	}
 
-	//std::cout << "maxX:" << maxX << " minX" << minX << " maxY:" << maxY << " minY:" << minY << " deltaY:" << maxY - minY << "\n\n";
-
+	//sets the new max/min points in each direction
 	aabbTL.setXY(minX, maxY);
 	aabbBR.setXY(maxX, minY);
 }
 void VertexShape::updateRotationOnVertices() //updates the vertices points
 {
 	rotation = sf::Transform{};
-	rotation.rotate(rotationOffsetDEGREES, sf::Vector2f(trueCenterPosition.getX() + rotationCenterOffset.getX() , trueCenterPosition.getY() + rotationCenterOffset.getY()));//, trueCenterPosition.getX(), trueCenterPosition.getY());
+	rotation.rotate(rotationOffsetDEGREES, sf::Vector2f(centerPosition.getX() , centerPosition.getY()));//, trueCenterPosition.getX(), trueCenterPosition.getY());
 
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
-		sf::Vector2f temp; //use sfml vector
+		sf::Vector2f temp; //use sfml vector as rotatio n object returns it
 
 	    //transforms the vertex point and stores it in temp
-		temp = rotation.transformPoint(vertices[i].getX() + rotationCenterOffset.getX(), vertices[i].getY() + rotationCenterOffset.getY());
+		temp = rotation.transformPoint(vertices[i].getX(), vertices[i].getY());
 		
 		vertices[i].setXY(temp.x, temp.y); //give the vertex the new temppos
 	}
@@ -204,7 +193,7 @@ void VertexShape::updateCenterPos() //updates the centerpos location of the vert
 {
 	float centerXTemp = 0, centerYTemp = 0;
 
-	//average values from vertices to get x and y values
+	//average values from vertices to get x and y values is the centerpos
 
 	//go through all vertices
 	unsigned int i = 0;
@@ -214,17 +203,16 @@ void VertexShape::updateCenterPos() //updates the centerpos location of the vert
 		centerYTemp += vertices[i].getY();
 	}
 
-	//averages the x and y values out over the number of vertices
-	trueCenterPosition.setX(centerXTemp / i);
-	trueCenterPosition.setY(centerYTemp / i);
+	//averages the x and y values out over the number of vertices which then gives the centerpos
+	centerPosition.setX(centerXTemp / i);
+	centerPosition.setY(centerYTemp / i);
 }
 
 
-VertexShape::VertexShape()
+VertexShape::VertexShape() //default constructor
 	:
 	PI(3.14159265f),
-	trueCenterPosition(),
-	rotationCenterOffset(),
+	centerPosition(),
 	rotationOffsetDEGREES(0),
 	rotationOffsetRADIANS(0),
 	vertices(),
@@ -233,15 +221,14 @@ VertexShape::VertexShape()
 	aabbBR()
 
 {
-	//log creating? maybe
 }
 
+//own made copy assignment operator, caused errors without it
 VertexShape& VertexShape::operator=(const VertexShape& inputVertexShape)
 {
 	if (this != &inputVertexShape)
 	{
-		trueCenterPosition = inputVertexShape.getCenterPos();
-		rotationCenterOffset = inputVertexShape.getRotationCenterOffset();
+		centerPosition = inputVertexShape.getCenterPos();
 		rotationOffsetDEGREES = inputVertexShape.getCurrentRotationDEGREES();
 		rotationOffsetRADIANS = inputVertexShape.getCurrentRotationRADIANS();
 		vertices = inputVertexShape.getVertices();

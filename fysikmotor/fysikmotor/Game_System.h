@@ -10,6 +10,7 @@
 #include "Font_System.h"
 
 #include "PE.h" //physics engine module
+#include "DataLogger.h"
 
 Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float cor, int ID, int state, Vec2D vel, float rot)
 {
@@ -25,9 +26,13 @@ Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float c
 	e.setMass(mass);
 	e.setRestitutionCoefficient(cor);
 	e.setFrictionCoefficient(0);
+	e.setDragCoefficient(0);
 	e.setEnttityID(ID);
 	e.setVelocity(vel);
 	e.setAngleRotationDEGREES(rot);
+
+	if (e.getEntityState() != 0) //only track movable objects
+		e.setTrackEntityData(true);
 
 	return e;
 }
@@ -37,8 +42,6 @@ class Game_System
 public:
 	Game_System(sf::RenderWindow& renderwindow, sf::Event& e, sf::Clock clock, sf::Time& elapsed)
 	{
-		
-	
 
 		PE physicsEngine;
 		physicsEngine.init(10, 10, 500, 500, 50, 50);
@@ -64,6 +67,7 @@ public:
 
 			if (logicTimer.getElapsedTime() >= logicTime)
 			{
+				
 				//logic; TODO; split up timer in smaller segments if it ets too big
 				physicsEngine.update(logicTimer.restart().asSeconds() );
 			}
@@ -73,6 +77,7 @@ public:
 			renderwindow.display();
 
 		}
+
 	}
 };
 #endif // ! _GAMESYSTEM:
