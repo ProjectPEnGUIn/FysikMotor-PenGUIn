@@ -1,7 +1,31 @@
 #include "EntityHandler.h"
 
-////collision countermeasures
+void EntityHandler::logEntityData(const Entity& e, const float currentDeltaTime, const float totalElapsedTime) //logs entity data onto storedentitydata
+{
+	std::string data;
 
+	//adds it into one long line of data
+
+	//GLOBALTIME, DELTATIME, ID, STATE, POSx, POSy, VELx, VELy, FRx, FRy, MASS, ROT(DEGREES), FRICTIONCOEFFICIENT, RESTITUTIONFOCEFFIENCT, DRAGCOEFFICIENT
+	data =  std::to_string(totalElapsedTime) + ","
+		+ std::to_string(currentDeltaTime) + ","
+		+ std::to_string(e.getEntityID()) + ","
+		+ std::to_string(e.getEntityState()) + ","
+		+ std::to_string(e.getPosition().getX()) + ","
+		+ std::to_string(e.getPosition().getY()) + ","
+		+ std::to_string(e.getVelocity().getX()) + ","
+		+ std::to_string(e.getVelocity().getY()) + ","
+		+ std::to_string(e.getResultingForce().getX()) + ","
+		+ std::to_string(e.getResultingForce().getY()) + ","
+		+ std::to_string(e.getMass()) + ","
+		+ std::to_string(e.getVertexShape().getCurrentRotationDEGREES()) + ","
+		+ std::to_string(e.getFrictionCoefficient()) + ","
+		+ std::to_string(e.getRestitutionCoefficient()) + ","
+		+ std::to_string(e.getDragCoefficient()) + ","
+		+ "\n"; //end of line
+
+	storedEntityData.addData(data); 
+}
 void EntityHandler::impulseCollision(Entity& e1, Entity& e2) //resolves collision
 {
 	// https://en.wikipedia.org/wiki/Coefficient_of_restitution 26/2 2017
@@ -19,21 +43,7 @@ void EntityHandler::impulseCollision(Entity& e1, Entity& e2) //resolves collisio
 	e2Vf.setX((e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX() + e1.getMass() * cor * (e1.getVelocity().getX() - e2.getVelocity().getX())) / (e1.getMass() + e2.getMass()));
 	e2Vf.setY((e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY() + e1.getMass() * cor * (e1.getVelocity().getY() - e2.getVelocity().getY())) / (e1.getMass() + e2.getMass()));
 
-	//2: change rotational velocityies etc
-
-
 	//3: apply values to entiteis if they are NOT static
-
-
-//	Vec2D e1Old = e1.getVelocity(), e2Old = e2.getVelocity();
-
-	//std::cout << "----\nE1 old: " << e1Old.getX() << " " << e1Old.getY() <<
-	//	"\nE1 new: " << e1Vf.getX() << " " << e1Vf.getY() <<
-	//	"\nE2 old: " << e2Old.getX() << " " << e2Old.getY() <<
-	//	"\nE2 new: " << e2Vf.getX() << " " << e2Vf.getY() << "\nCoR: " << cor << "\n---------";
-//	std::cin.get();
-
-
 	if (e1.getEntityState() != 0)
 	{
 		e1.setVelocity(e1Vf);
@@ -44,15 +54,11 @@ void EntityHandler::impulseCollision(Entity& e1, Entity& e2) //resolves collisio
 		e2.setVelocity(e2Vf);
 	}
 }
-void EntityHandler::elapseTime(Entity& inputEntity, const float deltaTime) //elapses time for the entitiy
-{
-//TODO may not be needed	
-}
+
 void EntityHandler::updateResultingForce(Entity& e)
 {
 	Vec2D resultingForce;
-//	std::cout << e.getForces().size() << std::endl;
-//	std::cin.get();
+
 	for (const Force& f : e.getForces())
 	{
 		resultingForce += f.getForce();
@@ -74,266 +80,234 @@ Vec2D EntityHandler::getAirDragForce(const Vec2D& inputVelocity, const float inp
 
 	return Vec2D(inputDragCoefficient * ((inputSillhouetteArea * getAirDensity(inputHeight) * inputVelocity.getX() * inputVelocity.getX()) / 2.0f), inputDragCoefficient * ((inputSillhouetteArea * getAirDensity(inputHeight) * inputVelocity.getY() * inputVelocity.getY()) / 2.0f));
 }
+
+
+void EntityHandler::setLogData(const bool inputBool)
+{
+	logData = inputBool;
+}
+void EntityHandler::setDataLoggerIntervall(const float intervall)
+{
+	dataLoggerIntervall = intervall;
+}
+
+void EntityHandler::initDataLogger(const std::string& inputFilename, const bool inputOverwriteStatus)
+{
+	storedEntityData = DataLogger(inputFilename, inputOverwriteStatus);
+
+	std::string dataInfo = "GLOBALTIME, DELTATIME, ID, STATE, POS_x, POS_y, VEL_x, VEL_y, FR_x, FR_y, MASS, ROTATION(DEGREES), FRICTIONCOEF.., RESTITUTIONCOEF.., AIR DRAG COEF..\n";
+	storedEntityData.addData(dataInfo); //adds some data to show what each columm stands for
+}
+
 void EntityHandler::updateEntities(const float deltaTime) //updates all entities, checks for collisions, handles collisioons
 {
-	tempElapsedTime += deltaTime;
 
-	//update entities
+	//using physics update order from this
+	//http://buildnewgames.com/gamephysics/ 8/3 2017
+
+	//1: Add forces
+	//1.1 gravity
+	//1.2 air drag
+	//1.3 forces that other objects are excerting
+	//2. Calc velocity
+	//3. calc position
+	//4. go back to 1
+
+	elapsedTime += deltaTime;
+	timeCounter += deltaTime;
+
+	if (timeCounter > dataLoggerIntervall)
+	{
+		timeCounter -= dataLoggerIntervall;
+		logData = true;
+	}
+
+    //	//add gravity and air drag
+    	for (Entity& e : entities)
+    	{
+    		clearActingForces(e);
+    		updateActingForces(e);
+    	}
+    
+    	//1.3 use collisioncheck to check what forces to excert on other objects
+    	//TODO: HOW TO HANDLE TIMELOSS?? 
+    
+    	for (Entity& e : entities)
+    	{
+    		for (Entity& e2 : entities)
+    		{
+    
+    			if (e.getEntityID() != -1 && e2.getEntityID() != -1 //both entities are defined
+    				&& e.getEntityID() != e2.getEntityID() //entite wonth check collision with itself
+    				&& e.getEntityState() != 0) //e is not a static entity 
+    			{
+    				//do a supersamplig/binary search SAT check to find collision
+    
+    			
+    				//broad phase check
+    				if(minskowskiDifferenceAABBCollisionCheck(e, e2) == true || sweptMinskowskiDifferenceAABBCollisionCheck(e, e2, deltaTime) == true)
+    				{
+    
+    					//accurate narrowphase check between one entity and another
+    					// TODO: //use this algorithm in a supersampling/binary collison check search to get a very close correct time of collision
+    					SATCollisionCheck collisionCheck;
+    
+    					VertexShape shape1 = e.getVertexShape(),
+    						shape2 = e2.getVertexShape();
+    
+    					//try to elapse time and move the shapes forward in this tick in small steps
+    					//use prev vel, <-- errors????
+    
+    					bool done = false;
+    
+    					float elapsedTime = 0.0f,
+    						maxTime = deltaTime, //max time interval to check collisions at
+    						timeIncrementAmount = deltaTime / 20; //TODO: finetune this value
+    
+    					//prevents an endless loop
+    					int iteration = 0,
+    						maxIteration = 20;
+    
+    					while (!done && elapsedTime < maxTime && iteration < maxIteration)
+    					{
+    						iteration++;
+    
+    						if (collisionCheck.SATCheck(shape1, shape2))
+    						{
+    							done = true;
+    
+    							//they are colliding
+    
+    							//1: for how long have they been overlapping? use this to minimize overall timeloss, take this in count when calculating logic in next section
+    							//¯\_(´_`)_ / ¯
+    							//the entities could have been travling inside one another for a certain amount of time before the collision check was done
+    							//will need to take this into count when updating logic furtheron
+    
+    						//	//chooses an axis on which to project their velocitrties on
+    						//	Vec2D projectionAxis = collisionCheck.getPenentrationVector().getNormalisation(); //the axis of least penentration
+    						//
+    						//	float e1VelocityProjection = projectionAxis * e.getVelocity(), //projects the velocities on the axis
+    						//		e2VelocityProjection = projectionAxis * e2.getVelocity();
+    						//
+    						//	float overlapTime = FLT_MAX,
+    						//		overlap = collisionCheck.getOverlap(); //the distance they are overlaping ín the overlapping axis
+    						//
+    						//	//use distance = velocity * time, time = distane/velocity
+    						//	
+    						//	if (e1VelocityProjection + e2VelocityProjection == 0 && overlap != 0.0f)
+    						//		overlapTime = fabs(overlap / (e1VelocityProjection * 2.0f)); //e1proj + e2proj = 0, they are traveling towards eachother with the same velocity
+    						//	else if (overlap != 0.0f)
+    						//		overlapTime = fabs(overlap / (e1VelocityProjection + e2VelocityProjection)); //the time that they have been overlapping for
+    						//	else
+    						//		overlapTime = 0;
+    
+    						//	overlap is wrong
+    
+    							//std::cout << "overlap: " << overlap << std::endl;
+    							//std::cout << "overlaptime: " << overlapTime << std::endl;
+    							//std::cin.get();
+    
+    						//	elapseEntityTime(e, elapsedTime); //moves the entity position back to the time of collision
+    						
+							//	e.setLostTime(elapsedTime);
+    
+    							//2: Impulsecollision logic
+    							impulseCollision(e, e2); 
+    
+    							//3: Apply forces on both entities
+    						
+    							Vec2D force = e.getResultingForce(), //the force that e excerts on e2
+    							//TAKE e2 IN COUNT OR NOT?
+    								collisionSurfaceEdge = collisionCheck.getEdge2().getNormalisation(),
+    								AxisNormalToCollisionSurface = collisionSurfaceEdge.getAntiClockWiseNormal(),
+    								AxisParallellToCollisionSurface = collisionSurfaceEdge.getAntiClockWiseNormal().getAntiClockWiseNormal(), //flipped 180 degrees
+    								forceOnNormalAxis = AxisNormalToCollisionSurface, //sets the axis on which the force acts on
+    								forceOnParallellAxis = AxisParallellToCollisionSurface, //sets axis
+    								frictionForceOnParallellAxis = AxisParallellToCollisionSurface.getAntiClockWiseNormal().getAntiClockWiseNormal(); //sets axis 180 degrees flipped, frictionforce is in oposite direction
+    
+    							float angle = collisionCheck.getEdge2().getDirectionRADIANS(), //the angle of the plane
+    								normalForce = cos(angle) * force.getMagnitude(),
+    								parallellForce = sin(angle) * force.getMagnitude(),
+    								frictionForce = ((e.getFrictionCoefficient() + e2.getFrictionCoefficient()) / 2) * normalForce;
+    
+    							//Set the correspondign forces that act on each of these axis
+    							forceOnNormalAxis.setVectorMagnitude(normalForce);
+    							
+    							//if parallellforce is greater than frictionforce, set them both to their corresponding values, if parallellforce is less than frictionforce, set frictionforce to parallellforce
+    							(parallellForce > frictionForce) ? forceOnParallellAxis.setVectorMagnitude(parallellForce), frictionForceOnParallellAxis.setVectorMagnitude(frictionForce) : forceOnParallellAxis.setVectorMagnitude(parallellForce), frictionForceOnParallellAxis.setVectorMagnitude(parallellForce);
+    							
+    							//apply the forces on both entities
+    							e.addForce(Force(forceOnNormalAxis, Vec2D(), "Normal Force", sf::Color::Green));
+								if (parallellForce != 0)
+									e.addForce(Force(forceOnParallellAxis, Vec2D(), "Parallell Force", sf::Color::Magenta));
+    							if(frictionForce != 0)
+									e.addForce(Force(frictionForceOnParallellAxis, Vec2D(), "Friction Force", sf::Color::Cyan));
+    
+    							//flipps the forces in the oposite direction
+    							e2.addForce(Force(forceOnNormalAxis.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Anti Normal Force", sf::Color::Green));
+    							if(parallellForce != 0)
+									e2.addForce(Force(forceOnParallellAxis.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Anti Parallell Force", sf::Color::Magenta));
+    							if(frictionForce != 0)
+									e2.addForce(Force(frictionForceOnParallellAxis.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Anti Friction Force", sf::Color::Cyan));
+    
+    
+    						}
+    						else
+    						{
+    							//collision was not found
+    
+    							if (elapsedTime + timeIncrementAmount >= deltaTime)
+    								done = true;
+    							
+    							else
+    								elapsedTime += timeIncrementAmount; //adds more time
+    
+    							//set the shapes' position at the elapsedTimeInterval
+    
+    							//USING VELOCITY FROM OLD TICK; may cause errors?
+    							shape1.setPosition(e.getPosition() + e.getVelocity() * elapsedTime);
+    							shape2.setPosition(e2.getPosition() + e2.getVelocity() * elapsedTime);
+    
+    							//goes back into the while loop and does a collisioncheck with theses values, if false it goes back here where time the gets incrementet
+    						}
+    					}
+    
+    				}
+    
+    			}
+    
+    		}
+    	}
+    
+    //update logic
 	for (Entity& e : entities)
 	{
-	//	if (e.getVelocity().getY() < -20)
-	//		std::cin.get();
-	//	std::cout << "v: " << e.getVelocity().getX() << " " << e.getVelocity().getY() << std::endl;
-
-
-		//if it is a movable entity
-		if (e.getEntityState() == 1) //only update movable entities
+		if (e.getEntityState() != 0)
 		{
+			//only logs data if it is time and that entity is set to be tracked
+			if (logData == true && e.getTrackEntityData() == true) 
+				logEntityData(e, deltaTime, elapsedTime);
 
-		//	std::cout << "v: " << e.getVelocity().getX() << std::endl;
 
-			clearActingForces(e);
-			updateActingForces(e); //also updates resultingforce FYI
-			updateVelocity(e, deltaTime);
-			//TODO ANGULAR THINGIES
+			float additionalTime = e.getLostTime();
+			if (additionalTime == FLT_MAX)
+				additionalTime = 0;
+			e.setLostTime(FLT_MAX);
+	
+			//update enttiy
+			updateResultingForce(e);
+			updateVelocity(e, deltaTime + additionalTime);
 			updatePreviousEntityData(e);
-			updatePosition(deltaTime, e);
-
-
-		//	if (tempElapsedTime > 5)
-		//		std::cin.get();
-
-		}
-		else if (e.getEntityState() == 0)
-			clearActingForces(e); //removes the forces, forces on static objects is only used for drawing to see where they are applied
-	}
-
-	//check for collisions //simple O(N^N) check, could easily be optimised
-	for (Entity& e : entities)
-	{
-		if (e.getEntityState() == 1)
-		{
-			//temp bruteforce check for now
-			for (unsigned int i = 0; i < entities.size(); i++)
-			{
-				//checks so the entiteis are defined and that collisions are not being checked with one entity and itself
-				if ((e.getEntityID() != -1)
-					&& (entities[i].getEntityID() != -1)
-					&& (e.getEntityID() != entities[i].getEntityID()))
-				{
-					//various collision checks
-
-					SATCollisionCheck collisionTest;
-
-						if ( minskowskiDifferenceAABBCollisionCheck(e, entities[i]) == true || sweptMinskowskiDifferenceAABBCollisionCheck(e, entities[i], deltaTime) == true)
-					{
-
-						//do a binary SAT search / multisapling, check for collison at different intervals during this tick, may result in errors with fast movign objects						
-					   //increase elapsedTime up until it reaches deltaTime, if no collision has been found  they probably did not collide during this tick
-					
-						//copies their bodies
-						VertexShape shape1 = e.getVertexShape(),
-							shape2 = entities[i].getVertexShape();
-					
-						//places the bodies at where they were at the start of the tick
-						shape1.setPosition(e.getPreviousPosition());
-						shape2.setPosition(entities[i].getPreviousPosition());
+			updatePosition(e, deltaTime + additionalTime);
 	
-	
-					//	//TODO; make timefactor the right interval
-					//	float s1halfsize = (shape1.getBottomRightAABBCorner() - shape1.getTopLeftAABBCorner()).getMagnitude() / 2,
-					//		s2halfsize = (shape2.getBottomRightAABBCorner() - shape2.getTopLeftAABBCorner()).getMagnitude() / 2,
-					//		minSize = s1halfsize <= s2halfsize ? s1halfsize : s2halfsize; //min "radius" from center, checks should be at an interval lesser than this, s = vt, use this to decide proper timefactor, t = s/v(greatest)
-					//	//	maxVelocity = (e.getVelocity().getMagnitude() > entities[i].getVelocity().getMagnitude()) ? e.getVelocity().getMagnitude() : entities[i].getVelocity().getMagnitude(),
-							
-						float timeFactor = deltaTime / 15.0f,
-							elapsedTime = 0;
-					
-						//prevent an endless loop
-						int maxIterations = 16, //needs to be fine tuned
-							iteration = 0;
-
-						bool done = false;
-						while (elapsedTime < deltaTime && done == false && iteration < maxIterations)
-						{
-							iteration++;
-
-							if (collisionTest.SATCheck(shape1, shape2))
-							{
-									//collision detected
-									//do logic just as normal
-
-								done = true; //wont iterate another time
-
-								//Find time of impact
-								Vec2D normal = collisionTest.getPenentrationVector().getNormalisation(); //lenght = 1
-								//	https://en.wikipedia.org/wiki/Vector_projection 1/3 2017
-							    //project e velocity onto normal axis
-								float e1Proj = (e.getVelocity() * normal),
-									e2Proj = (entities[i].getVelocity() * normal);
-
-								float overlapTime = FLT_MAX;
-								if (e1Proj + e2Proj == 0 && collisionTest.getOverlap() != 0.0f)
-									overlapTime = collisionTest.getOverlap()/2; //NOT SURE IF THIS IS RIGHT BUT IT WORKS ¯\_(´_` )_/¯
-								else if (collisionTest.getOverlap() != 0.0f)
-									overlapTime = fabs(collisionTest.getOverlap() / (e1Proj + e2Proj)); //the time that they have been overlapping for
-								else
-									overlapTime = 0;
-
-								//std::cout << "et: " << elapsedTime << std::endl;
-								elapsedTime -= overlapTime;
-								//std::cout << "et - ot: " << elapsedTime << std::endl;
-								//
-								//move the entities to when they were not íntersecting using the time calculated
-								if (e.getEntityState() != 0)
-									e.setPosition(e.getPreviousPosition() + (e.getVelocity() * (elapsedTime)));
-								
-								if (entities[i].getEntityState() != 0)
-									entities[i].setPosition(entities[i].getPreviousPosition() + (entities[i].getVelocity() * (elapsedTime)));
-								
-
-								//do the impulse collision for linear movement
-								impulseCollision(e, entities[i]);
-
-								//do the impulse?? collision for angular movement
-								//TODO
-
-
-								////add forces acting on both objects
-								//Vec2D force = e.getResultingForce(),
-								//	totalNormalForce = force.getRotatedVectorDEGREES(collisionTest.getEdge2().getDirectionDEGREES()).getAntiClockWiseNormal().getAntiClockWiseNormal(),
-								//	normalForcex = Vec2D(totalNormalForce.getX(), 0).getRotatedVectorDEGREES(collisionTest.getEdge2().getDirectionDEGREES()),
-								//	normalForcey = Vec2D(0, totalNormalForce.getY()).getRotatedVectorDEGREES(collisionTest.getEdge2().getDirectionDEGREES());
-								//
-								//
-								//float frictionForceSize = totalNormalForce.getMagnitude() * cos(collisionTest.getEdge2().getDirectionRADIANS()) * ((e.getFrictionCoefficient() + entities[i].getFrictionCoefficient()) / 2);
-								//
-								////e acts on e[i] with this force
-						    	//entities[i].addForce(Force(Vec2D(0, normalForcey.getAntiClockWiseNormal().getAntiClockWiseNormal().getY()), Vec2D(), "Normal Y component", sf::Color::Green));  //rotates it 180 degrees and applies to e[i]
-								//
-								////only apply friction if the force in the direction is great enoug
-								////TODO: SPlit up forces into sepeate forces, will then see the frictionforce acting in the right direction
-								//
-								//if (frictionForceSize > normalForcex.getMagnitude())
-								//	normalForcex.setVectorMagnitude(normalForcex.getMagnitude() - frictionForceSize);
-								//else
-								//	normalForcex.setVectorMagnitude(0);
-								//
-								//e.addForce(Force(normalForcex, Vec2D(), "ttt", sf::Color::Cyan));
-								//e.addForce(Force(normalForcey, Vec2D(), "ygktrg", sf::Color::Magenta));
-
-								float angle = collisionTest.getEdge2().getDirectionRADIANS(); //change it to difference between force and plane??? IDK
-
-								Vec2D force = e.getResultingForce(), //IS THIS RIGHt??
-									edge = collisionTest.getEdge2().getNormalisation(),
-									normalAxis = edge.getAntiClockWiseNormal(), //in the direction of collison normal
-									parallellAxis = edge.getAntiClockWiseNormal().getAntiClockWiseNormal(), //parallell to the edge and normal to normalaxis
-									forceOnNormalAxis1 = normalAxis,
-									//forceOnNormalAxis2 = normalAxis,
-									forceOnParallellAxis1 = parallellAxis;
-								//	forceOnParallellAxis2 = parallellAxis;
-							
-								//forceOnNormalAxis1.setVectorMagnitude(force.getY() * cos(angle));
-								//forceOnNormalAxis2.setVectorMagnitude(force.getX() * cos(angle));
-								//forceOnParallellAxis1.setVectorMagnitude(force.getY() * sin(angle));
-								//forceOnParallellAxis2.setVectorMagnitude(force.getX() * sin(angle));
-								
-								
-								forceOnNormalAxis1.setVectorMagnitude(force.getMagnitude() * cos(angle));
-								forceOnParallellAxis1.setVectorMagnitude(force.getMagnitude() * sin(angle));
-							//	std::cout << "angle: " << angle << std::endl;
-
-								e.addForce(Force(forceOnNormalAxis1, Vec2D()));
-								e.addForce(Force(forceOnParallellAxis1, Vec2D()));
-								entities[i].addForce(Force(forceOnNormalAxis1.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D()));
-							//	entities[i].addForce(Force(forceOnParallellAxis1.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D()));
-								//std::cout << "FORCE; " << force.getX() << " " << force.getY() << std::endl;
-								//std::cout << forceOnNormalAxis1.getMagnitude() << " " << forceOnParallellAxis1.getMagnitude() << std::endl;
-								//std::cout << forceOnNormalAxis1.getDirectionDEGREES() << " " << forceOnParallellAxis1.getDirectionDEGREES() << std::endl;
-								//std::cin.get();
-
-								//Vec2D fR = forceOnNormalAxis1 + forceOnParallellAxis1 + forceOnNormalAxis2 + forceOnParallellAxis2;
-						//		Vec2D fR = forceOnNormalAxis1 + forceOnParallellAxis1;
-							
-								//fR.setXY(cos(angle)*fR.getX() - sin(angle) * fR.getY(), sin(angle) * fR.getX() + cos(angle) * fR.getY());
-							
-								//std::cout<<"f: " << fR.getX() << " " << fR.getY() << std::endl;
-							//	sstd::cin.get();
-								//std::cout << "flipped f: " << fR.getAntiClockWiseNormal().getAntiClockWiseNormal().getX() << " " << fR.getAntiClockWiseNormal().getAntiClockWiseNormal().getY() << std::endl;
-							//	std::cin.get();
-
-								//entities[i].addForce(Force(fR, Vec2D(), " ", sf::Color::Cyan));
-								//e.addForce(Force(fR.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), " ", sf::Color::Cyan));
-
-		//maybe it works idk
-
-							
-								
-
-								float remainingTime = deltaTime - elapsedTime; //the amount of time left in this tick
-								if (remainingTime > 0)
-								{
-									//wrong with ramongin time???
-
-								    //remainingTime = 1;
-
-									std::cout << "time left in tick: "<< remainingTime << std::endl;
-									//move time forward for each entity
-
-									//std::cin.get();
-									//For e
-									//e.addForce(Force(Vec2D(-gravitationalAcceleration.getX() * e.getMass(), -gravitationalAcceleration.getY() * e.getMass()), Vec2D(0, 0), "Gravity"));
-
-									updateResultingForce(e);
-									//std::cout << e.getResultingForce().getX() << " " << e.getResultingForce().getY();
-									//std::cin.get();
-
-									updateVelocity(e, remainingTime);
-									//TODO UPDATE ANGULAR THINGY
-									updatePosition(remainingTime, e);
-
-									//For e[i]
-									updateResultingForce(entities[i]); //Only updates the resulting forces
-									updateVelocity(entities[i], remainingTime);
-									//TODO UPDATE ANGULAR THINGY
-
-									updatePosition(remainingTime, entities[i]);
-
-								}
-							
-							}
-							else
-							{
-								//check at a later interval
-					
-								//add more time
-								if (elapsedTime + timeFactor < deltaTime)
-									elapsedTime += timeFactor;
-								else
-									done = true;
-					
-								//pos = pos + distance, distance = velocity * time
-								shape1.setPosition(shape1.getCenterPos() + (e.getVelocity() * timeFactor));
-								shape2.setPosition(shape2.getCenterPos() + (entities[i].getVelocity() * timeFactor));
-							}
-						}
-					
-					}
-				}
-			}
 		}
+	
 	}
+	
+	logData = false;
 
 }
 
-
-//void EntityHandler::updateAcceleration(Entity& inputEntity) //updates acceleration on entitis
-//{
-//	//get resulting force of each entity and use F = ma, a = F/m
-//
-//	
-//	//	inputEntity.setAcceleration(Vec2D(resultingForce.getX() / inputEntity.getMass(), resultingForce.getY() / inputEntity.getMass()));
-//}
 void EntityHandler::updateVelocity(Entity& inputEntity, const float InputDeltaTime) //updates velócitiyes on entiteis
 {
 	if (inputEntity.getEntityState() != 0)
@@ -341,21 +315,19 @@ void EntityHandler::updateVelocity(Entity& inputEntity, const float InputDeltaTi
 		inputEntity.setVelocity(Vec2D(inputEntity.getVelocity().getX() + ((inputEntity.getResultingForce().getX() * InputDeltaTime) / inputEntity.getMass()), inputEntity.getVelocity().getY() + ((inputEntity.getResultingForce().getY() * InputDeltaTime) / inputEntity.getMass())));
 	}
 }
-void EntityHandler::updatePosition(const float deltaTime, Entity& inputEntity)
+void EntityHandler::updatePosition(Entity& inputEntity,const float deltaTime)
 {	
 	if (inputEntity.getEntityState() != 0)
 	{
-		inputEntity.setPosition(inputEntity.getPosition() + inputEntity.getVelocity().scaleVector(deltaTime));
+		inputEntity.setPosition(inputEntity.getPosition() + (inputEntity.getVelocity() * deltaTime));
 	}
 }
 void EntityHandler::updateActingForces(Entity& inputEntity)
 {
 	//add gravity, air resitance etc..
 
-		//F = mg
 	if (inputEntity.getEntityState() != 0)
 	{
-
 		Vec2D resultingForce;
 
 		//add gravity force
@@ -365,8 +337,6 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 		//TODO: calc silluhuete area
 	//	error: goes to infinity reeeeal quick.
 	//	inputEntity.addForce(Force(getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), 10, inputEntity.getPosition().getY()).getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Air drag"));
-
-		//std::cout << getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), 10, inputEntity.getPosition().getY()).getX() << " " << getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), 10, inputEntity.getPosition().getY()).getY() << std::endl;
 
 		for (const Force& f : inputEntity.getForces())
 		{
@@ -378,30 +348,26 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 	else if (inputEntity.getEntityState() == 0) //STATIC 
 		inputEntity.setResultingForce(Vec2D());
 }
-void EntityHandler::clearActingForces(Entity& inputEntity)
+void EntityHandler::clearActingForces(Entity& inputEntity) //removes all forces acting on entity and sets resultingforce to 0
 {
-
 	inputEntity.setResultingForce(Vec2D(0, 0));
 	inputEntity.setForces(std::vector<Force>{});
 }
 void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
 {
 	inputEntity.setPreviousPosition(inputEntity.getPosition());
-	
 	inputEntity.setPreviousVelocity(inputEntity.getVelocity());
-	//inputEntity.setPreviousRotation(inputEntity.getVertexShape().get)
-
-	//Saves the aabb boundries pos before position is updated with new velocity
 	inputEntity.setPreviousAABBTL(inputEntity.getAABBTopLeft());
 	inputEntity.setPreviousAABBBR(inputEntity.getAABBMBottomRight());
-
-
-	//std::cout << "width " << inputEntity.getPreviousAABBBR().getX() - inputEntity.getPreviousAABBTL().getX() << " height " << inputEntity.getPreviousAABBTL().getY() - inputEntity.getPreviousAABBBR().getY() << std::endl;
 }
 					   //add entites
 void EntityHandler::addEntity(Entity inputEntity) //adds the entity to the list of entities
 {
 	entities.push_back(inputEntity);
+}
+void EntityHandler::removeAllEntities()
+{
+	entities.clear();
 }
 									//get functions
 float EntityHandler::getWorldMaxX()
@@ -440,10 +406,18 @@ EntityHandler::EntityHandler()
 	worldMinX(-FLT_MAX),
 	worldMaxY(FLT_MAX),
 	worldMinY(-FLT_MAX),
-
 	gravitationalAcceleration(0.0f, -9.82f),
-
-	temp(false),
-	tempElapsedTime(0.0f)
+	elapsedTime(0),
+	timeCounter(0),
+	logData(false),
+	dataLoggerIntervall(1),
+	storedEntityData()
+	
 {
+	
+}
+
+EntityHandler::~EntityHandler() //default destructor
+{
+	storedEntityData.saveCurrentData();
 }

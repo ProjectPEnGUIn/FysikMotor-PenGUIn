@@ -16,6 +16,7 @@
 #include "Entity.h"
 #include "AABBCheck.h"
 #include "SATCollisionCheck.h"
+#include "DataLogger.h"
 
 
 class EntityHandler
@@ -23,16 +24,16 @@ class EntityHandler
 private:
 	//functions
 
+	void logEntityData(const Entity& e, const float currentDeltaTime, const float totalElapsedTime); //logs entity data onto storedentitydata
 	
 	void impulseCollision( Entity& e1, Entity& e2); //resolves collision
-	void elapseTime(Entity& inputEntity, const float deltaTime); //elapses time for the entitiy
+	//void elapseEntityTime(Entity& inputEntity, const float time); //elapses time for entity
 
 	void updateResultingForce(Entity& e);
-	//void updateAcceleration(Entity& inputEntity); //updates acceleration on entitis
 	void updateVelocity(Entity& inputEntity, const float inputDeltaTime); //updates velócitiyes on entiteis
-	void updatePosition(const float deltaTime, Entity& inputEntity);
+	void updatePosition(Entity& inputEntity, const float deltaTime);
 	void updateActingForces(Entity& inputEntity);
-	void clearActingForces(Entity& inputEntity);
+	void clearActingForces(Entity& inputEntity); //removes all forces acring o nentity and sets resultignforce to 0
 
 	void updatePreviousEntityData(Entity& inputEntity);
 
@@ -42,14 +43,19 @@ private:
 public:
 	//functions
 
+	void setLogData(const bool inputBool);
+	void setDataLoggerIntervall(const float intervall);
+	void initDataLogger(const std::string& inputFilename, const bool inputOverwriteStatus);
+
+	//void resetTimeCounter();
+	//float getTimeCounter() const;
+
 	//update funcrions
 	void updateEntities(const float deltaTime); //updates all entities, checks for collisions, handles collisioons
-	
-
-	void elapseEntityTime(const Entity& inputEntity, const float deltaTime); //elapses time for a single entity
 
 	//add entites
 	void addEntity(Entity inputEntity); //adds the entity to the list of entities
+	void removeAllEntities();
 
 	//get functions
 	float getWorldMaxX();
@@ -57,11 +63,11 @@ public:
 	float getWorldMaxY();
 	float getWorldMinY();
 
-	void init(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
-
 	std::vector<Entity> getAllEntities(); //retirives all entiteis in pe    
 
+	void init(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY);
 	EntityHandler();
+	~EntityHandler(); //default destructor
 private:
 	//members
 
@@ -73,14 +79,16 @@ private:
 	
 	std::vector<Entity> entities;
 
-	bool automaticDelete; //deletes entities if they exit world boundries
-
 	//world variables that apply to all entities
 	Vec2D gravitationalAcceleration;  
 
+	float elapsedTime; //total elapsed time
+	float timeCounter;
 
-	bool temp;
-	float tempElapsedTime;
+	bool logData;
+	float dataLoggerIntervall; //in seconds, will take entity data and log it in that interval
+	DataLogger storedEntityData;
 };
+
 
 #endif // !_ENTITYHANDLER_

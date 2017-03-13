@@ -1,10 +1,7 @@
 //can represent all avalibe entities in the basic physics engine
 //entity object, stores all values for an entity, pos, speed, acting forces, mass, density etc
-//represents an object within the corteasian plane/ world we will make, get the coords from the plane/world and render it to a "miniwindow" at the PROPER location
-//only use defined shapes for now, no vertex shapes, only rectangle and circles in this version
 
-//update entity using timestep, delta time. 
-//handle collisions outside of this object,
+//handle entity logic/rendering outside of this object,
 
 //everything is in metric units
 
@@ -30,7 +27,6 @@ class Entity
 {
 public:
 	//enums
-
 	enum class State
 	{
 		STATIC, //Static entity, cant be moved, not affected by forces, still affects other entites, example usage; ground?
@@ -38,20 +34,14 @@ public:
 	};
 private:
 	//functions
-
-	void updateAcceleration(const Vec2D& inputResultingForce); //updates acceleration
-	void updateVelocity(); //updates speed
-	void updatePosition();
 public:
 	//functions
 
 	//set functions
 	void setPosition(const Vec2D& inputPos); //Sets the pos using a PEVec2D object
 	void setVelocity(const Vec2D& inputVel); //sets velocity using pevec2d object
-	void setAcceleration(const Vec2D& inputAcc); //sets the velocity using pevec2d object
 	void setForces(std::vector<Force>& inputForces); //sets all the acting forces on the current object using a vector of vec2d objects
 	void setMass(float inputMass); //sets the mass in kg
-	void setCenterOfMass(const Vec2D& inputCenterOfMass); //sets the center of mass
 	void setAngleRotationDEGREES(float inputRotationDEGREES); //sets the entity rotation in degrees
 	void setAngleRotationRADIANS(float inputRotationRADIANS); //Sets the entity rotation in radians
 	void setIsColliding(bool inputBool); //sets isColding
@@ -59,8 +49,8 @@ public:
 	void setDragCoefficient(float inputDouble);
 	void setVertexShape(const VertexShape& inputShape);
 	void addForce(const Force& inputForce); //adds it to acting forces vector
-	void setEntityState(const int inputState); //0 for static non movable, 0 for movable
-	void setEnttityID(const int inputIDNumber);
+	void setEntityState(const int inputState); //0 for static non movable, 1 for movable
+	void setEnttityID(const int inputIDNumber); //used to differentiate entiteis from one another
 	void setPreviousVelocity(const Vec2D& inputPrevVel);
 	void setPreviousPosition(const Vec2D inputPrevPos);
 	void setPreviousRotation(const float inputPrevRot);
@@ -68,14 +58,14 @@ public:
 	void setPreviousAABBBR(const Vec2D& inputAABBBR);
 	void setResultingForce(const Vec2D& inputResultingForce);
 	void setFrictionCoefficient(const float inputFrictionCoefficient);
+	void setLostTime(const float inputLostTime);
+	void setTrackEntityData(const bool inputBool);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
 	Vec2D getVelocity() const; //gets the vel, in meters per second
-	Vec2D getAcceleration() const; //gets the acc, in meters per second squared
 	std::vector<Force> getForces() const; //gets all the acting forces
 	float getMass() const; //gets the mass in kg
-	Vec2D  getCenterOfmassOffset() const; //returns the Center of mass
 	float getAngleRotationDEGREES() const; //gets the rotation of entity in degrees
 	float getAngleRotationRADIANS() const; //gets the rotation of entity in radians
 	bool getIsColliding() const;
@@ -93,57 +83,44 @@ public:
 	Vec2D getPreviousAABBBR() const;
 	Vec2D getResultingForce() const;
 	float getFrictionCoefficient() const;
-
-	//update functions
-	void updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce); //updates all of the entity properties, speed, acc, forces
-
-
-	//void move(const Vec2D& inputMoveAmount);
+	float getLostTime() const;
+	bool getTrackEntityData() const;
 
 	//Constructor
 	Entity();
 
-	//other
-	//Entity& operator=(const Entity& inputEntity) = default; //own copy assignment operator made? due to getting error C2280, //http://en.cppreference.com/w/cpp/language/rule_of_three#Rule_of_five, //WAS ERROR WITH SHAPE COPYTHING, NOT INITING VARIABLES IN CONSTR
-
 private:
 	//members
 
-	int entityID; //the id of the entity, -1 if not set
+	int entityID; //the id of the entity, -1 if not set, used to identify entity
 	int entityState; //what state it is in, -1 if not set
 
-	Vec2D position; //pos of entity, is in the center
-	Vec2D velocity; //velocity of entity, has a magnitude and direction, in meters per second
-	Vec2D acceleration; //acceleration, in meters per seconds squared
-	std::vector<Force> forces; //all of the acting forces on the entity at this moment, in Newtons
-	Vec2D resultingForce;
+	//curent entity data:
+	Vec2D velocity,
+		resultingForce;
+	    //position is stored in shape
 
-	float mass; //mass of entity in kg, -1 if not set
-	Vec2D centerOfMassOffset; //pos of center of mass, is in the center of entity by default
+	std::vector<Force> forces; //all acting forces on entity
 
-	VertexShape shape; //the shape of entity, define it with verticies, has rotation, centerpos / pos in middle
+	float mass;
 
-	bool isColliding; //can change the outline to show that it is colliding
+	//coefficients for entity
+	float frictionCoefficient,
+		restitutionCoefficient,
+		dragCoefficient;
 
-	float frictionCoefficient;
-	float restitutionCoefficient; //is between 0 and 1, affects how collisions occur and the result
-	float dragCoefficient; //air drag of the body
+	VertexShape shape; //entity shape
 
-	//variables containing prev tick entity data
-	Vec2D prevPos;
-	Vec2D prevVel;
+	//prev tick entity data:
+	Vec2D prevPos,
+		prevVel,
+		prevAABBTL, 
+		prevAABBBR;
 	float prevRot;
-	Vec2D prevAABBTL, prevAABBBR; 
 
-	//physics variabeles
-	
+	float lostTime; 
+	bool isColliding;
 
-	//torque members
-	Vec2D torque; //M = F*L
-	Vec2D momentOfInertia;
-
-	//angular momentum
-	Vec2D angularMomentum;
-
+	bool trackEntityData;
 };
 #endif // !_ENTITY_

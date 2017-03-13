@@ -160,7 +160,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			centerOfMass.setFillColor(sf::Color::Red);
 			centerOfMass.setOrigin(1, 1);
 			centerOfMass.setRadius(2); //make it scale to entitysize sometime
-			centerOfMass.setPosition(toPixelCoords(sf::Vector2f(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY())));
+			centerOfMass.setPosition(toPixelCoords(sf::Vector2f(e.getPosition().getX() , e.getPosition().getY())));
 
 			rTexture.draw(centerOfMass);
 		}
@@ -172,7 +172,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 				//doesnt draw forces that have both x and y as 0, pointless and draws a horisontal line on screen
 				if (!(f.getForce().getX() == 0 && f.getForce().getY() == 0)) 
 				{
-					rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX() + f.getOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY() + f.getOffset().getY(), f.getForce(), f.getColour(), 0.0000001f));
+					rTexture.draw(makeArrowShape(e.getPosition().getX()  + f.getOffset().getX(), e.getPosition().getY() + f.getOffset().getY(), f.getForce(), f.getColour(), 0.0000001f));
 				}
 			}
 		}
