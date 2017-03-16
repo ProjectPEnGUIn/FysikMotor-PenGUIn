@@ -1,5 +1,4 @@
 ﻿  PE.cpp
 c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(13): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
-c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(47): warning C4305: 'argument': truncation from 'double' to 'const float'
   fysikmotor.vcxproj -> C:\Users\t980409erma\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
   fysikmotor.vcxproj -> C:\Users\t980409erma\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

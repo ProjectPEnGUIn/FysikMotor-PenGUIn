@@ -7,21 +7,21 @@ void EntityHandler::logEntityData(const Entity& e, const float currentDeltaTime,
 	//adds it into one long line of data
 
 	//GLOBALTIME, DELTATIME, ID, STATE, POSx, POSy, VELx, VELy, FRx, FRy, MASS, ROT(DEGREES), FRICTIONCOEFFICIENT, RESTITUTIONFOCEFFIENCT, DRAGCOEFFICIENT
-	data =  std::to_string(totalElapsedTime) + ","
-		+ std::to_string(currentDeltaTime) + ","
-		+ std::to_string(e.getEntityID()) + ","
-		+ std::to_string(e.getEntityState()) + ","
-		+ std::to_string(e.getPosition().getX()) + ","
-		+ std::to_string(e.getPosition().getY()) + ","
-		+ std::to_string(e.getVelocity().getX()) + ","
-		+ std::to_string(e.getVelocity().getY()) + ","
-		+ std::to_string(e.getResultingForce().getX()) + ","
-		+ std::to_string(e.getResultingForce().getY()) + ","
-		+ std::to_string(e.getMass()) + ","
-		+ std::to_string(e.getVertexShape().getCurrentRotationDEGREES()) + ","
-		+ std::to_string(e.getFrictionCoefficient()) + ","
-		+ std::to_string(e.getRestitutionCoefficient()) + ","
-		+ std::to_string(e.getDragCoefficient()) + ","
+	data =  std::to_string(totalElapsedTime) + ", "
+		+ std::to_string(currentDeltaTime) + ", "
+		+ std::to_string(e.getEntityID()) + ", "
+		+ std::to_string(e.getEntityState()) + ", "
+		+ std::to_string(e.getPosition().getX()) + ", "
+		+ std::to_string(e.getPosition().getY()) + ", "
+		+ std::to_string(e.getVelocity().getX()) + ", "
+		+ std::to_string(e.getVelocity().getY()) + ", "
+		+ std::to_string(e.getResultingForce().getX()) + ", "
+		+ std::to_string(e.getResultingForce().getY()) + ", "
+		+ std::to_string(e.getMass()) + ", "
+		+ std::to_string(e.getVertexShape().getCurrentRotationDEGREES()) + ", "
+		+ std::to_string(e.getFrictionCoefficient()) + ", "
+		+ std::to_string(e.getRestitutionCoefficient()) + ", "
+		+ std::to_string(e.getDragCoefficient()) + ", "
 		+ "\n"; //end of line
 
 	storedEntityData.addData(data); 

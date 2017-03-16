@@ -85,7 +85,7 @@ private:
 	float elapsedTime; //total elapsed time
 	float timeCounter;
 
-	bool logData;
+	bool logData;E
 	float dataLoggerIntervall; //in seconds, will take entity data and log it in that interval
 	DataLogger storedEntityData;
 };

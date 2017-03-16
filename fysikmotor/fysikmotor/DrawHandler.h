@@ -19,7 +19,6 @@ translates simulation world coordinates into pixel coordinates
 
 Erik Magnusson 23/12 2016
 
-
 //http://www.sfml-dev.org/documentation/2.4.1/classsf_1_1RenderTexture.php 1/1 2017
 
 -use sfml view for the "window" that will move around?? rather than creating basicly the same thing from scratch
@@ -38,7 +37,7 @@ Erik Magnusson 23/12 2016
 #include <math.h> //for making arrowshape
 #include <cmath> //for making arrowshape
 
-#include "EntityHandler.h"
+#include "Entity.h"
 #include "AABBCheck.h"
 
 #pragma once

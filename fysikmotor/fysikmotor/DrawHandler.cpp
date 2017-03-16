@@ -116,7 +116,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 
 
 	//go through each of the entityies and draw its shape onto the texture
-	for (Entity e : inputEntities)
+	for (const Entity& e : inputEntities)
 	{
 		if (drawAABBCollisionArea)
 		{
