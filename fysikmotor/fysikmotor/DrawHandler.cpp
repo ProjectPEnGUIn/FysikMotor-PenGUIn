@@ -38,7 +38,7 @@ sf::ConvexShape DrawHandler::makeArrowShape(const float inputStartX, const float
 {
 	//make a square for now to save time
 
-	const float height = inputVector.getMagnitude() * inputScale;
+	const float height = inputVector.getMagnitude() * (viewPixelSize.y / maxY) * inputScale;
 
 	//rotation is clockwise due to sfml t, sfml rotate is 0 at the top basiclly
 	float rotation = inputVector.getDirectionDEGREES();
@@ -50,12 +50,15 @@ sf::ConvexShape DrawHandler::makeArrowShape(const float inputStartX, const float
 		rotation = fmod(rotation, 360.0f);
 
 	sf::ConvexShape arrowShape;
-	arrowShape.setPointCount(4);
+	arrowShape.setPointCount(7);
 
 	arrowShape.setPoint(0, sf::Vector2f(-1, 0));
-	arrowShape.setPoint(1, sf::Vector2f(1, 0));
-	arrowShape.setPoint(2, sf::Vector2f(1, 0) + toPixelCoords(sf::Vector2f(0, height)));
-	arrowShape.setPoint(3, sf::Vector2f(-1, 0) + toPixelCoords(sf::Vector2f(0, height)));
+	arrowShape.setPoint(1, sf::Vector2f(-1, height));
+	arrowShape.setPoint(2, sf::Vector2f(-3, height * 1.01f));
+	arrowShape.setPoint(3, sf::Vector2f(0, height * 1.05f));
+	arrowShape.setPoint(4, sf::Vector2f(3, height));
+	arrowShape.setPoint(5, sf::Vector2f(1, height * 1.01f));
+	arrowShape.setPoint(6, sf::Vector2f(1, 0));
 
 	arrowShape.setPosition(toPixelCoords(sf::Vector2f(inputStartX, inputStartY)));
 
@@ -86,6 +89,8 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 	//1 draw background
 	//2 draw other things on background such as lines etc...
 	//3 draw entities
+	//4 give the rendertexture to sprite
+	//5 draw sprite on screen
 
 	rTexture.clear(sf::Color(255, 255, 255)); //clears imga to white
 	//draw lines etc onto the rtexture
@@ -116,7 +121,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 
 
 	//go through each of the entityies and draw its shape onto the texture
-	for (Entity e : inputEntities)
+	for (const Entity& e : inputEntities)
 	{
 		if (drawAABBCollisionArea)
 		{
@@ -127,14 +132,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			rShape.setOutlineThickness(1);
 			rTexture.draw(rShape); 
 		}
-		if (drawVertexIDs)
-		{
-
-		}
-		if (drawVelocityVector)
-		{
-			//rTexture.draw(makeArrowShape(e.getPosition().getX() + e.getCenterOfmassOffset().getX(), e.getPosition().getY() + e.getCenterOfmassOffset().getY(), e.getVelocity(), sf::Color::Magenta));
-		}
+		
 		if (drawFrictionSurface)
 		{
 			//ehhh todo
@@ -172,33 +170,57 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 				//doesnt draw forces that have both x and y as 0, pointless and draws a horisontal line on screen
 				if (!(f.getForce().getX() == 0 && f.getForce().getY() == 0)) 
 				{
-					rTexture.draw(makeArrowShape(e.getPosition().getX()  + f.getOffset().getX(), e.getPosition().getY() + f.getOffset().getY(), f.getForce(), f.getColour(), 0.0000001f));
+					rTexture.draw(makeArrowShape(e.getPosition().getX()  + f.getOffset().getX(), e.getPosition().getY() + f.getOffset().getY(), f.getForce(), f.getColour(), 0.25f));
+
+					if (f.getName() != "_noNameSet")
+					{
+						//draw the force name and value with units
+
+						text.setString(std::string(f.getName() + " " + std::to_string(f.getForce().getMagnitude()) + " N"));
+						text.setFillColor(f.getColour() - sf::Color(0, 0, 0, 50));
+						text.setPosition(toPixelCoords(e.getPosition() * 1.01f + f.getForce() * 0.25f));
+						rTexture.draw(text);
+					}
 				}
 			}
+		}
+
+		if (drawID)
+		{
+			text.setString(std::string("ID: " + std::to_string(e.getEntityID())));
+			text.setFillColor(sf::Color(200, 0, 150, 200));
+			text.setPosition(toPixelCoords(e.getPosition()));
+			rTexture.draw(text);
+		}
+		if (drawVelocityVector)
+		{		
+			//vel x
+			if (e.getVelocity().getX() != 0.0f)
+			{
+				rTexture.draw(makeArrowShape(e.getPosition().getX(), e.getPosition().getY(), Vec2D(e.getVelocity().getX(), 0), sf::Color(0, 0, 255), 0.5f));
+				text.setString(std::string("Velocity in X " + std::to_string(e.getVelocity().getX())));
+				text.setFillColor(sf::Color(0, 0, 255) - sf::Color(0, 0, 0, 50));
+				text.setPosition(toPixelCoords(e.getPosition() + Vec2D(e.getVelocity().getX() * 0.5f, 0)));
+				rTexture.draw(text);
+			}
+			//vel y
+			if (e.getVelocity().getY() != 0.0f)
+			{
+				rTexture.draw(makeArrowShape(e.getPosition().getX(), e.getPosition().getY(), Vec2D(0, e.getVelocity().getY()), sf::Color(0, 0, 255), 0.5f));
+				text.setString(std::string("Velocity in Y " + std::to_string(e.getVelocity().getX())));
+				text.setFillColor(sf::Color(0, 0, 255) - sf::Color(0, 0, 0, 50));
+				text.setPosition(toPixelCoords(e.getPosition() + Vec2D(0, e.getVelocity().getY() * 0.5f)));
+				rTexture.draw(text);
+			}
+				
 		}
 
 	}
 
 
-//	sf::CircleShape c;
-//	c.setRadius(3);
-//	//c.setOrigin(2, 2);
-//	c.setFillColor(sf::Color::Red);
-//
-//	c.setPosition(toPixelCoords(Vec2D(11.5, 3.37)));
-//	rTexture.draw(c);
-//	c.setPosition(toPixelCoords(Vec2D(10.1, 4.8)));
-//	rTexture.draw(c);
-//	c.setFillColor(sf::Color::Blue);
-//	c.setPosition(toPixelCoords(Vec2D(11, 4)));
-//	rTexture.draw(c);
-//	c.setPosition(toPixelCoords(Vec2D(9, 4)));
-//	rTexture.draw(c);
-
 	rTexture.display(); //displays it onto the rtexture
 	
 	sprite.setTexture(rTexture.getTexture()); //sets the sprite texture to the rtexture
-
 	sprite.setPosition(viewPixelPos);
 
 //	inputRenderWindow.setView(view);
@@ -237,9 +259,9 @@ void DrawHandler::setDrawFilledVertexShape(const bool inputBool)
 {
 	drawfilledVertexShapes = inputBool;
 }
-void DrawHandler::setDrawVertexIDs(const bool inputBool)
+void DrawHandler::setDrawID(const bool inputBool)
 {
-	drawVertexIDs = inputBool;
+	drawID = inputBool;
 }
 void DrawHandler::setDrawCenterOfMass(const bool inputBool)
 {
@@ -309,9 +331,9 @@ bool DrawHandler::getDrawFilledVertexShape() const
 {
 	return drawfilledVertexShapes;
 }
-bool DrawHandler::getDrawVertexIDs() const
+bool DrawHandler::getDrawID() const
 {
-	return drawVertexIDs;
+	return drawID;
 }
 bool DrawHandler::getDrawCenterOfMass() const
 {
@@ -362,7 +384,18 @@ void DrawHandler::init(const float inputSimulationWidth, const float inputSimula
 	viewPixelSize.y = imageHeight;
 
 	rTexture.create(imageWidth, imageHeight);
+
+	if(!font.loadFromFile("Fonts/arial.ttf"));
+	{
+		std::cout << "ERROR LOADING FONT IN ENTITYHANDLER INIT\n";
+	}
+
+	text.setFont(font);
+	text.setCharacterSize(15);
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(0.8f);
 }
+
 
 DrawHandler::DrawHandler()
 	:
@@ -376,15 +409,17 @@ DrawHandler::DrawHandler()
 	viewPixelSize(),
 	rTexture(),
 	sprite(),
+	font(),
+	text(),
 	squareGridSpacing(1.0f),
 
 	drawActingForces(true),
 	drawSquareGrid(true),
 	drawVertexPoints(false),
 	drawfilledVertexShapes(false),
-	drawVertexIDs(false),
+	drawID(true),
 	drawCenterOfMass(true),
-	drawVelocityVector(false),
+	drawVelocityVector(true),
 	drawFrictionSurface(false),
 	drawAABBCollisionArea(true),
 	drawEntityTexture(false),

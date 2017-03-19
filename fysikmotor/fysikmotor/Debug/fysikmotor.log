@@ -1,5 +1,34 @@
-﻿  PE.cpp
-c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(13): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
-c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(47): warning C4305: 'argument': truncation from 'double' to 'const float'
+﻿  main.cpp
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(26): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(136): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(137): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(149): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(150): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(236): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(237): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(427): warning C4305: 'argument': truncation from 'int' to 'sf::Uint8'
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(427): warning C4309: 'argument': truncation of constant value
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(460): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(461): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(473): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(474): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(486): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(487): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(500): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(501): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(513): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(514): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(564): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(565): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(652): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(653): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(739): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(740): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(32): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(27): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(49): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\t980409erma\fysikmotor-penguin\fysikmotor\fysikmotor\game_system.h(50): warning C4305: 'argument': truncation from 'double' to 'float'
   fysikmotor.vcxproj -> C:\Users\t980409erma\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
   fysikmotor.vcxproj -> C:\Users\t980409erma\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)

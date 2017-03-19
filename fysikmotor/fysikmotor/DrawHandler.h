@@ -19,7 +19,6 @@ translates simulation world coordinates into pixel coordinates
 
 Erik Magnusson 23/12 2016
 
-
 //http://www.sfml-dev.org/documentation/2.4.1/classsf_1_1RenderTexture.php 1/1 2017
 
 -use sfml view for the "window" that will move around?? rather than creating basicly the same thing from scratch
@@ -35,10 +34,11 @@ Erik Magnusson 23/12 2016
 #include <SFML\Window.hpp>
 
 #include <vector>
-#include <math.h> //for making arrowshape
-#include <cmath> //for making arrowshape
+#include <math.h>
+#include <cmath> 
+#include <string>
 
-#include "EntityHandler.h"
+#include "Entity.h"
 #include "AABBCheck.h"
 
 #pragma once
@@ -70,7 +70,7 @@ public:
 	void setDrawSquareGrid(const bool inputBool);
 	void setDrawVertexPoints(const bool inputBool);
 	void setDrawFilledVertexShape(const bool inputBool);
-	void setDrawVertexIDs(const bool inputBool);
+	void setDrawID(const bool inputBool);
 	void setDrawCenterOfMass(const bool inputBool);
 	void setDrawVelocityVector(const bool inputBool);
 	void setDrawFrictionSurface(const bool inputBool);
@@ -91,7 +91,7 @@ public:
 	bool getDrawSquareGrid() const;
 	bool getDrawVertexPoints() const;
 	bool getDrawFilledVertexShape() const;
-	bool getDrawVertexIDs() const;
+	bool getDrawID() const;
 	bool getDrawCenterOfMass() const;
 	bool getDrawVelocityVector() const;
 	bool getDrawFrictionSurface() const;
@@ -122,6 +122,8 @@ private:
 
 	sf::RenderTexture rTexture; //the texture entities will be drawn onto
 	sf::Sprite sprite; //the sprite that will be drawn onto the sf renderwindow
+	sf::Font font;
+	sf::Text text;
 
 	float squareGridSpacing; //in meters
 
@@ -130,7 +132,7 @@ private:
 		drawSquareGrid,
 		drawVertexPoints,
 		drawfilledVertexShapes,
-		drawVertexIDs,
+		drawID,
 		drawCenterOfMass,
 		drawVelocityVector,
 		drawFrictionSurface,

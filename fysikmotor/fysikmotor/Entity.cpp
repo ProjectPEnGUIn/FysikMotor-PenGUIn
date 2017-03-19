@@ -106,6 +106,10 @@ void Entity::setTrackEntityData(const bool inputBool)
 {
 	trackEntityData = inputBool;
 }
+void Entity::setSillhueteArea(const float inputSillhueteArea)
+{
+	sillhuetteArea = inputSillhueteArea;
+}
 
 //get functions
 Vec2D Entity::getPosition() const //gets the pos
@@ -200,7 +204,10 @@ bool Entity::getTrackEntityData() const
 {
 	return trackEntityData;
 }
-
+float Entity::getSillhueteArea() const
+{
+	return sillhuetteArea;
+}
 //Constructor
 Entity::Entity()
 	:
@@ -215,6 +222,7 @@ Entity::Entity()
 	frictionCoefficient(FLT_MAX),
 	restitutionCoefficient(FLT_MAX),
 	dragCoefficient(FLT_MAX),
+	sillhuetteArea(FLT_MAX),
 	prevPos(FLT_MAX, FLT_MAX),
 	prevVel(FLT_MAX, FLT_MAX),
 	prevRot(FLT_MAX),
