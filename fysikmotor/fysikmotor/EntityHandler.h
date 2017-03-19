@@ -47,6 +47,7 @@ public:
 	void setDataLoggerIntervall(const float intervall);
 	void initDataLogger(const std::string& inputFilename, const bool inputOverwriteStatus);
 	void setGravitationalAcceleration(const Vec2D& inputGravitationalAcceleration);
+	void setUseAirRessitance(const bool inputBool);
 
 	//void resetTimeCounter();
 	//float getTimeCounter() const;
@@ -89,6 +90,8 @@ private:
 	bool logData;
 	float dataLoggerIntervall; //in seconds, will take entity data and log it in that interval
 	DataLogger storedEntityData;
+
+	bool airResistanceEnabled; //true by default
 };
 
 
