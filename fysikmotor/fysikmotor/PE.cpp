@@ -299,5 +299,6 @@ PE::PE()
 {
 	entityHandler.initDataLogger("enttiysavetest", true);
 	entityHandler.setDataLoggerIntervall(0.01f);
+	entityHandler.setUseAirRessitance(false);
 }
 

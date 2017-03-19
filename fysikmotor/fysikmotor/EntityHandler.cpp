@@ -22,6 +22,7 @@ void EntityHandler::logEntityData(const Entity& e, const float currentDeltaTime,
 		+ std::to_string(e.getFrictionCoefficient()) + ", "
 		+ std::to_string(e.getRestitutionCoefficient()) + ", "
 		+ std::to_string(e.getDragCoefficient()) + ", "
+		+ std::to_string(airResistanceEnabled) + ", "
 		+ "\n"; //end of line
 
 	storedEntityData.addData(data); 
@@ -115,12 +116,16 @@ void EntityHandler::initDataLogger(const std::string& inputFilename, const bool 
 {
 	storedEntityData = DataLogger(inputFilename, inputOverwriteStatus);
 
-	std::string dataInfo = "GLOBALTIME, DELTATIME, ID, STATE, POS_x, POS_y, VEL_x, VEL_y, FR_x, FR_y, MASS, ROTATION(DEGREES), FRICTIONCOEF.., RESTITUTIONCOEF.., AIR DRAG COEF..\n";
+	std::string dataInfo = "GLOBALTIME, DELTATIME, ID, STATE, POS_x, POS_y, VEL_x, VEL_y, FR_x, FR_y, MASS, ROTATION(DEGREES), FRICTIONCOEF.., RESTITUTIONCOEF.., AIR DRAG COEF..,  use air resistance\n";
 	storedEntityData.addData(dataInfo); //adds some data to show what each columm stands for
 }
 void EntityHandler::setGravitationalAcceleration(const Vec2D& inputGravitationalAcceleration)
 {
 	gravitationalAcceleration = inputGravitationalAcceleration;
+}
+void EntityHandler::setUseAirRessitance(const bool inputBool)
+{
+	airResistanceEnabled = inputBool;
 }
 
 void EntityHandler::updateEntities(const float deltaTime) //updates all entities, checks for collisions, handles collisioons
@@ -342,9 +347,11 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 		inputEntity.addForce(Force(Vec2D(gravitationalAcceleration.getX() * inputEntity.getMass(), gravitationalAcceleration.getY() * inputEntity.getMass()), Vec2D(0, 0), "Gravity"));
 
 		//add air resistance
-
-		Vec2D airDrag = getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), inputEntity.getSillhueteArea(), inputEntity.getPosition().getY());
-		inputEntity.addForce(Force(airDrag, Vec2D(), "Air Drag", sf::Color::Cyan));
+		if (airResistanceEnabled == true)
+		{
+			Vec2D airDrag = getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), inputEntity.getSillhueteArea(), inputEntity.getPosition().getY());
+			inputEntity.addForce(Force(airDrag, Vec2D(), "Air Drag", sf::Color::Cyan));
+		}
 
 		for (const Force& f : inputEntity.getForces())
 		{
@@ -419,7 +426,8 @@ EntityHandler::EntityHandler()
 	timeCounter(0),
 	logData(false),
 	dataLoggerIntervall(1),
-	storedEntityData()
+	storedEntityData(),
+	airResistanceEnabled(true)
 	
 {
 	
