@@ -9,8 +9,6 @@
 //spaces wont matter; remove them later
 use ex ##overal_settings_pixel_width: 350
 
-created: DATE HERE
-
 ###pe_settings_width_meters: 3
 ###pe_settings_height_meters: 5
 ###pe_settings_pixel_width: 500
@@ -34,4 +32,4 @@ created: DATE HERE
 ###eh_settings_gravitational_acceleration_y: -9.82
 ###eh_settings_datalogger_interval_seconds: 1
 
-###entity: _state: 1, _ID:33, _pos_x: 32.4, _pos_y: 33, _vel_x: 0, _vel_y: -3.332323232, _fR_x: 0, _fR_y: 0, _mass
+###entity: #ID: 0, #state: 1, #pos_x: 3, #pos_y: 4, #vel_x: 0, #vel_y: 0, #fr_x: 0, #fr_y: 0, #mass: 5, #fc: 1, #rc: 1, #dc: 1, #rot_deg: 45, #tr_data: 1, #vert_x: 0, #vert_y: 0, #vert_x: 0, #vert_y: 5, #vert_x: 5, #vert_y: 5, #vert_x: 5, #vert_y: 0, 

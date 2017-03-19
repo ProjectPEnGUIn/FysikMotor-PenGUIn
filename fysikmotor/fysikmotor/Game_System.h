@@ -23,11 +23,12 @@ Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float c
 	e.setPosition(pos);
 	e.setMass(mass);
 	e.setRestitutionCoefficient(cor);
-	e.setFrictionCoefficient(0);
-	e.setDragCoefficient(0);
+	e.setFrictionCoefficient(0.5);
+	e.setDragCoefficient(0.15);
 	e.setEnttityID(ID);
 	e.setVelocity(vel);
 	e.setAngleRotationDEGREES(rot);
+	e.setSillhueteArea(1);
 
 	if (e.getEntityState() != 0) //only track movable objects
 		e.setTrackEntityData(true);
@@ -42,13 +43,15 @@ public:
 	{
 
 		PE physicsEngine;
-		physicsEngine.init(10, 10, 500, 500, 50, 50);
+		physicsEngine.init(20, 20, 500, 500, 50, 50);
 
-		physicsEngine.addEntity(getEntitySquare(Vec2D(5, 3), 5, 1, 100, 0.35, 3, 0, Vec2D(0, 0), 30));
-		physicsEngine.addEntity(getEntitySquare(Vec2D(5, 10), 1, 0.5, 5, 0.35, 2, 1, Vec2D(-1, 0),30));
+		//physicsEngine.loadSimulation("testsave");
+		physicsEngine.addEntity(getEntitySquare(Vec2D(10, 3), 5, 1, 100, 0.35, 3, 0, Vec2D(0, 0), 30));
+		physicsEngine.addEntity(getEntitySquare(Vec2D(10, 20), 1, 0.5, 5, 0.35, 2, 1, Vec2D(0, 0),30));
 	
 		sf::Time logicTime = sf::seconds(1 / 60.f);
 		sf::Clock logicTimer;
+		logicTimer.restart();
 
 		bool game = true;
 		while (renderwindow.isOpen() && game)
@@ -60,10 +63,8 @@ public:
 				if (e.type == sf::Event::Closed)
 					renderwindow.close();
 			}
-
 			if (logicTimer.getElapsedTime() >= logicTime)
 			{
-				
 				//logic; TODO; split up timer in smaller segments if time gets too big
 				physicsEngine.update(logicTimer.restart().asSeconds() );
 			}

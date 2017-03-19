@@ -69,7 +69,7 @@ Force::Force(const Vec2D& inputForce, const Vec2D& inputOffset, const std::strin
 Force::Force(const Vec2D& inputForce)
 	:
 	force(inputForce),
-	offset(Vec2D(0,0)),
+	offset(),
 	name("_noNameSet"),
 	colour(sf::Color::Red)
 

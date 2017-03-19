@@ -26,7 +26,7 @@ private:
 
 	void logEntityData(const Entity& e, const float currentDeltaTime, const float totalElapsedTime); //logs entity data onto storedentitydata
 	
-	void impulseCollision( Entity& e1, Entity& e2); //resolves collision
+	void handleCollision( Entity& e1, Entity& e2); //resolves collision
 	//void elapseEntityTime(Entity& inputEntity, const float time); //elapses time for entity
 
 	void updateResultingForce(Entity& e);
@@ -46,6 +46,7 @@ public:
 	void setLogData(const bool inputBool);
 	void setDataLoggerIntervall(const float intervall);
 	void initDataLogger(const std::string& inputFilename, const bool inputOverwriteStatus);
+	void setGravitationalAcceleration(const Vec2D& inputGravitationalAcceleration);
 
 	//void resetTimeCounter();
 	//float getTimeCounter() const;
@@ -85,7 +86,7 @@ private:
 	float elapsedTime; //total elapsed time
 	float timeCounter;
 
-	bool logData;E
+	bool logData;
 	float dataLoggerIntervall; //in seconds, will take entity data and log it in that interval
 	DataLogger storedEntityData;
 };

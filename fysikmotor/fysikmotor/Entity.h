@@ -60,6 +60,7 @@ public:
 	void setFrictionCoefficient(const float inputFrictionCoefficient);
 	void setLostTime(const float inputLostTime);
 	void setTrackEntityData(const bool inputBool);
+	void setSillhueteArea(const float inputSillhueteArea);
 
 	//get functions
 	Vec2D getPosition() const; //gets the pos
@@ -85,6 +86,7 @@ public:
 	float getFrictionCoefficient() const;
 	float getLostTime() const;
 	bool getTrackEntityData() const;
+	float getSillhueteArea() const;
 
 	//Constructor
 	Entity();
@@ -107,7 +109,8 @@ private:
 	//coefficients for entity
 	float frictionCoefficient,
 		restitutionCoefficient,
-		dragCoefficient;
+		dragCoefficient,
+		sillhuetteArea;
 
 	VertexShape shape; //entity shape
 
