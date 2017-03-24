@@ -297,8 +297,11 @@ PE::PE()
 	entityHandler(),
 	drawHandler()
 {
-	entityHandler.initDataLogger("enttiysavetest", true);
+	entityHandler.initDataLogger("dpcsvjoogsdnfosdpofsdjfiosd", true);
 	entityHandler.setDataLoggerIntervall(0.01f);
 	entityHandler.setUseAirRessitance(false);
+	entityHandler.setGravitationalAcceleration(Vec2D(0, 0));
+
+	drawHandler.setSquareGridSpacing(1.0f);
 }
 

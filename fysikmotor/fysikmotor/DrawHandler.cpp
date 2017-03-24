@@ -198,7 +198,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			if (e.getVelocity().getX() != 0.0f)
 			{
 				rTexture.draw(makeArrowShape(e.getPosition().getX(), e.getPosition().getY(), Vec2D(e.getVelocity().getX(), 0), sf::Color(0, 0, 255), 0.5f));
-				text.setString(std::string("Velocity in X " + std::to_string(e.getVelocity().getX())));
+				text.setString(std::string("Velocity X " + std::to_string(e.getVelocity().getX())));
 				text.setFillColor(sf::Color(0, 0, 255) - sf::Color(0, 0, 0, 50));
 				text.setPosition(toPixelCoords(e.getPosition() + Vec2D(e.getVelocity().getX() * 0.5f, 0)));
 				rTexture.draw(text);
@@ -207,7 +207,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			if (e.getVelocity().getY() != 0.0f)
 			{
 				rTexture.draw(makeArrowShape(e.getPosition().getX(), e.getPosition().getY(), Vec2D(0, e.getVelocity().getY()), sf::Color(0, 0, 255), 0.5f));
-				text.setString(std::string("Velocity in Y " + std::to_string(e.getVelocity().getX())));
+				text.setString(std::string("Velocity Y " + std::to_string(e.getVelocity().getY())));
 				text.setFillColor(sf::Color(0, 0, 255) - sf::Color(0, 0, 0, 50));
 				text.setPosition(toPixelCoords(e.getPosition() + Vec2D(0, e.getVelocity().getY() * 0.5f)));
 				rTexture.draw(text);
@@ -411,17 +411,17 @@ DrawHandler::DrawHandler()
 	sprite(),
 	font(),
 	text(),
-	squareGridSpacing(1.0f),
+	squareGridSpacing(FLT_MAX),
 
 	drawActingForces(true),
 	drawSquareGrid(true),
 	drawVertexPoints(false),
 	drawfilledVertexShapes(false),
-	drawID(true),
+	drawID(false),
 	drawCenterOfMass(true),
 	drawVelocityVector(true),
 	drawFrictionSurface(false),
-	drawAABBCollisionArea(true),
+	drawAABBCollisionArea(false),
 	drawEntityTexture(false),
 	drawRotationAngleOfEntity(false),
 	drawTrejectory(false)
