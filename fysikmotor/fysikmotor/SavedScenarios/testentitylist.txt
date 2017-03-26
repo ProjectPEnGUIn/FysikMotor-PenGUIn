@@ -1,0 +1,112 @@
+//PEnGUIn scenario template
+//list of entites and their attributes
+//simple interface to correctly load entities from startup
+//bool usage; 1 = true, 0 = false
+
+###entity
+[ 
+###id: 0
+###state: 1
+###pos_x: 10 
+###pos_y: 15 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 10 
+###friction_coef: 0.5 
+###restitution_coef: 0.5 
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 45 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 0 
+]
+
+###entity
+[ 
+###id: 1
+###state: 1
+###pos_x: 15 
+###pos_y: 15 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 10 
+###friction_coef: 0.5 
+###restitution_coef: 0.5 
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 45 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 0 
+]
+
+###entity
+[ 
+###id: 2
+###state: 1
+###pos_x: 12 
+###pos_y: 15 
+###vel_x: 10 
+###vel_y: 10 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 10 
+###friction_coef: 0.5 
+###restitution_coef: 0.5 
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 45 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 0 
+]
+
+###entity
+[ 
+###id: 3
+###state: 1
+###pos_x: 18 
+###pos_y: 20 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 10 
+###friction_coef: 0.5 
+###restitution_coef: 0.5 
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 45 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 0 
+]

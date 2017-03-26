@@ -22,20 +22,12 @@ Erik Magnusson 15/1 2017
 
 #include "EntityHandler.h"
 #include "DrawHandler.h"
+#include "ReadFile.h"
 
 class PE
 {
 private:
 	//functions
-
-	//http://stackoverflow.com/questions/4316442/stdofstream-check-if-file-exists-before-writing 12/3 2017
-	bool fileExists(const std::string& filename) const; //checks weather file already exists or not
-	bool containsLetters(const std::string& inputString);
-	float getFloat(const std::string& inputString);
-	bool getBool(const std::string& inputString);
-
-	void updateEntityHandlerLogic();
-	void updateDrawHandlerLogic();
 
 public:
 	//functions
@@ -47,7 +39,7 @@ public:
 	void update(const float& deltaTime);
 	void inputEvent(sf::Event& inputEvent);
 
-	void loadSimulation(const std::string& filename); //loads simulation scenario
+	void loadSimulation(const std::string& settingsFilename, const std::string& entitylistFilename); //loads simulation scenario
 	void saveSimulation(const std::string& filename, bool allowToOverwritePreviousData); //saves current
 
 	PE();

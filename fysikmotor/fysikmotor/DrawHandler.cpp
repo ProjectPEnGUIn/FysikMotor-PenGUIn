@@ -132,11 +132,6 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			rShape.setOutlineThickness(1);
 			rTexture.draw(rShape); 
 		}
-		
-		if (drawFrictionSurface)
-		{
-			//ehhh todo
-		}
 		if (drawEntityTexture)
 		{
 			//get help from Dennis yo
@@ -251,10 +246,7 @@ void DrawHandler::setDrawSquareGrid(const bool inputBool)
 {
 	drawSquareGrid = inputBool;
 }
-void DrawHandler::setDrawVertexPoints(const bool inputBool)
-{
-	drawVertexPoints = inputBool;
-}
+
 void DrawHandler::setDrawFilledVertexShape(const bool inputBool)
 {
 	drawfilledVertexShapes = inputBool;
@@ -270,10 +262,6 @@ void DrawHandler::setDrawCenterOfMass(const bool inputBool)
 void DrawHandler::setDrawVelocityVector(const bool inputBool)
 {
 	drawVelocityVector = inputBool;
-}
-void DrawHandler::setDrawFrictionSurface(const bool inputBool)
-{
-	drawFrictionSurface = inputBool;
 }
 void DrawHandler::setDrawAABBCollisionArea(const bool inputBool)
 {
@@ -323,10 +311,7 @@ bool DrawHandler::getDrawSquareGrid() const
 {
 	return drawSquareGrid;
 }
-bool DrawHandler::getDrawVertexPoints() const
-{
-	return drawVertexPoints;
-}
+
 bool DrawHandler::getDrawFilledVertexShape() const
 {
 	return drawfilledVertexShapes;
@@ -342,10 +327,6 @@ bool DrawHandler::getDrawCenterOfMass() const
 bool DrawHandler::getDrawVelocityVector() const
 {
 	return drawVelocityVector;
-}
-bool DrawHandler::getDrawFrictionSurface() const
-{
-	return drawFrictionSurface;
 }
 bool DrawHandler::getDrawAABBCollisionArea() const
 {
@@ -387,7 +368,7 @@ void DrawHandler::init(const float inputSimulationWidth, const float inputSimula
 
 	if(!font.loadFromFile("Fonts/arial.ttf"));
 	{
-		std::cout << "ERROR LOADING FONT IN ENTITYHANDLER INIT\n";
+		std::cout << "ERROR LOADING FONT IN DRAWHANDLER INIT\n";
 	}
 
 	text.setFont(font);
@@ -413,14 +394,12 @@ DrawHandler::DrawHandler()
 	text(),
 	squareGridSpacing(FLT_MAX),
 
-	drawActingForces(true),
-	drawSquareGrid(true),
-	drawVertexPoints(false),
+	drawActingForces(false),
+	drawSquareGrid(false),
 	drawfilledVertexShapes(false),
 	drawID(false),
-	drawCenterOfMass(true),
-	drawVelocityVector(true),
-	drawFrictionSurface(false),
+	drawCenterOfMass(false),
+	drawVelocityVector(false),
 	drawAABBCollisionArea(false),
 	drawEntityTexture(false),
 	drawRotationAngleOfEntity(false),

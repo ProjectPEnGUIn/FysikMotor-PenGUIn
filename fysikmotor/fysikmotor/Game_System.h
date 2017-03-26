@@ -23,7 +23,7 @@ Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float c
 	e.setPosition(pos);
 	e.setMass(mass);
 	e.setRestitutionCoefficient(cor);
-	e.setFrictionCoefficient(0.5f);
+	e.setFrictionCoefficient(0.0f);
 	e.setDragCoefficient(0.15f);
 	e.setEnttityID(ID);
 	e.setVelocity(vel);
@@ -42,12 +42,11 @@ public:
 	Game_System(sf::RenderWindow& renderwindow, sf::Event& e, sf::Clock clock, sf::Time& elapsed)
 	{
 		PE physicsEngine;
-		physicsEngine.init(50, 50, 500, 500, 50, 50);
+	//	physicsEngine.init(20, 20, 500, 500, 50, 50);
 
-		//physicsEngine.loadSimulation("testsave");
-	//	physicsEngine.addEntity(getEntitySquare(Vec2D(25, 10), 20, 2, 500, 0.0f, 2, 0, Vec2D(0, 0), 10));
-		physicsEngine.addEntity(getEntitySquare(Vec2D(0, 25), 5, 5, 15, 1.0f, 0, 1, Vec2D(10, 0), 0));
-		physicsEngine.addEntity(getEntitySquare(Vec2D(50, 25), 1, 1, 5, 1.0f, 1, 1, Vec2D(-10, 0), 0));
+		//physicsEngine.addEntity(getEntitySquare(Vec2D(10, 2), 20, 0.5, 10, 1.0f, 0, 0, Vec2D(0, 0), 35));
+		//physicsEngine.addEntity(getEntitySquare(Vec2D(10, 20), 3, 1, 5, 1.0f, 1, 1, Vec2D(0, 0), 0));
+	//	physicsEngine.addEntity(getEntitySquare(Vec2D(16, 10), 2, 4, 7, 1.0f, 2, 1, Vec2D(0, 0), 35));
 
 		sf::Time logicTime = sf::seconds(1.0f / 60.f);
 		sf::Clock logicTimer;
@@ -61,10 +60,19 @@ public:
 				if (e.type == sf::Event::Closed)
 					renderwindow.close();
 			}
+	
 			if (logicTimer.getElapsedTime() >= logicTime)
 			{
-				//logic; TODO; split up timer in smaller segments if time gets too big
-				physicsEngine.update(logicTimer.restart().asSeconds() );
+				//if time elapsed since last tick gets too big it will split the time into smaller segments, the max dTime will be 2.5 * tickTime
+				float t = logicTimer.restart().asSeconds();
+				if(t > 2.5f * logicTime.asSeconds())
+					while (t > 2.5f * logicTime.asSeconds())
+					{
+						physicsEngine.update(logicTime.asSeconds());
+						t -= logicTime.asSeconds();
+					}
+
+				physicsEngine.update(t);
 			}
 
 			elapsed = clock.getElapsedTime();

@@ -253,7 +253,14 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		return true;
 	}
 	else
-		std::cout << "ERROR tried to do SAT check between two entiteis that arent convex\n";
+		std::cout << "ERROR tried to do SAT check between two entiteis that aren't convex\n";
+
+	//resets variables if no collision was found
+	edge1 = Vec2D();
+	edge2 = Vec2D();
+	penentrationVector = Vec2D();
+	overlap = FLT_MAX;
+	contactPoints = std::vector<Vec2D>{};
 
 	return false;
 }
