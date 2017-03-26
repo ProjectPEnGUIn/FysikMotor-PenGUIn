@@ -24,14 +24,17 @@ void PE::loadSimulation(const std::string& settingsFilename, const std::string& 
 	bool draw_forces = settings.getBool("###dh_settings_draw_forces:"),
 		draw_grid = settings.getBool("###dh_settings_draw_grid:"),
 		draw_filled_shape = settings.getBool("###dh_settings_draw_filled_shape:"),
-		draw_id = settings.getBool("###dh_settings_draw_ID:"),
+		draw_id = settings.getBool("###dh_settings_draw_id:"),
 		draw_mass = settings.getBool("###dh_settings_draw_mass_center:"),
 		draw_velocity = settings.getBool("###dh_settings_draw_velocity:"),
 		draw_aabb = settings.getBool("###dh_settings_draw_aabb_area:"),
 		draw_rotation = settings.getBool("###dh_settings_draw_rotation_angle"),
 		draw_trejectory = settings.getBool("###dh_settings_draw_entity_trejectory:"),
-		eh_use_airresistance = settings.getBool("###eh_settings_use_airresistance:");
+		eh_use_airresistance = settings.getBool("###eh_settings_use_airresistance:"),
+		eh_overwrite_data = settings.getBool("###eh_settings_overwrite_prev_data:");
 	
+	std::string eh_filename = settings.getString("###eh_settings_datalogger_filename:");
+
 	//checks all float values to make sure thye have been properly set before setting the values on each componment
 
 	if (simulation_width != FLT_MAX && simulation_height != FLT_MAX && screen_width != FLT_MAX && screen_height != FLT_MAX)
@@ -51,6 +54,12 @@ void PE::loadSimulation(const std::string& settingsFilename, const std::string& 
 
 	if (eh_datalogg_intervall != FLT_MAX)
 		entityHandler.setDataLoggerIntervall(eh_datalogg_intervall);
+
+	if (eh_filename != "")
+	{
+		entityHandler.initDataLogger(eh_filename, eh_overwrite_data);
+	}
+		
 
 	//bool values does not have to be checked, either they are true or not, if not loaded succesfully they are set to false
 
@@ -89,19 +98,19 @@ void PE::loadSimulation(const std::string& settingsFilename, const std::string& 
 
 		if (tempString.find("]") != std::string::npos && foundEntity == true)
 		{
-			std::cout << "testerino\n";
-
-			std::cout << "E:\n" << "pos: " << tEntity.getPosition().getX() << " " << tEntity.getPosition().getY() << std::endl;
-			std::cout << "vel: " << tEntity.getVelocity().getX() << " " << tEntity.getVelocity().getY() << std::endl;
-			std::cout << "fr: " << tEntity.getResultingForce().getX() << " " << tEntity.getResultingForce().getY() << std::endl;
-			std::cout << "mass: " << tEntity.getMass() << std::endl;
-			std::cout << "fric: " << tEntity.getFrictionCoefficient() << std::endl;
-			std::cout << "rest: " << tEntity.getRestitutionCoefficient() << std::endl;
-			std::cout << "drag: " << tEntity.getDragCoefficient() << std::endl;
-			std::cout << "s area: " << tEntity.getSillhueteArea() << std::endl;
-			std::cout << "track e: " << tEntity.getTrackEntityData() << std::endl;
-			std::cout << "rot: " << tEntity.getAngleRotationDEGREES() << std::endl;
-			std::cout << "amount of vertices: " << tShape.getAmountOfVertices() << std::endl;
+		//	std::cout << "testerino\n";
+		//
+		//	std::cout << "E:\n" << "pos: " << tEntity.getPosition().getX() << " " << tEntity.getPosition().getY() << std::endl;
+		//	std::cout << "vel: " << tEntity.getVelocity().getX() << " " << tEntity.getVelocity().getY() << std::endl;
+		//	std::cout << "fr: " << tEntity.getResultingForce().getX() << " " << tEntity.getResultingForce().getY() << std::endl;
+		//	std::cout << "mass: " << tEntity.getMass() << std::endl;
+		//	std::cout << "fric: " << tEntity.getFrictionCoefficient() << std::endl;
+		//	std::cout << "rest: " << tEntity.getRestitutionCoefficient() << std::endl;
+		//	std::cout << "drag: " << tEntity.getDragCoefficient() << std::endl;
+		//	std::cout << "s area: " << tEntity.getSillhueteArea() << std::endl;
+		//	std::cout << "track e: " << tEntity.getTrackEntityData() << std::endl;
+		//	std::cout << "rot: " << tEntity.getAngleRotationDEGREES() << std::endl;
+		//	std::cout << "amount of vertices: " << tShape.getAmountOfVertices() << std::endl;
 
 			foundEntity = false;
 			tEntity.setVertexShape(tShape);
@@ -201,8 +210,6 @@ void PE::loadSimulation(const std::string& settingsFilename, const std::string& 
 
 			if (s_pos_x != FLT_MAX && s_pos_y != FLT_MAX)
 			{
-				std::cout << "vertexpoint on shape: " << s_pos_x << " " << s_pos_y << std::endl;
-
 				tShape.addVertexPoint(Vec2D(s_pos_x, s_pos_y));
 				s_pos_x = FLT_MAX;
 				s_pos_y = FLT_MAX;
@@ -249,9 +256,9 @@ PE::PE()
 	entityHandler(),
 	drawHandler()
 {
-	loadSimulation("testSettings", "testentitylist");
+	loadSimulation("aaa_settings_template", "aaa_entitylist_template");
 
-	entityHandler.initDataLogger("errorcheck", true);
+	//entityHandler.initDataLogger("errorcheck", true);
 	//&entityHandler.setDataLoggerIntervall(0.01f);
 	//&entityHandler.setUseAirRessitance(false);
 	//&entityHandler.setGravitationalAcceleration(Vec2D(0, -9.82));

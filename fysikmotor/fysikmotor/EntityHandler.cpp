@@ -30,46 +30,49 @@ void EntityHandler::logEntityData(const Entity& e, const float currentDeltaTime,
 void EntityHandler::handleCollision(Entity& e1, Entity& e2) //resolves collision
 {
 	// https://en.wikipedia.org/wiki/Coefficient_of_restitution 26/2 2017
-
+	
 	//1: change linear velocities
 	Vec2D e1Vf, e2Vf; //final velocities
-
+	
 	//approximating CoR
 	float cor = (e1.getRestitutionCoefficient() + e2.getRestitutionCoefficient()) / 2.0f; //coeficcient of restitution
-
+	
 	e1Vf.setX((e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX() + e2.getMass() * cor * (e2.getVelocity().getX() - e1.getVelocity().getX())) / (e1.getMass() + e2.getMass()));
 	e1Vf.setY((e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY() + e2.getMass() * cor * (e2.getVelocity().getY() - e1.getVelocity().getY())) / (e1.getMass() + e2.getMass()));
-
+	
 	e2Vf.setX((e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX() + e1.getMass() * cor * (e1.getVelocity().getX() - e2.getVelocity().getX())) / (e1.getMass() + e2.getMass()));
 	e2Vf.setY((e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY() + e1.getMass() * cor * (e1.getVelocity().getY() - e2.getVelocity().getY())) / (e1.getMass() + e2.getMass()));
-
+	
 	//3: apply values to entiteis if they are NOT static
 	if (e1.getEntityState() != 0)
 	{
 		e1.setVelocity(e1Vf);
 	}
-
+	
 	if (e2.getEntityState() != 0)
 	{
 		e2.setVelocity(e2Vf);
 	}
 
+	std::cout << e1Vf.getX() << "  " << e1Vf.getY() << std::endl;
+	std::cout << e2Vf.getX() << " " << e2Vf.getY() << std::endl;
+	//std::cin.get();
 
-//	float tCor = (e1.getRestitutionCoefficient() + e2.getRestitutionCoefficient()) / 2, //rough estimade 
-//		fx = tCor * (e1.getVelocity().getX() - e2.getVelocity().getX()),
-//		fy = tCor * (e1.getVelocity().getY() - e2.getVelocity().getY()),
-//		gx = e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX(),
-//		gy = e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY(),
-//		vA2x = (gx - fx * e2.getMass()) / (e1.getMass() + e2.getMass()),
-//		vA2y = (gy - fy * e2.getMass()) / (e1.getMass() + e2.getMass()),
-//		vB2x = fx - vA2x,
-//		vB2y = fy - vA2y;
-//
-//	if (e1.getEntityState() != 0)
-//		e1.setVelocity(Vec2D(vA2x, vA2y));
-//	if (e2.getEntityState() != 0)
-//		e2.setVelocity(Vec2D(vB2x, vB2y));
-//
+	//float tCor = (e1.getRestitutionCoefficient() + e2.getRestitutionCoefficient()) / 2, //rough estimade 
+	//	fx = tCor * (e1.getVelocity().getX() - e2.getVelocity().getX()),
+	//	fy = tCor * (e1.getVelocity().getY() - e2.getVelocity().getY()),
+	//	gx = e1.getMass() * e1.getVelocity().getX() + e2.getMass() * e2.getVelocity().getX(),
+	//	gy = e1.getMass() * e1.getVelocity().getY() + e2.getMass() * e2.getVelocity().getY(),
+	//	vA2x = (gx - fx * e2.getMass()) / (e1.getMass() + e2.getMass()),
+	//	vA2y = (gy - fy * e2.getMass()) / (e1.getMass() + e2.getMass()),
+	//	vB2x = fx - vA2x,
+	//	vB2y = fy - vA2y;
+	//
+	//if (e1.getEntityState() != 0)
+	//	e1.setVelocity(Vec2D(vA2x, vA2y));
+	//if (e2.getEntityState() != 0)
+	//	e2.setVelocity(Vec2D(vB2x, vB2y));
+
 }
 
 void EntityHandler::updateResultingForce(Entity& e)
@@ -377,7 +380,7 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 			if (e.getEntityState() != -1 && e2.getEntityState() != -1 //both of the entity states are set
 				&& e.getEntityID() != -1 && e2.getEntityID() != -1 //both of the entities has been given an ID
 				&& e.getEntityID() != e2.getEntityID() //collision is not being checked between one entity and itself
-			/*	&& e.getIsColliding() == false */
+				&& e.getIsColliding() == false 
 				&& e.getEntityState() != 0
 				)
 			{
@@ -449,17 +452,36 @@ void EntityHandler::updateEntities(const float deltaTime) //updates all entities
 
 							//3: save the time that the entites lost while traveling inside eachother in this tick
 							if (leftoverTime < e.getLostTime() && e.getLostTime() != FLT_MAX && e.getEntityState() != 0)
+							{
+								e.setIsColliding(false);
 								e.setLostTime(leftoverTime);
+							}
 							else if (e.getLostTime() == FLT_MAX && e.getEntityState() != 0)
+							{
 								e.setLostTime(leftoverTime);
+							}
 
 							if (leftoverTime < e2.getLostTime() && e2.getLostTime() != FLT_MAX && e2.getEntityState() != 0)
+							{
+								e2.setIsColliding(false);
 								e2.setLostTime(leftoverTime);
+							}
 							else if (e2.getLostTime() == FLT_MAX && e2.getEntityState() != 0)
+							{
 								e2.setLostTime(leftoverTime);
+							}
+						
+
+							//skip collison logic if it is not the collison at the smallest time point
+							if (e.getIsColliding() == true)
+								continue; 
+
+							e.setIsColliding(true);
+							e2.setIsColliding(true);
 
 							//4: handle collision lgic
 							handleCollision(e, e2);
+							
 
 							//5: apply acting forces on e1
 							Vec2D force = e.getResultingForce(), //the force that e excerts on e2
