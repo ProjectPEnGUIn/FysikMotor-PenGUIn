@@ -30,7 +30,7 @@
 [
 ###id: 1
 ###state: 1
-###pos_x: 9 
+###pos_x: 19 
 ###pos_y: 5 
 ###vel_x: -10
 ###vel_y: 0 

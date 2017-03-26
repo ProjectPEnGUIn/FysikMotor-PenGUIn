@@ -3,8 +3,8 @@
 //bool usage; 1 = true, 0 = false
 //program will only read lines with ### which allows comments to be made
 
-###pe_settings_width_meters: 10
-###pe_settings_height_meters: 10
+###pe_settings_width_meters: 20
+###pe_settings_height_meters: 20
 ###pe_settings_pixel_width: 500
 ###pe_settings_pixel_height:500
 ###pe_settings_onscreen_pos_x: 10

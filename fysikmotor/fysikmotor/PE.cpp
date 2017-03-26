@@ -256,7 +256,7 @@ PE::PE()
 	entityHandler(),
 	drawHandler()
 {
-	loadSimulation("aaa_settings_template", "aaa_entitylist_template");
+	loadSimulation("elastisk stöt 4 INSTÄLLNINGAR", "elastisk stöt 4 ENTITETSLISTA");
 
 	//entityHandler.initDataLogger("errorcheck", true);
 	//&entityHandler.setDataLoggerIntervall(0.01f);

@@ -621,8 +621,11 @@ void EntityHandler::updateActingForces(Entity& inputEntity)
 		//add air resistance
 		if (airResistanceEnabled == true)
 		{
-			Vec2D airDrag = getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), inputEntity.getSillhueteArea(), inputEntity.getPosition().getY());
-			inputEntity.addForce(Force(airDrag, Vec2D(), "Air Drag", sf::Color::Cyan));
+			Vec2D airDrag = getAirDragForce(inputEntity.getVelocity(), inputEntity.getDragCoefficient(), inputEntity.getSillhueteArea(), inputEntity.getPosition().getY()),
+				direction = inputEntity.getVelocity().getNormalisation().getAntiClockWiseNormal().getAntiClockWiseNormal();
+			direction.setVectorMagnitude(airDrag.getMagnitude());
+			
+			inputEntity.addForce(Force(direction, Vec2D(), "Air Drag", sf::Color::Cyan));
 		}
 
 		for (const Force& f : inputEntity.getForces())
