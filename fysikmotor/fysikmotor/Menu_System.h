@@ -251,7 +251,6 @@ public:
 		sf::Clock arrow_Animation;
 		sf::Clock menuChange_Animation;
 		sf::Clock messagebox_Animation;
-
 		
 		////Main Menu buttons
 		Texture_System S_StartButton("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(870.f, 451.0f), sf::IntRect(10, 360, 395, 83), 1.f, 1.0f, true, false);
@@ -264,7 +263,6 @@ public:
 		Texture_System background( "Backgrounds/Main_Menu_Background.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 0.0f, 0.0f ), sf::IntRect( 0, 0, 1920 * 1000, 1080 ), 1.f, 1.f, true, true );
 
 		//Message Box
-
 		Texture_System Message_Box("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(225.f, 200.f), sf::IntRect(224, 497, 1051, 214), 1.1f, 1.1f, true, false);
 		Texture_System yesBox("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.f, 0.f), sf::Vector2f(350, 500), sf::IntRect(10, 360, 395, 83), 1.f, 1.f, true, false);
 		Texture_System noBox("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.f, 0.f), sf::Vector2f(850, 500), sf::IntRect(10, 360, 395, 83), 1.f, 1.f, true, false);
@@ -279,10 +277,7 @@ public:
 		
 		////Initiate the Sound
 		Sound_System menu_selectSfx("Music/main_MenuSFX.wav", 100, 1.f, false);
-		Sound_System main_Theme("Music/01-Main_Theme.ogg", 25, 0.95f, true);
 		Sound_System selectOptSFX("Music/Select sfx.ogg", 100, 1.f, false);
-		
-		main_Theme.playMusic();
 		
 		//Variables
 		int menu_Option = 3;

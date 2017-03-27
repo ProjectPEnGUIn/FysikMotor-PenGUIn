@@ -22,7 +22,7 @@ int main()
 	myicon.loadFromFile("Textures/Icon.png");
 	settings.antialiasingLevel = 8;
 	
-	sf::RenderWindow renderWindow(sf::VideoMode(1600, 900, 32), "Project PEnGUIn", sf::Style::Fullscreen, settings);
+	sf::RenderWindow renderWindow(sf::VideoMode(1600, 900, 32), "Project PEnGUIn", sf::Style::Default, settings);
 	renderWindow.setIcon(256, 256, myicon.getPixelsPtr());
 	
 	SplashScreen splashScreen(renderWindow, e, clock, elapsed);
