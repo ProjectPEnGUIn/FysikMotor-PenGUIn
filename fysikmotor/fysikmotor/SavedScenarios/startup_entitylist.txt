@@ -1,0 +1,140 @@
+
+//falling block
+###entity
+[
+###id: 0
+###state: 1
+###pos_x: 5 
+###pos_y: 10 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 7 
+###friction_coef: 0 
+###restitution_coef: 0.7
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 0 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 0 
+]
+
+//falling block
+###entity
+[
+###id: 0
+###state: 4
+###pos_x: 17 
+###pos_y: 20 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 7 
+###friction_coef: 0 
+###restitution_coef: 0.7
+###drag_coef: 0.5 
+###sillhuete_area: 1.562
+###track_entity: 1 
+###rot_degrees: 0 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1.25
+###shape_p_x: 1
+###shape_p_y: 1.25
+###shape_p_x: 1 
+###shape_p_y: 0 
+]
+
+//kaströrelse
+###entity
+[
+###id: 0
+###state: 1
+###pos_x: 17 
+###pos_y: 13.5
+###vel_x: -6 
+###vel_y: 8 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 5
+###friction_coef: 0 
+###restitution_coef: 0.7
+###drag_coef: 0.5 
+###sillhuete_area: 0.0625
+###track_entity: 1 
+###rot_degrees: 0 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 0.25
+###shape_p_x: 0.25 
+###shape_p_y: 0.25
+###shape_p_x: 0.25
+###shape_p_y: 0 
+]
+
+//low platform
+###entity
+[
+###id: 1
+###state: 0
+###pos_x: 5 
+###pos_y: 1 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 40
+###friction_coef: 0 
+###restitution_coef: 0.7
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 0 
+###rot_degrees: 0
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 8 
+###shape_p_y: 1
+###shape_p_x: 8 
+###shape_p_y: 0 
+]
+
+//high platform
+###entity
+[
+###id: 2
+###state: 0
+###pos_x: 18 
+###pos_y: 13 
+###vel_x: 0 
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 40
+###friction_coef: 0 
+###restitution_coef: 0.7
+###drag_coef: 0.5 
+###sillhuete_area: 1
+###track_entity: 0
+###rot_degrees: 0
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 0.25
+###shape_p_x: 5 
+###shape_p_y: 0.25
+###shape_p_x: 5
+###shape_p_y: 0 
+]

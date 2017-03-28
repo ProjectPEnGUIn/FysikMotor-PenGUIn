@@ -54,8 +54,8 @@ void EntityHandler::handleCollision(Entity& e1, Entity& e2) //resolves collision
 		e2.setVelocity(e2Vf);
 	}
 
-	std::cout << e1Vf.getX() << "  " << e1Vf.getY() << std::endl;
-	std::cout << e2Vf.getX() << " " << e2Vf.getY() << std::endl;
+	//std::cout << e1Vf.getX() << "  " << e1Vf.getY() << std::endl;
+	//std::cout << e2Vf.getX() << " " << e2Vf.getY() << std::endl;
 	//std::cin.get();
 
 	//float tCor = (e1.getRestitutionCoefficient() + e2.getRestitutionCoefficient()) / 2, //rough estimade 

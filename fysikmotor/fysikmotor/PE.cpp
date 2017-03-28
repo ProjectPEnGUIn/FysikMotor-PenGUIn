@@ -255,19 +255,6 @@ PE::PE()
 	:
 	entityHandler(),
 	drawHandler()
-{
-	loadSimulation("elastisk stöt 4 INSTÄLLNINGAR", "elastisk stöt 4 ENTITETSLISTA");
-
-	//entityHandler.initDataLogger("errorcheck", true);
-	//&entityHandler.setDataLoggerIntervall(0.01f);
-	//&entityHandler.setUseAirRessitance(false);
-	//&entityHandler.setGravitationalAcceleration(Vec2D(0, -9.82));
-	//&
-	//&drawHandler.setDrawID(true);
-	//&drawHandler.setDrawActingForces(true);
-	//&drawHandler.setDrawVelocityVector(false);
-	//&drawHandler.setDrawSquareGrid(true);
-	//&
-	//&drawHandler.setSquareGridSpacing(1.0f);
+{	
 }
 

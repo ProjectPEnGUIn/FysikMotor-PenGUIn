@@ -3,8 +3,6 @@
 #ifndef _MENUSYSTEM_
 #define _MENUSYSTEM_
 
-
-
 #include "Sound_system.h"
 #include "Texture_System.h"
 #include "Font_System.h"
@@ -247,14 +245,12 @@ private:
 class Main_Menu
 {
 public:
-	Main_Menu(sf::RenderWindow& renderwindow, sf::Event& e, sf::Clock clock, sf::Time& elapsed)
-
+	Main_Menu(sf::RenderWindow& renderwindow, sf::Event& e, sf::Clock clock, sf::Time& elapsed )
 	{
 		//Initiate a clock
 		sf::Clock arrow_Animation;
 		sf::Clock menuChange_Animation;
 		sf::Clock messagebox_Animation;
-
 		
 		////Main Menu buttons
 		Texture_System S_StartButton("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(870.f, 451.0f), sf::IntRect(10, 360, 395, 83), 1.f, 1.0f, true, false);
@@ -264,7 +260,8 @@ public:
 		Texture_System S_start_Text("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(980.f, 465.0f), sf::IntRect(27, 476, 161, 45), 1.f, 1.0f, true, false);
 		Texture_System S_credits_Text("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(965.f, 595.0f), sf::IntRect(27, 529, 199, 45), 1.f, 1.0f, true, false);
 		Texture_System S_quit_Text("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1000.f, 725.0f), sf::IntRect(26, 583, 113, 48), 1.f, 1.0f, true, false);
-		
+		Texture_System background( "Backgrounds/Main_Menu_Background.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 0.0f, 0.0f ), sf::IntRect( 0, 0, 1920 * 1000, 1080 ), 1.f, 1.f, true, true );
+
 		//Message Box
 		Texture_System Message_Box("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(225.f, 200.f), sf::IntRect(224, 497, 1051, 214), 1.1f, 1.1f, true, false);
 		Texture_System yesBox("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.f, 0.f), sf::Vector2f(350, 500), sf::IntRect(10, 360, 395, 83), 1.f, 1.f, true, false);
@@ -275,23 +272,17 @@ public:
 		Texture_System rightBlue_Arrow("Textures/Main_menu_sprite_Sheet.png", sf::Vector2f(0.f, 0.f), sf::Vector2f(0, 0), sf::IntRect(470, 355, 61, 95), 1.f, 1.f, true, false);
 		
 		//Images
-		Texture_System Main_menu_background("Backgrounds/Main_Menu_Background.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, 0.0f), sf::IntRect(0, 0, 1920 * 1000, 1080), 1.f, 1.f, true, true);
 		Texture_System Main_Menu_Title("Textures/Project_PEnGUIn_Sheet2.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(870.0f, 35.0f), sf::IntRect(85, 760, 265, 275), 1.45f, 1.45f, true, false);
 		Texture_System Main_Menu_Vertex("Textures/Vertex_Array_PEnGUIn.png", sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, 0.0f), sf::IntRect(0, 0, 1000, 900), 1.2f, 1.2f, true, false);
 		
 		////Initiate the Sound
 		Sound_System menu_selectSfx("Music/main_MenuSFX.wav", 100, 1.f, false);
-		Sound_System main_Theme("Music/01-Main_Theme.ogg", 25, 0.95f, true);
 		Sound_System selectOptSFX("Music/Select sfx.ogg", 100, 1.f, false);
-		
-		main_Theme.playMusic();
 		
 		//Variables
 		int menu_Option = 3;
 		bool mainMenu = true;
 
-		
-        
 		//While the Window is open "Do stuff"
 		while (mainMenu && renderwindow.isOpen())
 		{
@@ -300,11 +291,11 @@ public:
 			sf::Time elapsed_menuAnimation = menuChange_Animation.getElapsedTime();
 			sf::Time elapsed_messagebox = messagebox_Animation.getElapsedTime();
 		
-			Main_menu_background.setPosition(sf::Vector2f(-40 * elapsed.asSeconds(), 0));
+			background.setPosition(sf::Vector2f(-40 * elapsed.asSeconds(), 0));
 		
 			renderwindow.clear();
 		
-			Main_menu_background.draw(renderwindow);
+			background.draw(renderwindow);
 		
 			Main_Menu_Title.draw(renderwindow);
 			Main_Menu_Vertex.draw(renderwindow);
@@ -346,19 +337,19 @@ public:
 						case 3: //Play start animation (Make a function within texture class)
 						{
 							selectOptSFX.playMusic();
-							startChangeScene_Animation(S_StartButton, S_CreditsButton, S_QuitButton, S_start_Text, S_credits_Text, S_quit_Text, Main_Menu_Title, Main_Menu_Vertex, elapsed_menuAnimation, menuChange_Animation, renderwindow, e, Main_menu_background, elapsed, clock);
+							startChangeScene_Animation(S_StartButton, S_CreditsButton, S_QuitButton, S_start_Text, S_credits_Text, S_quit_Text, Main_Menu_Title, Main_Menu_Vertex, elapsed_menuAnimation, menuChange_Animation, renderwindow, e, background, elapsed, clock);
 							mainMenu = false;
 						}
 						break;
 						case 2: //Play credits animation (Make a function within texture class)
 						{
 							selectOptSFX.playMusic();
-							creditsChangeScene_Animation(S_StartButton, S_CreditsButton, S_QuitButton, S_start_Text, S_credits_Text, S_quit_Text, Main_Menu_Title, Main_Menu_Vertex, elapsed_menuAnimation, menuChange_Animation, renderwindow, e, Main_menu_background, elapsed, clock);
-							credits_Screen(renderwindow, e, clock, elapsed, Main_menu_background);
+							creditsChangeScene_Animation(S_StartButton, S_CreditsButton, S_QuitButton, S_start_Text, S_credits_Text, S_quit_Text, Main_Menu_Title, Main_Menu_Vertex, elapsed_menuAnimation, menuChange_Animation, renderwindow, e, background, elapsed, clock);
+							credits_Screen(renderwindow, e, clock, elapsed, background);
 		
 							selectOptSFX.playMusic();
 		
-							Main_menu_background.setColor(sf::Color(255, 255, 255, 255));
+							background.setColor(sf::Color(255, 255, 255, 255));
 		
 							Main_Menu_Title.setPosition(sf::Vector2f(870.0f, 35.0f));
 							Main_Menu_Vertex.setPosition(sf::Vector2f(0.f, 0.f));
@@ -375,12 +366,12 @@ public:
 						case 1: //Play quit animation (Make a function within texture class)
 						{
 							selectOptSFX.playMusic();
-							quitChangeScene_Animation(S_StartButton, S_CreditsButton, S_QuitButton, S_start_Text, S_credits_Text, S_quit_Text, Main_Menu_Title, Main_Menu_Vertex, elapsed_menuAnimation, menuChange_Animation, renderwindow, e, Main_menu_background, elapsed, clock);
-							quit_Prompt(renderwindow, e, clock, elapsed, Message_Box, messagebox_Animation, elapsed_messagebox, Main_menu_background, yesBox, noBox);
+							quitChangeScene_Animation(S_StartButton, S_CreditsButton, S_QuitButton, S_start_Text, S_credits_Text, S_quit_Text, Main_Menu_Title, Main_Menu_Vertex, elapsed_menuAnimation, menuChange_Animation, renderwindow, e, background, elapsed, clock);
+							quit_Prompt(renderwindow, e, clock, elapsed, Message_Box, messagebox_Animation, elapsed_messagebox, background, yesBox, noBox);
 		
 							selectOptSFX.playMusic();
 		
-							Main_menu_background.setColor(sf::Color(255, 255, 255, 255));
+							background.setColor(sf::Color(255, 255, 255, 255));
 		
 							Main_Menu_Title.setPosition(sf::Vector2f(870.0f, 35.0f));
 							Main_Menu_Vertex.setPosition(sf::Vector2f(0.f, 0.f));

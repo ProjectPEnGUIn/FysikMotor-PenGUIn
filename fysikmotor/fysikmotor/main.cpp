@@ -23,9 +23,12 @@ int main()
 	sf::RenderWindow renderWindow(sf::VideoMode(1600, 900, 32), "Project PEnGUIn", sf::Style::Default, settings);
 	renderWindow.setIcon(256, 256, myicon.getPixelsPtr());
 	
-//	SplashScreen splashScreen(renderWindow, e, clock, elapsed);
-	//Main_Menu mainmenu(renderWindow, e, clock, elapsed);
-	Game_System game(renderWindow, e, clock, elapsed);
+	SplashScreen splashScreen(renderWindow, e, clock, elapsed);
+        Main_Menu mainmenu(renderWindow, e, clock, elapsed);
+	Game_System game(renderWindow, e, clock, elapsed );
+
+	std::cout << "succesful\nPress enter\n";
+	std::cin.get();
 
 	return 0;
 }

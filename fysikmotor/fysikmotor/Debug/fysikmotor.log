@@ -1,7 +1,5 @@
-﻿  PE.cpp
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(135): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(199): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(204): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\pe.cpp(226): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+﻿  DrawHandler.cpp
+c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(367): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(369): warning C4390: ';': empty controlled statement found; is this the intent?
   fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
   fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
