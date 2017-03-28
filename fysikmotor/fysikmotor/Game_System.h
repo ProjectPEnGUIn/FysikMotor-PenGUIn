@@ -7,6 +7,33 @@
 #include "Texture_System.h"
 #include "Font_System.h"
 #include "PE.h" //physics engine module
+#include "DataLogger.h"
+
+Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float cor, int ID, int state, Vec2D vel, float rot)
+{
+	Entity e;
+	VertexShape s;
+	e.setEntityState(state);
+	s.addVertexPoint(Vec2D(0, 0));
+	s.addVertexPoint(Vec2D(0, height));
+	s.addVertexPoint(Vec2D(width, height));
+	s.addVertexPoint(Vec2D(width, 0));
+	e.setVertexShape(s);
+	e.setPosition(pos);
+	e.setMass(mass);
+	e.setRestitutionCoefficient(cor);
+	e.setFrictionCoefficient(0.0f);
+	e.setDragCoefficient(0.15f);
+	e.setEnttityID(ID);
+	e.setVelocity(vel);
+	e.setAngleRotationDEGREES(rot);
+	e.setSillhueteArea(1);
+
+	if (e.getEntityState() != 0) //only track movable objects
+		e.setTrackEntityData(true);
+
+	return e;
+}
 
 class Game_System
 {
@@ -20,7 +47,7 @@ public:
 		}
 
 		PE physicsEngine;
-		physicsEngine.init(30, 30, 1000, 899, 600, 0);
+		physicsEngine.loadSimulation("startup_settings", "startup_entitylist");
 
 		Texture_System background( "Backgrounds/Main_Menu_Background.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 0.0f, 0.0f ), sf::IntRect( 0, 0, 1920 * 1000, 1080 ), 1.f, 1.f, true, true );
 		Texture_System border( "Textures/Main screen.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 555.0f, 0.0f ), sf::IntRect( 0, 0, 1031, 756 ), 1.26f, 2.f, true, false );
@@ -116,8 +143,9 @@ public:
 		T_Friction.setPosition( 255, 770 );
 		T_TrackEntity.setPosition( 255, 845 );
 
-		sf::Time logicTime = sf::seconds(1 / 60);
+		sf::Time logicTime = sf::seconds(1.0f / 60.f);
 		sf::Clock logicTimer;
+		logicTimer.restart();
 
 		background.setColor( sf::Color( 255, 255, 255, 45 ) );
 
@@ -126,6 +154,7 @@ public:
 		
 		while (renderwindow.isOpen() && game)
 		{
+
 			renderwindow.clear();
 
 			T_ID.setString( ID );
@@ -145,6 +174,9 @@ public:
 			background.setPosition( sf::Vector2f( -20 * elapsed.asSeconds(), 0 ) );
 
 			while( renderwindow.pollEvent( e ) )
+
+			while (renderwindow.pollEvent(e))
+
 			{
 				if( e.type == sf::Event::TextEntered )
 				{
@@ -267,10 +299,19 @@ public:
 				}
 			}
 			
+
 			if (logicTimer.getElapsedTime() >= logicTime)
 			{
-				//logic; TODO; split up timer in smaller segments if it gets too big
-				physicsEngine.update(logicTimer.restart().asSeconds());
+				//if time elapsed since last tick gets too big it will split the time into smaller segments, the max dTime will be 2.5 * tickTime
+				float t = logicTimer.restart().asSeconds();
+				if(t > 2.5f * logicTime.asSeconds())
+					while (t > 2.5f * logicTime.asSeconds())
+					{
+						physicsEngine.update(logicTime.asSeconds());
+						t -= logicTime.asSeconds();
+					}
+
+				physicsEngine.update(t);
 			}
 
 			switch( option )
@@ -514,10 +555,16 @@ public:
 			renderwindow.draw( T_Friction );
 			renderwindow.draw( T_TrackEntity );
 
+
 			border.draw( renderwindow );
-		
+			physicsEngine.draw(renderwindow);
 			renderwindow.display();
 		}
+
 	}
+
+	private:
+		//misc functions
+
 };
 #endif // ! _GAMESYSTEM:

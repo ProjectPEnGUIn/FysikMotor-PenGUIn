@@ -5,18 +5,25 @@
 // set functions
 void Entity::setPosition(const Vec2D& inputPos) //Sets the pos using a PEVec2D object
 {
-	prevAABBBR = shape.getBottomRightAABBCorner();
-	prevAABBTL = shape.getTopLeftAABBCorner();
-	prevPos = shape.getCenterPos();
+	if (entityState == 0)
+	{
+
+		//prevAABBBR = shape.getBottomRightAABBCorner();
+		//prevAABBTL = shape.getTopLeftAABBCorner();
+		prevPos = inputPos;
+	}
+	else
+	{
+		//prevAABBBR = shape.getBottomRightAABBCorner();
+		//prevAABBTL = shape.getTopLeftAABBCorner();
+		prevPos = shape.getCenterPos();
+	}
+	
 	shape.setPosition(inputPos);
 }
 void Entity::setVelocity(const Vec2D& inputVel) //sets velocity using pevec2d object
 {
 	velocity = inputVel;
-}
-void Entity::setAcceleration(const Vec2D& inputAcc) //sets the velocity using pevec2d object
-{
-	acceleration = inputAcc;
 }
 void Entity::setForces(std::vector<Force>& inputForces) //sets all the acting forces on the current object using a vector of vec2d objects
 {
@@ -25,10 +32,6 @@ void Entity::setForces(std::vector<Force>& inputForces) //sets all the acting fo
 void Entity::setMass(float inputMass) //sets the mass in kg
 {
 	mass = inputMass;
-}
-void Entity::setCenterOfMass(const Vec2D& inputCenterOfMass) //sets the center of mass
-{
-	shape.setRotationCenterOffset(inputCenterOfMass);
 }
 void Entity::setAngleRotationDEGREES(float inputRotationDEGREES) //sets the entity rotation in degrees
 {
@@ -91,7 +94,22 @@ void Entity::setResultingForce(const Vec2D& inputResultingForce)
 {
 	resultingForce = inputResultingForce;
 }
-
+void Entity::setFrictionCoefficient(const float inputFrictionCoefficient)
+{
+	frictionCoefficient = inputFrictionCoefficient;
+}
+void Entity::setLostTime(const float inputTime)
+{
+	lostTime = inputTime;
+}
+void Entity::setTrackEntityData(const bool inputBool)
+{
+	trackEntityData = inputBool;
+}
+void Entity::setSillhueteArea(const float inputSillhueteArea)
+{
+	sillhuetteArea = inputSillhueteArea;
+}
 
 //get functions
 Vec2D Entity::getPosition() const //gets the pos
@@ -102,10 +120,6 @@ Vec2D Entity::getVelocity() const //gets the vel, in meters per second
 {
 	return velocity;
 }
-Vec2D Entity::getAcceleration() const //gets the acc, in meters per second squared
-{
-	return acceleration;
-}
 std::vector<Force> Entity::getForces() const //gets all the acting forces
 {
 	return forces;
@@ -113,10 +127,6 @@ std::vector<Force> Entity::getForces() const //gets all the acting forces
 float Entity::getMass() const//gets the mass in kg
 {
 	return mass;
-}
-Vec2D  Entity::getCenterOfmassOffset() const //returns the Center of mass
-{
-	return shape.getRotationCenterOffset();
 }
 float Entity::getAngleRotationDEGREES() const //gets the rotation of entity in degrees
 {
@@ -182,54 +192,43 @@ Vec2D Entity::getResultingForce() const
 {
 	return resultingForce;
 }
-
-//update functions
-void Entity::updateALL(sf::Time inputDeltaTime, const Vec2D& inputResultingForce) //updates all of the entity properties, speed, acc, forces
+float Entity::getFrictionCoefficient() const
 {
-
+	return frictionCoefficient;
 }
-void Entity::updateAcceleration(const Vec2D& inputResultingForce) //updates acceleration
+float Entity::getLostTime() const
 {
-	//using F = ma, a = F/m
+	return lostTime;
 }
-void Entity::updateVelocity() //updates speed
+bool Entity::getTrackEntityData() const
 {
-	velocity += acceleration;
+	return trackEntityData;
 }
-void Entity::updatePosition()
+float Entity::getSillhueteArea() const
 {
-	//adds velocity to position
-	//position += velocity;
+	return sillhuetteArea;
 }
-
 //Constructor
 Entity::Entity()
 	:
 	entityID(-1),
 	entityState(-1),
-
-	position(),
 	velocity(),
-	acceleration(),
 	forces(),
 	resultingForce(),
-
-	mass(1.0f),
-	centerOfMassOffset(),
-
+	mass(FLT_MAX),
 	shape(),
-
 	isColliding(false),
-
-	restitutionCoefficient(1.0f),
-	dragCoefficient(0.15f),
-	prevPos(),
-	prevVel(),
-	prevRot(),
-	prevAABBTL(),
-	prevAABBBR()
-	
+	frictionCoefficient(FLT_MAX),
+	restitutionCoefficient(FLT_MAX),
+	dragCoefficient(FLT_MAX),
+	sillhuetteArea(FLT_MAX),
+	prevPos(FLT_MAX, FLT_MAX),
+	prevVel(FLT_MAX, FLT_MAX),
+	prevRot(FLT_MAX),
+	prevAABBTL(FLT_MAX, FLT_MAX),
+	prevAABBBR(FLT_MAX, FLT_MAX),
+	lostTime(FLT_MAX),
+	trackEntityData(false)
 {
-
-
 }

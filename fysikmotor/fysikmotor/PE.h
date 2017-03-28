@@ -1,4 +1,5 @@
 /*
+Physics Engine
 object that has inherits all the objects
 object to interface wirh all the other objects
 
@@ -13,16 +14,20 @@ Erik Magnusson 15/1 2017
 #include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <algorithm> 
+
 #include "EntityHandler.h"
 #include "DrawHandler.h"
+#include "ReadFile.h"
 
 class PE
 {
 private:
 	//functions
-
-	void updateEntityHandlerLogic();
-	void updateDrawHandlerLogic();
 
 public:
 	//functions
@@ -33,6 +38,9 @@ public:
 	void draw(sf::RenderWindow& inputRenderwindow);
 	void update(const float& deltaTime);
 	void inputEvent(sf::Event& inputEvent);
+
+	void loadSimulation(const std::string& settingsFilename, const std::string& entitylistFilename); //loads simulation scenario
+	void saveSimulation(const std::string& filename, bool allowToOverwritePreviousData); //saves current
 
 	PE();
 
