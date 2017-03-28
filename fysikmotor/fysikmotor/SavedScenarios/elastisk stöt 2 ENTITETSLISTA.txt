@@ -1,0 +1,54 @@
+
+###entity
+[
+###id: 0
+###state: 1
+###pos_x: 1 
+###pos_y: 5 
+###vel_x: 10
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 10 
+###friction_coef: 0 
+###restitution_coef: 1 
+###drag_coef: 0 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 0 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 2
+###shape_p_x: 2
+###shape_p_y: 2
+###shape_p_x: 2 
+###shape_p_y: 0 
+]
+
+###entity
+[
+###id: 1
+###state: 1
+###pos_x: 19 
+###pos_y: 5 
+###vel_x: -10
+###vel_y: 0 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 5 
+###friction_coef: 0 
+###restitution_coef: 1 
+###drag_coef: 0 
+###sillhuete_area: 1
+###track_entity: 1 
+###rot_degrees: 0 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 1
+###shape_p_x: 1
+###shape_p_y: 1
+###shape_p_x: 1 
+###shape_p_y: 0 
+]

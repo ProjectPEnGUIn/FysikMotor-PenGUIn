@@ -132,11 +132,6 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			rShape.setOutlineThickness(1);
 			rTexture.draw(rShape); 
 		}
-		
-		if (drawFrictionSurface)
-		{
-			//ehhh todo
-		}
 		if (drawEntityTexture)
 		{
 			//get help from Dennis yo
@@ -198,7 +193,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			if (e.getVelocity().getX() != 0.0f)
 			{
 				rTexture.draw(makeArrowShape(e.getPosition().getX(), e.getPosition().getY(), Vec2D(e.getVelocity().getX(), 0), sf::Color(0, 0, 255), 0.5f));
-				text.setString(std::string("Velocity in X " + std::to_string(e.getVelocity().getX())));
+				text.setString(std::string("Velocity X " + std::to_string(e.getVelocity().getX())));
 				text.setFillColor(sf::Color(0, 0, 255) - sf::Color(0, 0, 0, 50));
 				text.setPosition(toPixelCoords(e.getPosition() + Vec2D(e.getVelocity().getX() * 0.5f, 0)));
 				rTexture.draw(text);
@@ -207,7 +202,7 @@ void DrawHandler::draw(sf::RenderWindow& inputRenderWindow, const std::vector<En
 			if (e.getVelocity().getY() != 0.0f)
 			{
 				rTexture.draw(makeArrowShape(e.getPosition().getX(), e.getPosition().getY(), Vec2D(0, e.getVelocity().getY()), sf::Color(0, 0, 255), 0.5f));
-				text.setString(std::string("Velocity in Y " + std::to_string(e.getVelocity().getX())));
+				text.setString(std::string("Velocity Y " + std::to_string(e.getVelocity().getY())));
 				text.setFillColor(sf::Color(0, 0, 255) - sf::Color(0, 0, 0, 50));
 				text.setPosition(toPixelCoords(e.getPosition() + Vec2D(0, e.getVelocity().getY() * 0.5f)));
 				rTexture.draw(text);
@@ -251,10 +246,7 @@ void DrawHandler::setDrawSquareGrid(const bool inputBool)
 {
 	drawSquareGrid = inputBool;
 }
-void DrawHandler::setDrawVertexPoints(const bool inputBool)
-{
-	drawVertexPoints = inputBool;
-}
+
 void DrawHandler::setDrawFilledVertexShape(const bool inputBool)
 {
 	drawfilledVertexShapes = inputBool;
@@ -270,10 +262,6 @@ void DrawHandler::setDrawCenterOfMass(const bool inputBool)
 void DrawHandler::setDrawVelocityVector(const bool inputBool)
 {
 	drawVelocityVector = inputBool;
-}
-void DrawHandler::setDrawFrictionSurface(const bool inputBool)
-{
-	drawFrictionSurface = inputBool;
 }
 void DrawHandler::setDrawAABBCollisionArea(const bool inputBool)
 {
@@ -323,10 +311,7 @@ bool DrawHandler::getDrawSquareGrid() const
 {
 	return drawSquareGrid;
 }
-bool DrawHandler::getDrawVertexPoints() const
-{
-	return drawVertexPoints;
-}
+
 bool DrawHandler::getDrawFilledVertexShape() const
 {
 	return drawfilledVertexShapes;
@@ -342,10 +327,6 @@ bool DrawHandler::getDrawCenterOfMass() const
 bool DrawHandler::getDrawVelocityVector() const
 {
 	return drawVelocityVector;
-}
-bool DrawHandler::getDrawFrictionSurface() const
-{
-	return drawFrictionSurface;
 }
 bool DrawHandler::getDrawAABBCollisionArea() const
 {
@@ -387,7 +368,7 @@ void DrawHandler::init(const float inputSimulationWidth, const float inputSimula
 
 	if(!font.loadFromFile("Fonts/arial.ttf"));
 	{
-		std::cout << "ERROR LOADING FONT IN ENTITYHANDLER INIT\n";
+		std::cout << "ERROR LOADING FONT IN DRAWHANDLER INIT\n";
 	}
 
 	text.setFont(font);
@@ -411,17 +392,15 @@ DrawHandler::DrawHandler()
 	sprite(),
 	font(),
 	text(),
-	squareGridSpacing(1.0f),
+	squareGridSpacing(FLT_MAX),
 
-	drawActingForces(true),
-	drawSquareGrid(true),
-	drawVertexPoints(false),
+	drawActingForces(false),
+	drawSquareGrid(false),
 	drawfilledVertexShapes(false),
-	drawID(true),
-	drawCenterOfMass(true),
-	drawVelocityVector(true),
-	drawFrictionSurface(false),
-	drawAABBCollisionArea(true),
+	drawID(false),
+	drawCenterOfMass(false),
+	drawVelocityVector(false),
+	drawAABBCollisionArea(false),
 	drawEntityTexture(false),
 	drawRotationAngleOfEntity(false),
 	drawTrejectory(false)

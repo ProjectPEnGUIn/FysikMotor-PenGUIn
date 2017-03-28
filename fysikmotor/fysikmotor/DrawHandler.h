@@ -68,12 +68,10 @@ public:
 	//set functions
 	void setDrawActingForces(const bool inputBool);
 	void setDrawSquareGrid(const bool inputBool);
-	void setDrawVertexPoints(const bool inputBool);
 	void setDrawFilledVertexShape(const bool inputBool);
 	void setDrawID(const bool inputBool);
 	void setDrawCenterOfMass(const bool inputBool);
 	void setDrawVelocityVector(const bool inputBool);
-	void setDrawFrictionSurface(const bool inputBool);
 	void setDrawAABBCollisionArea(const bool inputBool);
 	void setDrawEntityTexture(const bool inputBool);
 	void setDrawRotationAngle(const bool inputBool);
@@ -89,12 +87,10 @@ public:
 	//get functions
 	bool getDrawActingForces() const;
 	bool getDrawSquareGrid() const;
-	bool getDrawVertexPoints() const;
 	bool getDrawFilledVertexShape() const;
 	bool getDrawID() const;
 	bool getDrawCenterOfMass() const;
 	bool getDrawVelocityVector() const;
-	bool getDrawFrictionSurface() const;
 	bool getDrawAABBCollisionArea() const;
 	bool getDrawEntityTexture() const;
 	bool getDrawRotationAngle()const;
@@ -130,12 +126,10 @@ private:
 	//bools regarding the rendering
 	bool drawActingForces,
 		drawSquareGrid,
-		drawVertexPoints,
 		drawfilledVertexShapes,
 		drawID,
 		drawCenterOfMass,
 		drawVelocityVector,
-		drawFrictionSurface,
 		drawAABBCollisionArea,
 		drawEntityTexture,
 		drawRotationAngleOfEntity,
