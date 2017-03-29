@@ -54,288 +54,120 @@ inline bool SATCollisionCheck::isBetweenOrdered(const float val, const float low
 {
 	return lowerBound <= val && val <= upperBound;
 }
-//void SATCollisionCheck::calculateContactPoints(const VertexShape& inputShape1, const VertexShape& inputShape2) //sets the proper contactpoints
-//{
-//	//roughly based on http://www.dyn4j.org/2011/11/contact-points-using-clipping/  psudeocode9/2
-//
-//	std::vector<Vec2D> edge1 = { Vec2D(FLT_MAX, FLT_MAX), Vec2D(FLT_MAX, FLT_MAX), Vec2D(FLT_MAX, FLT_MAX) },
-//		edge2 = { Vec2D(FLT_MAX, FLT_MAX), Vec2D(FLT_MAX, FLT_MAX), Vec2D(FLT_MAX, FLT_MAX) };
-//
-//	Vec2D n = penentrationVector.getNormalisation().getAntiClockWiseNormal().getAntiClockWiseNormal();
-//
-//	edge1 = getNearestEdge(inputShape1.getVertices(), n );
-//	edge2 = getNearestEdge(inputShape2.getVertices(), n * -1.0f);
-//
-//	Vec2D edge1v = edge1[1] - edge1[2],
-//		edge2v = edge2[1] - edge2[2];
-//	
-//	std::cout << "n: " << n.getX() << " " << n.getY() << std::endl;
-//	std::cout << "e1 = (" << edge1[1].getX() << ", " << edge1[1].getY() << ") to (" << edge1[2].getX() << " ," << edge1[2].getY() << ") = (" << edge1v.getX() << ", " << edge1v.getY() << ")\n";
-//	std::cout << "e2 = (" << edge2[1].getX() << ", " << edge2[1].getY() << ") to (" << edge2[2].getX() << " ," << edge2[2].getY() << ") = (" << edge2v.getX() << ", " << edge2v.getY() << ")\n";
-//	std::cout << "e1max: " << edge1[0].getX() << " " << edge1[0].getY() << std::endl;
-//	std::cout << "e2max: " << edge2[0].getX() << " " << edge2[0].getY() << std::endl;
-//	std::cout << "e1 * n = " << edge1v * n << std::endl;
-//	std::cout << "e2 * n = " << edge2v * n << std::endl;
-//	std::cout << "press enter\n";
-//	std::cin.get();
-//
-//	std::vector<Vec2D> ref, inc;
-//	bool flipped = false;
-//
-//	if (fabs(edge1v * n) <= fabs(edge2v * n))
-//	{
-//		ref = edge1;
-//		inc = edge2;
-//	}
-//	else
-//	{
-//		ref = edge2;
-//		inc = edge1;
-//		flipped = true;
-//
-//		std::cout << "-DID THE FLIP-" << std::endl;
-//	}
-//
-//	Vec2D refv = ref[1] - ref[2];
-//	refv = refv.getNormalisation();
-//	float o1 = refv * ref[2];
-//
-//	std::cout << "flipped: " << flipped << std::endl;
-//	std::cout << "ref normalastion " << refv.getX() << " " << refv.getY() << std::endl;
-//	std::cout << "o1 " << o1 << std::endl;
-//
-//	std::vector<Vec2D> tempClippedPoints = getClippedPoints(inc[1], inc[2], refv, o1);
-//	if (tempClippedPoints.size() < 2)
-//	{
-//		//std::cout << "cancel point calc\n";
-//		return;
-//	}
-//
-//	std::cout << "points so far:\n";
-//	for (unsigned int i = 0; i < tempClippedPoints.size(); i++)
-//	{
-//		std::cout << "[" << i << "] " << tempClippedPoints[i].getX() << " " << tempClippedPoints[i].getY() << std::endl;
-//	}
-//
-//	/////////////////////////////////^works so far :S
-//
-//	float o2 = refv * ref[1];
-//	std::cout << "o2: " << o2 << std::endl;
-//	tempClippedPoints = getClippedPoints(tempClippedPoints[0], tempClippedPoints[1], refv * -1.0f, -o2);
-//	if (tempClippedPoints.size() < 2)
-//	{
-//		//std::cout << "cancel point calc2jgijfijgfij\n";
-//		return;
-//	}
-//	std::cout << "points so far:\n";
-//	for (unsigned int i = 0; i < tempClippedPoints.size(); i++)
-//	{
-//		std::cout << "[" << i << "] " << tempClippedPoints[i].getX() << " " << tempClippedPoints[i].getY() << std::endl;
-//	}
-//	////////////////////////////^works so far
-//
-//	//Vec2D refNorm = refv.getCrossProductWithScalar(-1.0f);
-//	Vec2D refNorm = refv.getCrossProductWithScalar(-1.0f);
-//
-//	std::cout << "refNorm: " << refNorm.getX() << " " << refNorm.getY() << std::endl;
-//	std::cout << "flipped status: " << flipped << std::endl;
-//
-//	//if (flipped)
-//	//	refNorm *= -1.0f;
-//	//std::cout << "refNorm (if flipped): " << refNorm.getX() << " " << refNorm.getY() << std::endl;
-//
-//	float max = refNorm * ref[0]; //////////////////////////////////error getting max value
-//
-//	std::cout << "ref[max]: " << ref[0].getX() << " " << ref[0].getY() << std::endl;
-//	std::cout << "ref: " << ref[0].getX() << " " << ref[0].getY() << std::endl;
-//	std::cout << "max: " << max << std::endl;
-//
-//	if (refNorm * tempClippedPoints[0] - max < 0.0f)
-//	{
-//		tempClippedPoints.erase(tempClippedPoints.begin() + 0);
-//			
-//		if (refNorm * tempClippedPoints[0] - max < 0.0f)
-//			tempClippedPoints.erase(tempClippedPoints.begin() + 0);
-//	}
-//	else if (refNorm * tempClippedPoints[1] - max < 0.0f)
-//		tempClippedPoints.erase(tempClippedPoints.begin() + 1);
-//
-//
-//	contactPoints = tempClippedPoints;
-//}
-//std::vector<Vec2D> SATCollisionCheck::getNearestEdge(const std::vector<Vec2D>& inputShapeVertices, const Vec2D& inputNormal)
-//{
-//	//roughly based on this psudeocode http://www.dyn4j.org/2011/11/contact-points-using-clipping/  9/2 2017
-//
-//	std::vector<Vec2D> edge;
-//
-//	int index = -1;
-//	float max = -FLT_MAX;
-//
-//	for (unsigned int i = 0; i < inputShapeVertices.size(); i++)
-//	{
-//		float projection = inputShapeVertices[i] * inputNormal;
-//		
-//		if (projection > max)
-//		{
-//			index = i;
-//			max = projection;
-//		}
-//	}
-//
-//	std::cout << "--getNearestEdge--\n"
-//		<< "index: " << index << std::endl
-//		<< "maxp: " << max << std::endl;
-//
-//	Vec2D v = inputShapeVertices[index],
-//		vNext = inputShapeVertices[(index + 1) % inputShapeVertices.size()],
-//		vPrevious = inputShapeVertices[(index - 1) % inputShapeVertices.size()],
-//		left = v - vPrevious, 
-//		right = v - vNext; 
-//
-//	left = left.getNormalisation();
-//	right = right.getNormalisation();
-//
-//	if (right * inputNormal <= left * inputNormal)
-//	{
-//	//right
-//
-//		std::cout << "-Right-\n";
-//
-//		edge.push_back(v);
-//		edge.push_back(v);
-//		edge.push_back(vNext);
-//	}
-//	else
-//	{
-//		std::cout << "-Left-\n";
-//
-//		//left
-//		edge.push_back(v);
-//		edge.push_back(vPrevious);
-//		edge.push_back(v);
-//	}
-//
-//	std::cout << "-----\n";
-//
-//	return edge;
-//}
-//std::vector<Vec2D> SATCollisionCheck::getClippedPoints(const Vec2D& v1, const Vec2D& v2, const Vec2D& n, const float o)
-//{
-////http://www.dyn4j.org/2011/11/contact-points-using-clipping/ 9/2 2017
-//	
-//	std::vector<Vec2D> tempClippedPoints;
-//
-//	float d1 = n * v1 - o,
-//		d2 = n * v2 - o;
-//
-//	if (d1 >= 0.0f)
-//		tempClippedPoints.push_back(v1);
-//
-//	if (d2 >= 0.0f)
-//		tempClippedPoints.push_back(v2);
-//
-//	std::cout << "-------------------------" << std::endl;
-//	std::cout << "v1: " << v1.getX() << " " << v1.getY() << std::endl;
-//	std::cout << "v2: " << v2.getX() << " " << v2.getY() << std::endl;
-//
-//	std::cout << "d1 " << d1 << "\nd2 " << d2 << std::endl;
-//
-//	if (d1 * d2 < 0.0f)
-//	{
-//		Vec2D e = v2 - v1;
-//
-//		std::cout << "e: " << e.getX() << " " << e.getY() << std::endl;
-//
-//		float u = d1 / (d1 - d2);
-//
-//		e *= u;
-//
-//		std::cout << "u: " << u << std::endl;
-//		std::cout << "e * u: " << e.getX() << " " << e.getY() << std::endl;
-//
-//		e += v1;
-//
-//		std::cout << "e + v1: " << e.getX() << " " << e.getY() << std::endl;
-//
-//		tempClippedPoints.push_back(e);
-//
-//	}
-//
-//	std::cout << "-------------------------" << std::endl;
-//
-//	return tempClippedPoints;
-//}
-void SATCollisionCheck::calculateContactPoints(const std::vector<Vec2D>& shape1Vertices, const std::vector<Vec2D>& shape2Vertices)
+void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Vertices, const std::vector<Vec2D>& shape2Vertices, const Vec2D& normal)
 {
-	//1 find the edge from each shape
+	//use what ive learnt from trying to impleemente sat before in this
+	//tried to follow a guide a some time ago but did not get anywhere using it, trying again from memory. http://www.dyn4j.org/2011/11/contact-points-using-clipping/ gets credit 2/3 2017
 
-	Vec2D normal = penentrationVector.getNormalisation(); //points to shape1
-	std::vector<Vec2D> edge1 = getEdge(shape1Vertices, normal * -1.0f),
-		edge2 = getEdge(shape2Vertices, normal);
-}
-std::vector<Vec2D> SATCollisionCheck::getEdge(const std::vector<Vec2D>& shapeVertices, const Vec2D& collisionNormal) const //returns two points forming an edge
-{
-	//roughly based on http://www.dyn4j.org/2011/11/contact-points-using-clipping/ 19/2
 
-	//int indexMax = -1, indexNextUpMax = -1;
-	//float max = -FLT_MAX, nextUpMax = -FLT_MAX;
-	//
-	//for (unsigned int i = 0; i < shapeVertices.size(); i++)
-	//{
-	//	float projection = collisionNormal * shapeVertices[i];
-	//
-	//	if (projection > max)
-	//	{
-	//		indexNextUpMax = indexMax;
-	//		nextUpMax = max;
-	//
-	//		max = projection;
-	//		indexMax = i;
-	//	}
-	//	else if (projection > nextUpMax)
-	//	{
-	//		nextUpMax = projection;
-	//		indexNextUpMax = i;
-	//	}
-	//}
-	//
-	//
-	//Vec2D maxV = shapeVertices[indexMax],
-	//	almostMaxV = shapeVertices[indexNextUpMax];
+	//normal points from shape 1 to shape 2
+	//NOTE: normal has to be size 1
 
-	//std::cout << "maxv: " << maxV.getX() << " " << maxV.getY() << std::endl;
-	//std::cout << "almost maxv " << almostMaxV.getX() << " " << almostMaxV.getY() << std::endl;
-	//std::cin.get();
+	//find vertice furthest along the oposite? <- not sure / direction the normal is pointing
 
-	int indexMin = -1, indexNextUpMin = -1;
-	float min = FLT_MAX, nextUpMin = FLT_MAX;
-	for (unsigned int i = 0; i < shapeVertices.size(); i++)
+	//shape1, fidn the vertice closest to shape2
+
+	
+	Vec2D nNormal1 = (normal.getDirectionDEGREES() >= 180.0f) ? normal : normal.getClockWiseNormal().getClockWiseNormal();
+	
+	int index1 = 0; 
+	float maxp1 = nNormal1 * shape1Vertices[0];
+	for (unsigned int i = 0; i < shape1Vertices.size(); i++)
 	{
-		float projection = collisionNormal * shapeVertices[i];
-
-		if (projection < min)
+		float newp = nNormal1 * shape1Vertices[i];
+		
+		if (newp > maxp1)
 		{
-			indexNextUpMin = indexMin;
-			nextUpMin = min;
-
-			indexMin = i;
-			min = projection;
-		}
-		else if (projection < nextUpMin)
-		{
-			indexNextUpMin = i;
-			min = projection;
+			maxp1 = newp;
+			index1 = i;
 		}
 	}
 
-	Vec2D vertex1 = shapeVertices[indexMin],
-		vertex2 = shapeVertices[indexNextUpMin];
+	//shape 2: find the vertice closests to shape1, invert normal
+	
+	
+	Vec2D nNormal2 = (normal.getDirectionDEGREES() >= 180.0f) ? normal.getClockWiseNormal().getClockWiseNormal() : normal;
+	
+	int index2 = 0;
+	float maxp2 = nNormal2 * shape2Vertices[0];
+	for (unsigned int i = 0; i < shape2Vertices.size(); i++)
+	{
+		float newp = nNormal2 * shape2Vertices[i];
 
-	std::cout << "V1: " << vertex1.getX() << " " << vertex2.getY() <<
-		"\nV2: " << vertex2.getX() << " " << vertex2.getY() << std::endl;
+		if (newp > maxp2)
+		{
+			maxp2 = newp;
+			index2 = i;
+		}
+	}
 
-	return std::vector<Vec2D>{};
+	//closest points
+	Vec2D s1cP1 = shape1Vertices[index1],
+		s1cP2,
+		s2cP1 = shape2Vertices[index2],
+		s2cP2;
+
+
+	//^WORKS SO FAR.
+
+
+	//find the points next the found points, check with the two verticies connecting to closest vertex to see which one is closest, same logic as when calculating the frist point
+
+	Vec2D p1Next = shape1Vertices[(index1 + 1) % shape1Vertices.size()],	//use mod operator to avoid out of range errors with the vectors
+		p1Previous = shape1Vertices[(index1 - 1) % shape1Vertices.size()],
+		p2Next = shape2Vertices[(index2 + 1) % shape2Vertices.size()],
+		p2Previous = shape2Vertices[(index2 - 1) % shape2Vertices.size()],
+	
+		//used the psudeo code from tutoro
+		s1L = (p1Previous - s1cP1).getNormalisation(),
+		s1R = (p1Next - s1cP1).getNormalisation(),
+		s2L = (p2Previous - s2cP1).getNormalisation(),
+		s2R = (p2Next - s2cP1).getNormalisation();
+
+	//error vertices building edges must be in right order
+
+	if (s1R * nNormal1 <= s1L * nNormal1)
+	{
+		s1cP2 = p1Previous;
+
+		edge1 = s1cP1 - s1cP2;
+	}
+	else
+	{
+		s1cP2 = p1Next;
+
+		edge1 = s1cP2 - s1cP1;
+	}
+
+	if (s2R * nNormal2 <= s2L * nNormal2)
+	{
+		s2cP2 = p2Previous;
+
+		edge2 = s2cP1 - s2cP2;
+	}
+	else
+	{
+		s2cP2 = p2Next;
+
+		edge2 = s2cP2 - s2cP1;
+	}
+
+	//edges are in anticlockwise direction, but it works so im leaving it here, if it needs adjusting i'll do it later
+
+	
+
+	//std::cout << "edge 1: " << edge1.getX() << " " << edge1.getY() << " angle: " << edge1.getDirectionDEGREES() << std::endl;
+	//std::cout << "edge 2: " << edge2.getX() << " " << edge2.getY() << " angle: " << edge2.getDirectionDEGREES() << std::endl;
+	////std::cin.get();
+	//std::cout << "points on shape1: p1: " << s1cP1.getX() << " " << s1cP1.getY() << " p2: " << s1cP2.getX() << " " << s1cP2.getY()
+	//	<< "\nPoints on shape2: p1: " << s2cP1.getX() << " " << s2cP1.getY() << " p2: " << s2cP2.getX() << " " << s2cP2.getY() << std::endl;
+	//
+	//std::cout << "Normal dir: " << normal.getDirectionDEGREES() << std::endl << " n1N: " << nNormal1.getDirectionDEGREES() << " n2N: " << nNormal2.getDirectionDEGREES() << std::endl;
+	//
+	//std::cout << "Paused: Press Enter\n";
+	//std::cin.get();
+	
+
 }
 bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2)
 {
@@ -345,11 +177,8 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 
 	Vec2D overlapAxis;
 
-
 	if (isConvex(inputVertexShape1) && isConvex(inputVertexShape2))
 	{
-	
-
 		//test normals on shape 1 for overlapping on shape 2 axis
 		for (const Vec2D& n : getEdges(inputVertexShape1.getVertices()))
 		{
@@ -406,39 +235,36 @@ bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const Ver
 		overlapAxis.setVectorMagnitude(overlap);
 		penentrationVector = overlapAxis;
 
-	//	if (penentrationVector.getX() < 0.0f && penentrationVector.getX() > -0.0000001)
-	//		penentrationVector.setX(0.0f);
-	//	if (penentrationVector.getY() < 0.0f && penentrationVector.getY() > -0.0000001)
-	//		penentrationVector.setY(0.0f);
+		//makes it so the vector points from e1 to e2
+		Vec2D d = inputVertexShape2.getCenterPos() - inputVertexShape1.getCenterPos();
+		if (d * penentrationVector.getNormalisation() > 0.0f)
+			penentrationVector = penentrationVector * -1.0f;
 
 		//minimizing rounding errors
 		if (penentrationVector.getX() < 0.0f && penentrationVector.getX() > -0.0000001)
 			penentrationVector.setX(roundf(penentrationVector.getX() * 100.0f / 100.0f));
 		if (penentrationVector.getY() < 0.0f && penentrationVector.getY() > -0.0000001)
 			penentrationVector.setY(roundf(penentrationVector.getY() * 100.0f / 100.0f));
-	
-		//if (penentrationVector.getX() == -0)
-		//	penentrationVector.setX(0.0f);
-		//if (penentrationVector.getY() == -0)
-		//	penentrationVector.setY(0.0f);
 
 		//calc contactpoints
-	//	calculateContactPoints(inputVertexShape1.getVertices(), inputVertexShape2.getVertices());
+		//1: find closest edges
+		findEdgesInCollision(inputVertexShape1.getVertices(), inputVertexShape2.getVertices(), penentrationVector.getNormalisation());
 
 		return true;
 	}
 	else
-		std::cout << "ERROR tried to do SAT check between two entiteis that arent convex\n";
+		std::cout << "ERROR tried to do SAT check between two entiteis that aren't convex\n";
 
+	//resets variables if no collision was found
+	edge1 = Vec2D();
+	edge2 = Vec2D();
+	penentrationVector = Vec2D();
+	overlap = FLT_MAX;
+	contactPoints = std::vector<Vec2D>{};
 
 	return false;
 }
-bool SATCollisionCheck::binarySATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2, const float& deltaTime, const Vec2D& v1, const Vec2D& v2)
-{
-	//do binary search for collision i ntime between currentpos and pos at next tick
 
-	return false;
-}
 void SATCollisionCheck::clearVariables() //resets all variables so it can take in new entities and compare
 {
 
@@ -459,10 +285,22 @@ std::vector<Vec2D> SATCollisionCheck::getContactPoints() const //coords of conta
 {
 	return contactPoints;
 }
+
+Vec2D SATCollisionCheck::getEdge1() const //the edge on the first shape that is involved in the collision
+{
+	return edge1;
+}
+Vec2D SATCollisionCheck::getEdge2() const //the edge on the second shape that is involved in the collision
+{
+	return edge2;
+}
 SATCollisionCheck::SATCollisionCheck()
 	:
+	edge1(FLT_MAX, FLT_MAX),
+	edge2(FLT_MAX, FLT_MAX),
 	overlap(FLT_MAX),
 	contactPoints(),
 	penentrationVector()
+	
 {
 }

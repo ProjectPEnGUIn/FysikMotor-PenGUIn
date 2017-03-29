@@ -1,0 +1,56 @@
+//PEnGUIn scenario template
+//list of entites and their attributes
+//simple interface to correctly load entities from startup
+//bool usage; 1 = true, 0 = false
+
+###entity
+[
+//(int)
+###id: 0
+//(int)
+###state: 1
+//(float)
+###pos_x: 10 
+//(float)
+###pos_y: 15 
+//(float)
+###vel_x: 0 '
+//(float)
+###vel_y: 0 
+//(float)
+###r_force_x: 0 
+//(float)
+###r_force_y: 0
+//(float)
+###mass: 10 
+//(float)
+###friction_coef: 0.5 
+//(float)
+###restitution_coef: 0.5 
+//(float)
+###drag_coef: 0.5 
+//(float)
+###sillhuete_area: 1
+//(bool)
+###track_entity: 1 
+//(float)
+###rot_degrees: 45 
+//(float)
+###shape_p_x: 0 
+//(float)
+###shape_p_y: 0 
+//(float)
+###shape_p_x: 0 
+//(float)
+###shape_p_y: 1
+//(float)
+###shape_p_x: 1 
+//(float)
+###shape_p_y: 1
+//(float)
+###shape_p_x: 1 
+//(float)
+###shape_p_y: 0 
+]
+
+//#...#Entity .... //next entity
