@@ -1,5 +1,24 @@
-﻿  DrawHandler.cpp
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(367): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
-c:\users\erik\documents\github\fysikmotor-penguin\fysikmotor\fysikmotor\drawhandler.cpp(369): warning C4390: ';': empty controlled statement found; is this the intent?
-  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
-  fysikmotor.vcxproj -> C:\Users\Erik\Documents\GitHub\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb (Partial PDB)
+﻿Build started 2017-03-28 22:50:26.
+     1>Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe" /INCREMENTAL /NOLOGO "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-audio.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-audio-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-graphics.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-graphics-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-window.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-window-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\vorbisfile.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\vorbisenc.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\vorbis.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\openal32.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\ogg.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\jpeg.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\freetype.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\flac.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-system-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\sfml-main-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.lib" /MACHINE:X86 Debug\AABBCheck.obj
+         Debug\DrawHandler.obj
+         Debug\Entity.obj
+         Debug\EntityHandler.obj
+         Debug\Force.obj
+         Debug\GJK.obj
+         Debug\InputHandler.obj
+         Debug\main.obj
+         Debug\PE.obj
+         Debug\PEVec2D.obj
+         Debug\QuadTree.obj
+         Debug\SATCollisionCheck.obj
+         Debug\Sound_system.obj
+         Debug\Texture_System.obj
+         Debug\VertexShape.obj
+     1>LINK : fatal error LNK1168: cannot open C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe for writing
+     1>Done Building Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.49
