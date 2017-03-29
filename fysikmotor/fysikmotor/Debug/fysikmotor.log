@@ -1,37 +1,6 @@
-﻿Build started 2017-03-26 22:27:42.
+﻿Build started 2017-03-28 22:50:26.
      1>Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-audio.2.4.0.0\build\native\../..//build/native/include/" /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-graphics.2.4.0.0\build\native\../..//build/native/include/" /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-window.2.4.0.0\build\native\../..//build/native/include/" /I"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/include/" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D HAS_SFML /D HAS_SFML /D HAS_SFML /D HAS_SFML /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(26): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\font_system.h(48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(134): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(135): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(147): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(148): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(234): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(235): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(418): warning C4305: 'argument': truncation from 'int' to 'sf::Uint8'
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(418): warning C4309: 'argument': truncation of constant value
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(451): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(452): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(464): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(465): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(477): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(478): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(491): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(492): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(504): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(505): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(555): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(556): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(643): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(644): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(730): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\menu_system.h(731): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(32): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-     1>c:\skola\gymnasieprojekt\fysikmotor-penguin\fysikmotor\fysikmotor\splashscreen.h(33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe" /INCREMENTAL /NOLOGO "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-audio.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-audio-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-graphics.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-graphics-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-window.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-window-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\vorbisfile.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\vorbisenc.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\vorbis.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\openal32.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\ogg.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\jpeg.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\freetype.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\flac.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\dynamic\sfml-system-d.lib" "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\packages\sfml-system.2.4.0.0\build\native\../..//build/native/lib/Win32\v140\Debug\sfml-main-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.lib" /MACHINE:X86 Debug\AABBCheck.obj
          Debug\DrawHandler.obj
          Debug\Entity.obj
@@ -47,11 +16,9 @@
          Debug\Sound_system.obj
          Debug\Texture_System.obj
          Debug\VertexShape.obj
-         fysikmotor.vcxproj -> C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe
-       BscMake:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\bscmake.exe /nologo /o"C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.bsc" /n Debug\AABBCheck.sbr Debug\DrawHandler.sbr Debug\Entity.sbr Debug\EntityHandler.sbr Debug\Force.sbr Debug\GJK.sbr Debug\InputHandler.sbr Debug\main.sbr Debug\PE.sbr Debug\PEVec2D.sbr Debug\QuadTree.sbr Debug\SATCollisionCheck.sbr Debug\Sound_system.sbr Debug\Texture_System.sbr Debug\VertexShape.sbr
-     1>Done Building Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" (Build target(s)).
+     1>LINK : fatal error LNK1168: cannot open C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\Debug\fysikmotor.exe for writing
+     1>Done Building Project "C:\Skola\Gymnasieprojekt\FysikMotor-PenGUIn\fysikmotor\fysikmotor\fysikmotor.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:05.76
+Time Elapsed 00:00:00.49

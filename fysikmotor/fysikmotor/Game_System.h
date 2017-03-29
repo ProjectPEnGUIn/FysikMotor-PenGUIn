@@ -8,6 +8,22 @@
 #include "Font_System.h"
 #include "PE.h" //physics engine module
 
+std::string ID;
+std::string Drag;
+std::string Mass;
+std::string PositionX;
+std::string PositionY;
+std::string Restitution;
+std::string Rotation;
+std::string ShapeHeight;
+std::string ShapeWidth;
+std::string STATE;
+std::string Friction;
+std::string TrackEntity;
+std::string VelocityX;
+std::string VelocityY;
+std::string SurfaceArea;
+
 class Game_System
 {
 public:
@@ -25,44 +41,39 @@ public:
 		Texture_System background( "Backgrounds/Main_Menu_Background.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 0.0f, 0.0f ), sf::IntRect( 0, 0, 1920 * 1000, 1080 ), 1.f, 1.f, true, true );
 		Texture_System border( "Textures/Main screen.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 555.0f, 0.0f ), sf::IntRect( 0, 0, 1031, 756 ), 1.26f, 2.f, true, false );
 
-		Texture_System Box_test( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 10.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test2( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 85.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test3( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 160.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test4( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 235.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test5( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 310.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test6( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 385.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test7( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 460.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test8( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 535.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test9( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 610.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test10( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 685.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test11( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 760.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
-		Texture_System Box_test12( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 835.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.3f, 0.3f, true, false );
+		Texture_System Box_test( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 10.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test2( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 65.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test3( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 120.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test4( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 175.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test5( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 230.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test6( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 285.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test7( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 340.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test8( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 395.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test9( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 450.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test10( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 505.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test11( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 560.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test12( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 615.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		
+		Texture_System Box_test13( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 10.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test14( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 85.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
+		Texture_System Box_test15( "Textures/Main_menu_sprite_Sheet.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 225.0f, 160.0f ), sf::IntRect( 224, 496, 1041, 215 ), 0.22f, 0.22f, true, false );
 
-		Texture_System TEXT1( "Textures/Drag.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 95.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT2( "Textures/ID.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 20.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT3( "Textures/MASS.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 170.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT4( "Textures/Position X.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 245.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT5( "Textures/Position Y.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 320.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT6( "Textures/Restitution.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 395.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT7( "Textures/Rotation.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 470.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT8( "Textures/Shape Height.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 545.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT9( "Textures/Shape Width.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 620.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT10( "Textures/STATE.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 695.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT11( "Textures/FRICTION.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 770.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
-		Texture_System TEXT12( "Textures/Track Entity.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 845.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.32f, 0.4f, true, false );
-
-		std::string ID;
-		std::string Drag;
-		std::string Mass;
-		std::string PositionX;
-		std::string PositionY;
-		std::string Restitution;
-		std::string Rotation;
-		std::string ShapeHeight;
-		std::string ShapeWidth;
-		std::string STATE;
-		std::string Friction;
-		std::string TrackEntity;
+		Texture_System drag( "Textures/Drag.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 95.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System id( "Textures/ID.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 20.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System mass( "Textures/MASS.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 170.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System posx( "Textures/Position X.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 245.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System posy( "Textures/Position Y.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 320.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System restit( "Textures/Restitution.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 395.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System rotat( "Textures/Rotation.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 470.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System shapeh( "Textures/Shape Height.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 545.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System shapew( "Textures/Shape Width.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 620.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System state( "Textures/STATE.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 695.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System friction( "Textures/FRICTION.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 770.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.4f, 0.4f, true, false );
+		Texture_System tracke( "Textures/Track Entity.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 845.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.32f, 0.4f, true, false );
+		
+		Texture_System velocx( "Textures/Velocity X.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 20.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.32f, 0.4f, true, false );
+		Texture_System velocy( "Textures/Velocity Y.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 95.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.32f, 0.4f, true, false );
+		Texture_System surfaAr( "Textures/Surface Area.png", sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 25.0f, 170.0f ), sf::IntRect( 0, 0, 1000, 300 ), 0.32f, 0.4f, true, false );
 
 		sf::Text T_ID;
 		sf::Text T_Drag;
@@ -77,6 +88,10 @@ public:
 		sf::Text T_Friction;
 		sf::Text T_TrackEntity;
 
+		sf::Text T_VelocityX;
+		sf::Text T_VelocityY;
+		sf::Text T_SurfaceArea;
+
 		T_ID.setFont( font );
 		T_Drag.setFont( font );
 		T_Mass.setFont( font );
@@ -89,6 +104,10 @@ public:
 		T_STATE.setFont( font );
 		T_Friction.setFont( font );
 		T_TrackEntity.setFont( font );
+
+		T_SurfaceArea.setFont( font );
+		T_VelocityX.setFont( font );
+		T_VelocityY.setFont( font );
 
 		T_ID.setFillColor( sf::Color::Red );
 		T_Drag.setFillColor( sf::Color::Red );
@@ -103,6 +122,10 @@ public:
 		T_Friction.setFillColor( sf::Color::Red );
 		T_TrackEntity.setFillColor( sf::Color::Red );
 
+		T_SurfaceArea.setFillColor( sf::Color::Red );
+		T_VelocityX.setFillColor( sf::Color::Red );
+		T_VelocityY.setFillColor( sf::Color::Red );
+
 		T_ID.setPosition( 255, 20 );
 		T_Drag.setPosition( 255, 95 );
 		T_Mass.setPosition( 255, 170 );
@@ -115,6 +138,10 @@ public:
 		T_STATE.setPosition( 255, 695 );
 		T_Friction.setPosition( 255, 770 );
 		T_TrackEntity.setPosition( 255, 845 );
+
+		T_SurfaceArea.setPosition( 255, 20 );
+		T_VelocityX.setPosition( 255, 95 );
+		T_VelocityY.setPosition( 255, 170 );
 
 		sf::Time logicTime = sf::seconds(1 / 60);
 		sf::Clock logicTimer;
@@ -488,18 +515,18 @@ public:
 			Box_test11.draw( renderwindow );
 			Box_test12.draw( renderwindow );
 
-			TEXT1.draw( renderwindow );
-			TEXT2.draw( renderwindow );
-			TEXT3.draw( renderwindow );
-			TEXT4.draw( renderwindow );
-			TEXT5.draw( renderwindow );
-			TEXT6.draw( renderwindow );
-			TEXT7.draw( renderwindow );
-			TEXT8.draw( renderwindow );
-			TEXT9.draw( renderwindow );
-			TEXT10.draw( renderwindow );
-			TEXT11.draw( renderwindow );
-			TEXT12.draw( renderwindow );
+			id.draw( renderwindow );
+			drag.draw( renderwindow );
+			mass.draw( renderwindow );
+			posx.draw( renderwindow );
+			posy.draw( renderwindow );
+			restit.draw( renderwindow );
+			rotat.draw( renderwindow );
+			shapeh.draw( renderwindow );
+			shapew.draw( renderwindow );
+			state.draw( renderwindow );
+			friction.draw( renderwindow );
+			tracke.draw( renderwindow );
 
 			renderwindow.draw( T_ID );
 			renderwindow.draw( T_Drag );
