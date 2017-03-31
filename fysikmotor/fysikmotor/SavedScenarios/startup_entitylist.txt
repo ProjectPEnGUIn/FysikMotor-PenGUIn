@@ -54,7 +54,33 @@
 ###shape_p_x: 1 
 ###shape_p_y: 0 
 ]
-
+//fast horisontal one
+###entity
+[
+###id: 6
+###state: 1
+###pos_x: 0 
+###pos_y: 15
+###vel_x: 15 
+###vel_y: 1 
+###r_force_x: 0 
+###r_force_y: 0
+###mass: 1
+###friction_coef: 0 
+###restitution_coef: 0.7
+###drag_coef: 0.5
+###sillhuete_area: 0.25
+###track_entity: 1 
+###rot_degrees: 0 
+###shape_p_x: 0 
+###shape_p_y: 0 
+###shape_p_x: 0 
+###shape_p_y: 0.25
+###shape_p_x: 0.7 
+###shape_p_y: 0.25
+###shape_p_x: 0.7
+###shape_p_y: 0 
+]
 //kaströrelse
 ###entity
 [

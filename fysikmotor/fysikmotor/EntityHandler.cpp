@@ -133,202 +133,6 @@ void EntityHandler::setUseAirRessitance(const bool inputBool)
 
 void EntityHandler::updateEntities(const float deltaTime) //updates all entities, checks for collisions, handles collisioons
 {
-	////using physics update order from this
-	////http://buildnewgames.com/gamephysics/ 8/3 2017
-	//
-	////1: Add forces
-	////1.1 gravity
-	////1.2 air drag
-	////1.3 forces that other objects are excerting
-	////2. Calc velocity
-	////3. calc position
-	////4. go back to 1
-	//
-	//elapsedTime += deltaTime;
-	//timeCounter += deltaTime;
-	//
-	//if (timeCounter > dataLoggerIntervall)
-	//{
-	//	timeCounter -= dataLoggerIntervall;
-	//	logData = true;
-	//}
-	//
-    ////	//add gravity and air drag
-    //	for (Entity& e : entities)
-    //	{
-    //		clearActingForces(e);
-    //		updateActingForces(e);
-    //	}
-    //
-    //	//1.3 use collisioncheck to check what forces to excert on other objects
-  	//
-    //	for (Entity& e : entities)
-    //	{
-    //		for (Entity& e2 : entities)
-    //		{
-    //
-    //			if (e.getEntityID() != -1 && e2.getEntityID() != -1 //both entities are defined
-    //				&& e.getEntityID() != e2.getEntityID() //entite wonth check collision with itself
-    //				&& e.getEntityState() != 0) //e is not a static entity 
-    //			{
-    //				//do a supersamplig/binary search SAT check to find collision
-    //
-    //			
-    //				//broad phase check
-    //			//	if(minskowskiDifferenceAABBCollisionCheck(e, e2) == true || sweptMinskowskiDifferenceAABBCollisionCheck(e, e2, deltaTime) == true)
-    //			//	{
-    //
-    //					//accurate narrowphase check between one entity and another
-    //					SATCollisionCheck collisionCheck;
-    //
-	//					//Stores a copy of the entities positiion
-    //				   VertexShape shape1 = e.getVertexShape(),
-    //						shape2 = e2.getVertexShape();
-    //
-    //					//try to elapse time and move the shapes forward in this tick in small steps
-    //					bool done = false;
-    //
-    //					float et = 0.0f,
-    //						maxTime = deltaTime, //max time interval to check collisions at
-    //						timeIncrementAmount = deltaTime / 20; //TODO: finetune this value
-    //
-    //					//prevents an endless loop
-    //					int iteration = 0,
-    //						maxIteration = 21;
-    //
-    //					while (!done && et  < maxTime && iteration < maxIteration)
-    //					{
-    //						iteration++;
-    //
-    //						if (collisionCheck.SATCheck(shape1, shape2))
-    //						{
-    //							done = true;
-    //
-    //							//they are colliding
-    //
-    //							//1: for how long have they been overlapping? use this to minimize overall timeloss, take this in count when calculating logic in next section
-    //							//the entities could have been travling inside one another for a certain amount of time before the collision check was done
-    //							//will need to take this into count when updating logic furtheron
-    //
-    //							//chooses an axis on which to project their velocitrties on
-    //							Vec2D projectionAxis = collisionCheck.getPenentrationVector().getNormalisation(); //the axis of least penentration
-    //						
-    //							float e1VelocityProjection = projectionAxis * e.getVelocity(), //projects the velocities on the axis
-    //								e2VelocityProjection = projectionAxis * e2.getVelocity();
-    //						
-    //							float overlapTime = FLT_MAX,
-    //								overlap = collisionCheck.getOverlap(); //the distance they are overlaping ín the overlapping axis
-    //						
-    //							//use distance = velocity * time, time = distane/velocity
-    //							
-    //							if (e1VelocityProjection + e2VelocityProjection == 0 && overlap != 0.0f)
-    //								overlapTime = fabs(overlap / (e1VelocityProjection * 2.0f)); //e1proj + e2proj = 0, they are traveling towards eachother with the same velocity
-    //							else if (overlap != 0.0f)
-    //								overlapTime = fabs(overlap / (e1VelocityProjection + e2VelocityProjection)); //the time that they have been overlapping for
-    //							else
-    //								overlapTime = 0;
-   	//
-	//							//moves entities back to where they are just not touching
-	//							if(e.getEntityState() != 0.0f)
-	//								e.setPosition(e.getPosition() + e.getVelocity()* (et- overlapTime));
-	//							if (e2.getEntityState() != 0.0f)
-	//								e2.setPosition(e.getPosition() + e2.getVelocity()* (et-overlapTime));
-    //
-	//							e.setLostTime(et);
-	//							e2.setLostTime(et);
-    //
-    //							//2: collision logic
-    //							handleCollision(e, e2); 
-    //
-    //							//3: Apply forces on both entities
-    //							Vec2D force = e.getResultingForce(), //the force that e excerts on e2
-    //							//TAKE e2 IN COUNT OR NOT?
-    //								collisionSurfaceEdge = collisionCheck.getEdge2().getNormalisation(),
-    //								AxisNormalToCollisionSurface = collisionSurfaceEdge.getAntiClockWiseNormal(),
-    //								AxisParallellToCollisionSurface = collisionSurfaceEdge.getAntiClockWiseNormal().getAntiClockWiseNormal(), //flipped 180 degrees
-    //								forceOnNormalAxis = AxisNormalToCollisionSurface, //sets the axis on which the force acts on
-    //								forceOnParallellAxis = AxisParallellToCollisionSurface, //sets axis
-    //								frictionForceOnParallellAxis = AxisParallellToCollisionSurface.getAntiClockWiseNormal().getAntiClockWiseNormal(); //sets axis 180 degrees flipped, frictionforce is in oposite direction
-    //
-    //							float angle = collisionCheck.getEdge2().getDirectionRADIANS(), //the angle of the plane
-    //								normalForce = cos(angle) * force.getMagnitude(),
-    //								parallellForce = sin(angle) * force.getMagnitude(),
-    //								frictionForce = ((e.getFrictionCoefficient() + e2.getFrictionCoefficient()) / 2) * normalForce;
-    //
-    //							//Set the correspondign forces that act on each of these axis
-    //							forceOnNormalAxis.setVectorMagnitude(normalForce);
-    //							
-    //							//if parallellforce is greater than frictionforce, set them both to their corresponding values, if parallellforce is less than frictionforce, set frictionforce to parallellforce
-    //							(parallellForce > frictionForce) ? forceOnParallellAxis.setVectorMagnitude(parallellForce), frictionForceOnParallellAxis.setVectorMagnitude(frictionForce) : forceOnParallellAxis.setVectorMagnitude(parallellForce), frictionForceOnParallellAxis.setVectorMagnitude(parallellForce);
-    //							
-    //							//apply the forces on both entities
-    //							e.addForce(Force(forceOnNormalAxis, Vec2D(), "Normal Force", sf::Color::Green));
-	//							if (parallellForce != 0)
-	//								e.addForce(Force(forceOnParallellAxis, Vec2D(), "Parallell Force", sf::Color::Magenta));
-    //							if(frictionForce != 0)
-	//								e.addForce(Force(frictionForceOnParallellAxis, Vec2D(), "Friction Force", sf::Color::Cyan + sf::Color(100, 0, 0)));
-    //
-    //							//flipps the forces in the oposite direction
-    //							e2.addForce(Force(forceOnNormalAxis.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Anti Normal Force", sf::Color::Green));
-    //							if(parallellForce != 0)
-	//								e2.addForce(Force(forceOnParallellAxis.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Anti Parallell Force", sf::Color::Magenta));
-    //							if(frictionForce != 0)
-	//								e2.addForce(Force(frictionForceOnParallellAxis.getAntiClockWiseNormal().getAntiClockWiseNormal(), Vec2D(), "Anti Friction Force", sf::Color::Cyan + sf::Color(100, 0, 0)));
-    //						}
-    //						else
-    //						{
-    //							//collision was not found
-    //
-    //							if (et + timeIncrementAmount >= deltaTime)
-    //								done = true;
-    //							
-    //							else
-	//								et += timeIncrementAmount; //adds more time
-    //
-    //							//set the shapes' position at the next elapsedTimeInterval
-    //
-    //							shape1.setPosition(e.getPosition() + e.getVelocity() * et);
-    //							shape2.setPosition(e2.getPosition() + e2.getVelocity() * et);
-    //
-    //							//goes back into the loop and does a collisioncheck with theses values, if false it goes back here where time the gets incremented
-    //						}
-    //					}
-    //
-    //				//}
-    //
-    //			}
-    //
-    //		}
-    //	}
-    //
-    ////update logic
-	//for (Entity& e : entities)
-	//{
-	//	if (e.getEntityState() != 0)
-	//	{
-	//		float additionalTime = e.getLostTime();
-	//		if (additionalTime == FLT_MAX || additionalTime < 0.0f)
-	//			additionalTime = 0;
-	//		e.setLostTime(FLT_MAX);
-	//
-	//		//update enttiy
-	//		updateResultingForce(e);
-	//		updateVelocity(e, deltaTime + additionalTime);
-	//		updatePreviousEntityData(e);
-	//		updatePosition(e, deltaTime + additionalTime);
-	//
-	//		//only logs data if it is time and that entity is set to be tracked
-	//		if (logData == true && e.getTrackEntityData() == true)
-	//			logEntityData(e, deltaTime, elapsedTime);
-	//	}
-	//
-	//}
-	//
-	//logData = false;
-
-
-//=======================================================================================================================================================================================================================================
-
 	elapsedTime += deltaTime;
 	timeCounter += deltaTime;
 	
@@ -675,6 +479,30 @@ float EntityHandler::getWorldMaxY()
 float EntityHandler::getWorldMinY()
 {
 	return worldMinY;
+}
+Entity EntityHandler::getEntity(const int ID)
+{
+	if (ID < entities.size())
+	{
+		return entities[ID];
+	}
+}
+void EntityHandler::setEntity(const Entity& e, const int ID)
+{
+	if (ID > entities.size() - 1)
+	{
+		entities.push_back(e);
+	}
+	else
+	{
+		for (Entity& e2 : entities)
+		{
+			if (e2.getEntityID() == ID)
+			{
+				e2 = e;
+			}
+		}
+	}
 }
 void EntityHandler::init(const float inputMaxX, const float inputMinX, const float inputMaxY, const float inputMinY)
 {

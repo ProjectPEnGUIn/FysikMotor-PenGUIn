@@ -7,33 +7,7 @@
 #include "Texture_System.h"
 #include "Font_System.h"
 #include "PE.h" //physics engine module
-#include "DataLogger.h"
-
-Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float cor, int ID, int state, Vec2D vel, float rot)
-{
-	Entity e;
-	VertexShape s;
-	e.setEntityState(state);
-	s.addVertexPoint(Vec2D(0, 0));
-	s.addVertexPoint(Vec2D(0, height));
-	s.addVertexPoint(Vec2D(width, height));
-	s.addVertexPoint(Vec2D(width, 0));
-	e.setVertexShape(s);
-	e.setPosition(pos);
-	e.setMass(mass);
-	e.setRestitutionCoefficient(cor);
-	e.setFrictionCoefficient(0.0f);
-	e.setDragCoefficient(0.15f);
-	e.setEnttityID(ID);
-	e.setVelocity(vel);
-	e.setAngleRotationDEGREES(rot);
-	e.setSillhueteArea(1);
-
-	if (e.getEntityState() != 0) //only track movable objects
-		e.setTrackEntityData(true);
-
-	return e;
-}
+#include <algorithm>
 
 std::string ID;
 std::string Drag;
@@ -194,6 +168,7 @@ public:
 		int option = 12;
 		bool game = true;
 
+	
 		while (renderwindow.isOpen() && game)
 		{
 			T_ID.setString( ID );
@@ -211,15 +186,12 @@ public:
 			T_VelocityX.setString( VelocityX );
 			T_VelocityY.setString( VelocityY);
 			T_SurfaceArea.setString( SurfaceArea );
-			
+
 			elapsed = clock.getElapsedTime();
 			background.setPosition( sf::Vector2f( -20 * elapsed.asSeconds(), 0 ) );
 
 			while ( renderwindow.pollEvent(e) )
 			{
-
-				std::cout << "loop\n";
-
 				if( e.type == sf::Event::TextEntered )
 				{
 					switch( option )
@@ -365,6 +337,7 @@ public:
 				}
 			}
 			
+			//updating of the physics engine itself
 			if (logicTimer.getElapsedTime() >= logicTime)
 			{
 				//if time elapsed since last tick gets too big it will split the time into smaller segments, the max dTime will be 2.5 * tickTime
@@ -670,6 +643,8 @@ public:
 
 			elapsed = clock.getElapsedTime();
 			
+
+			//rendering part of gameloop
 			renderwindow.clear();
 			background.draw( renderwindow );
 			physicsEngine.draw( renderwindow );
@@ -733,5 +708,39 @@ public:
 	private:
 		//misc functions
 
+		float getFloat(const std::string& inputString) const //used to get a float value from the sf::text, if weerd string return FLT_MAX
+		{
+			std::string s = inputString;
+			s.erase(std::remove(s.begin(), s.end(), ' '), s.end()); 														
+			std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+			for (unsigned int i = 0; i < s.length(); i++)
+			{
+				if (isdigit(s[i]) == false)
+				{
+					std::cout << "ERROR: DID NOT INPUt A NUMBER INTO tHE BOX, >" << s << "<\n";
+					return FLT_MAX;
+				}
+			}
+			return std::stof(s);
+		}
+		bool getBool(const std::string& inputString) const //used to get a bool value from the sf::text, if weerd string return false
+		{
+			std::string s = inputString;
+			s.erase(std::remove(s.begin(), s.end(), ' '), s.end());
+			std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+			for (unsigned int i = 0; i < s.length(); i++)
+			{
+				if (isdigit(s[i]) == false)
+				{
+					std::cout << "ERROR: DID NOT INPUt A NUMBER INTO tHE BOX, >" << s << "<\n";
+					return false;
+				}
+			}
+			return std::stoi(s);
+		}
+		std::string getString(const std::string& inputString) const //used to get a string from the sf:.text, if weird string retun string("")
+		{
+
+		}
 };
 #endif // ! _GAMESYSTEM:

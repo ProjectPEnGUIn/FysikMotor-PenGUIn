@@ -120,12 +120,9 @@
     <ClCompile Include="DataLogger.cpp" />
     <ClCompile Include="EntityHandler.cpp" />
     <ClCompile Include="Force.cpp" />
-    <ClCompile Include="GJK.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PE.cpp" />
     <ClCompile Include="PEVec2D.cpp" />
-    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="ReadFile.cpp" />
     <ClCompile Include="SATCollisionCheck.cpp" />
     <ClCompile Include="Sound_system.cpp" />
@@ -141,12 +138,9 @@
     <ClInclude Include="Font_System.h" />
     <ClInclude Include="Force.h" />
     <ClInclude Include="Game_System.h" />
-    <ClInclude Include="GJK.h" />
-    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Menu_System.h" />
     <ClInclude Include="PE.h" />
     <ClInclude Include="PEVec2D.h" />
-    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="ReadFile.h" />
     <ClInclude Include="SATCollisionCheck.h" />
     <ClInclude Include="Sound_system.h" />

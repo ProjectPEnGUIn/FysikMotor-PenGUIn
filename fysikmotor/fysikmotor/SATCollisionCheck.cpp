@@ -154,20 +154,6 @@ void SATCollisionCheck::findEdgesInCollision(const std::vector<Vec2D>& shape1Ver
 
 	//edges are in anticlockwise direction, but it works so im leaving it here, if it needs adjusting i'll do it later
 
-	
-
-	//std::cout << "edge 1: " << edge1.getX() << " " << edge1.getY() << " angle: " << edge1.getDirectionDEGREES() << std::endl;
-	//std::cout << "edge 2: " << edge2.getX() << " " << edge2.getY() << " angle: " << edge2.getDirectionDEGREES() << std::endl;
-	////std::cin.get();
-	//std::cout << "points on shape1: p1: " << s1cP1.getX() << " " << s1cP1.getY() << " p2: " << s1cP2.getX() << " " << s1cP2.getY()
-	//	<< "\nPoints on shape2: p1: " << s2cP1.getX() << " " << s2cP1.getY() << " p2: " << s2cP2.getX() << " " << s2cP2.getY() << std::endl;
-	//
-	//std::cout << "Normal dir: " << normal.getDirectionDEGREES() << std::endl << " n1N: " << nNormal1.getDirectionDEGREES() << " n2N: " << nNormal2.getDirectionDEGREES() << std::endl;
-	//
-	//std::cout << "Paused: Press Enter\n";
-	//std::cin.get();
-	
-
 }
 bool SATCollisionCheck::SATCheck(const VertexShape& inputVertexShape1, const VertexShape& inputVertexShape2)
 {

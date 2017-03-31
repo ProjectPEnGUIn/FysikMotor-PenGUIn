@@ -76,8 +76,6 @@ public:
 	Vec2D getEdge1() const; //the edge on the first shape that is involved in the collision
 	Vec2D getEdge2() const; //the edge on the second shape that is involved in the collision
 
-	
-
 	SATCollisionCheck();
 
 private:

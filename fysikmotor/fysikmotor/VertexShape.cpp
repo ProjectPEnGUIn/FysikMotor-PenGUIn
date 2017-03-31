@@ -208,7 +208,6 @@ void VertexShape::updateCenterPos() //updates the centerpos location of the vert
 	centerPosition.setY(centerYTemp / i);
 }
 
-
 VertexShape::VertexShape() //default constructor
 	:
 	PI(3.14159265f),

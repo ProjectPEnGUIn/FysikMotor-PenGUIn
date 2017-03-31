@@ -49,9 +49,6 @@ public:
 	void setGravitationalAcceleration(const Vec2D& inputGravitationalAcceleration);
 	void setUseAirRessitance(const bool inputBool);
 
-	//void resetTimeCounter();
-	//float getTimeCounter() const;
-
 	//update funcrions
 	void updateEntities(const float deltaTime); //updates all entities, checks for collisions, handles collisioons
 
@@ -64,6 +61,9 @@ public:
 	float getworldMinX();
 	float getWorldMaxY();
 	float getWorldMinY();
+
+	Entity getEntity(const int ID);
+	void setEntity(const Entity& e, const int ID);
 
 	std::vector<Entity> getAllEntities(); //retirives all entiteis in pe    
 

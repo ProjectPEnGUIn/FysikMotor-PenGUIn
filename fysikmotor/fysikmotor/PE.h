@@ -37,7 +37,8 @@ public:
 	void clearEntities();
 	void draw(sf::RenderWindow& inputRenderwindow);
 	void update(const float& deltaTime);
-	void inputEvent(sf::Event& inputEvent);
+	Entity getEntity(const int ID);
+	void setEnttiy(const Entity& e, const int ID);
 
 	void loadSimulation(const std::string& settingsFilename, const std::string& entitylistFilename); //loads simulation scenario
 	void saveSimulation(const std::string& filename, bool allowToOverwritePreviousData); //saves current
@@ -49,7 +50,6 @@ private:
 
 	EntityHandler entityHandler; //handles everything with entities, moving them around and checking for collisions -> handle collisions etc
 	DrawHandler drawHandler; //does all the drawing with use of entities from entityhandler
-	//LogicHandler logicHandler; //handles all the PE logic, takes input etc
 };
 
 #endif // !_PE_

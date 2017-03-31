@@ -98,20 +98,6 @@ void PE::loadSimulation(const std::string& settingsFilename, const std::string& 
 
 		if (tempString.find("]") != std::string::npos && foundEntity == true)
 		{
-		//	std::cout << "testerino\n";
-		//
-		//	std::cout << "E:\n" << "pos: " << tEntity.getPosition().getX() << " " << tEntity.getPosition().getY() << std::endl;
-		//	std::cout << "vel: " << tEntity.getVelocity().getX() << " " << tEntity.getVelocity().getY() << std::endl;
-		//	std::cout << "fr: " << tEntity.getResultingForce().getX() << " " << tEntity.getResultingForce().getY() << std::endl;
-		//	std::cout << "mass: " << tEntity.getMass() << std::endl;
-		//	std::cout << "fric: " << tEntity.getFrictionCoefficient() << std::endl;
-		//	std::cout << "rest: " << tEntity.getRestitutionCoefficient() << std::endl;
-		//	std::cout << "drag: " << tEntity.getDragCoefficient() << std::endl;
-		//	std::cout << "s area: " << tEntity.getSillhueteArea() << std::endl;
-		//	std::cout << "track e: " << tEntity.getTrackEntityData() << std::endl;
-		//	std::cout << "rot: " << tEntity.getAngleRotationDEGREES() << std::endl;
-		//	std::cout << "amount of vertices: " << tShape.getAmountOfVertices() << std::endl;
-
 			foundEntity = false;
 			tEntity.setVertexShape(tShape);
 			tEntity.setAngleRotationDEGREES(rot);
@@ -219,6 +205,14 @@ void PE::loadSimulation(const std::string& settingsFilename, const std::string& 
 
 	}
 
+}
+Entity PE::getEntity(const int ID)
+{
+	return entityHandler.getEntity(ID);
+}
+void PE::setEnttiy(const Entity& e, const int ID) 
+{
+	entityHandler.setEntity(e, ID);
 }
 void PE::init(const float inputSimulationWidth, const float inputSimulationHeight, const int imageWidth, const int imageHeight, const float imageSCreenXPos, const float imageScreenYPos)
 {

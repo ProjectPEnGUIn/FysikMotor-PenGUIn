@@ -11,7 +11,7 @@
 ###dh_settings_draw_filled_shape:0
 ###dh_settings_draw_ID: 1
 ###dh_settings_draw_mass_center:1
-###dh_settings_draw_velocity:0
+###dh_settings_draw_velocity:1
 ###dh_settings_draw_aabb_area:0
 ###dh_settings_draw_rotation_angle:0
 ###dh_settings_draw_entity_trejectory:0
