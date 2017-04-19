@@ -35,21 +35,21 @@ Entity getEntitySquare(Vec2D pos, float width, float height, float mass, float c
 	return e;
 }
 
-std::string ID;
-std::string Drag;
-std::string Mass;
-std::string PositionX;
-std::string PositionY;
-std::string Restitution;
-std::string Rotation;
-std::string ShapeHeight;
-std::string ShapeWidth;
-std::string STATE;
-std::string Friction;
-std::string TrackEntity;
-std::string VelocityX;
-std::string VelocityY;
-std::string SurfaceArea;
+std::string ID("");
+std::string Drag( "" );
+std::string Mass( "" );
+std::string PositionX( "" );
+std::string PositionY( "" );
+std::string Restitution( "" );
+std::string Rotation( "" );
+std::string ShapeHeight( "" );
+std::string ShapeWidth( "" );
+std::string STATE( "" );
+std::string Friction( "" );
+std::string TrackEntity( "" );
+std::string VelocityX( "" );
+std::string VelocityY( "" );
+std::string SurfaceArea( "" );
 
 class Game_System
 {
@@ -196,6 +196,21 @@ public:
 
 		while (renderwindow.isOpen() && game)
 		{
+
+
+			Entity tempEntity;
+			if( getFloatValue( ID ) != FLT_MAX && ID != "" )
+				tempEntity.setEnttityID( getFloatValue( ID ));
+			if( getFloatValue( Drag ) != FLT_MAX )
+				tempEntity.setDragCoefficient( getFloatValue( Drag ) );
+			if( getFloatValue( Mass ) != FLT_MAX )
+				tempEntity.setMass( getFloatValue( Mass ) );
+			if( getFloatValue( PositionX ) != FLT_MAX && PositionX != "" )
+				tempEntity.setPosition( Vec2D( getFloatValue( PositionX), tempEntity.getPosition().getY() ) );
+		
+
+//			physicsEngine.addEntity( tempEntity );
+
 			T_ID.setString( ID );
 			T_Drag.setString( Drag);
 			T_Mass.setString( Mass );
@@ -732,6 +747,17 @@ public:
 
 	private:
 		//misc functions
+
+		float getFloatValue( const std::string& inputString )
+		{
+			std::string s = inputString;
+
+			std::transform( s.begin(), s.end(), s.begin(), ::tolower );
+			if( !(s.find_first_not_of( "0123456789.-" ) == std::string::npos ))
+				return FLT_MAX;
+
+			return std::stof( inputString );
+		}
 
 };
 #endif // ! _GAMESYSTEM:

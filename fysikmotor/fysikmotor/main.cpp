@@ -8,9 +8,21 @@
 #include "Game_System.h"
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 int main()
 {
+
+	std::string s = "abc", s2 = "-1.23", s3 = "12";
+	if(!( s.find_first_not_of( "0123456789.-" ) == std::string::npos ))
+		std::cout << "s does not contai nnumbers\n";
+	if( !(s2.find_first_not_of( "0123456789.-" ) == std::string::npos ))
+		std::cout << "s2 does not contai nnumbers\n";
+	if( !(s3.find_first_not_of( "0123456789.-" ) == std::string::npos ))
+		std::cout << "s3 does not contai nnumbers\n";
+
+	std::cin.get();
+
 	sf::Event e;
 	sf::ContextSettings settings;
 	sf::Clock clock;

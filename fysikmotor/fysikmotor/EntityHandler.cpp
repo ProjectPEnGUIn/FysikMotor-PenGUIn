@@ -653,7 +653,8 @@ void EntityHandler::updatePreviousEntityData(Entity& inputEntity)
 					   //add entites
 void EntityHandler::addEntity(Entity inputEntity) //adds the entity to the list of entities
 {
-	entities.push_back(inputEntity);
+	
+		entities.push_back(inputEntity);
 }
 void EntityHandler::removeAllEntities()
 {
